@@ -1,0 +1,54 @@
+<div
+    class="builder-page"
+    fxFill
+    fxLayout="row"
+>
+
+    <!-- Forms -->
+    <div
+        fxFlex
+        fxLayout="row wrap" fxLayoutGap="24px"
+        [formGroup]="attributeForm"
+    >
+        <!-- Attribute Loop -->
+        <div
+            fxFlex="25"
+            *ngFor="let attribute of attributes"
+        >
+
+            <mat-form-field appearance="outline" fxFill>
+                <mat-label>{{ attribute | titlecase }}</mat-label>
+                <input matInput type="number" min="0" [formControlName]="attribute" autocomplete="off">
+            </mat-form-field>
+
+
+        </div>
+    </div>
+
+    <!-- Result -->
+    <div
+        fxFlex
+    >
+        <!-- Race List -->
+        <mat-action-list>
+            <button mat-list-item
+                *ngFor="let race of races"
+                (click)="onRaceItemClicked(race)"
+                matTooltip="Open information dialog"
+            >
+
+                <span>{{ race | titlecase }}</span>
+
+                <div fxFlex></div>
+
+                <span
+                    fxLayoutAlign="end"
+                    [style.color]="getRemainingPontsColor(race)"
+                >
+                    {{ getRemainingPoints(race) | number: '1.0-0' }}
+                </span>
+            </button>
+        </mat-action-list>
+    </div>
+
+</div>
