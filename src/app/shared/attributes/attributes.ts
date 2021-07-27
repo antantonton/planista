@@ -3,17 +3,17 @@ export const STARTING_POINTS: number = 150
 export const POINT_PER_LEVEL: number = 20
 
 export enum Attribute {
-    HEALTH = 'HEALTH',
+    STAMINA = 'STAMINA',
     STRENGTH = 'STRENGTH',
     ENDURANCE = 'ENDURANCE',
-    AVOIDANCE = 'AVOIDANCE',
+    DODGE = 'DODGE',
     INITIATIVE = 'INITIATIVE',
-    PIERCING = 'PIERCING',
-    HAMMER = 'HAMMER',
+    SPEAR = 'SPEAR',
+    MACE = 'MACE',
     SWORD = 'SWORD',
     AXE = 'AXE',
-    FLAIL = 'FLAIL',
-    STAFF = 'STAFF',
-    UNARMED = 'UNARMED',
+    CHAIN = 'CHAIN',
+    STAVE = 'STAVE',
+    FIST_WEAPON = 'FIST_WEAPON',
     SHIELD = 'SHIELD',
 }

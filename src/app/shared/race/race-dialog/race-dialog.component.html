@@ -1,32 +1,31 @@
-<!-- Header -->
-<h1 mat-dialog-title>{{ data?.race | titlecase }}</h1>
+<div fxFill fxLayout="column" fxLayoutGap="12px">
 
-<!-- Content -->
-<div mat-dialog-content>
+    <!-- Header -->
+    <h1 >{{ data?.race | titlecase }}</h1>
 
-    <mat-list>
-        <mat-list-item
-            *ngFor="let attribute of attributes"
-        >
-            <span>
-                {{ attribute | titlecase}}
-            </span>
+    <!-- Content -->
+    <div >
+        <mat-list>
+            <mat-list-item
+                *ngFor="let attribute of attributes"
+            >
+                <span>
+                    {{ attribute | titlecase}}
+                </span>
 
-            <div fxFlex></div>
+                <div fxFlex></div>
 
-            <span>
-                {{ getFormattedAttributeFactor(attribute) | number: '1.0-0' }} %
-            </span>
+                <span>
+                    {{ getFormattedAttributeFactor(attribute) | number: '1.0-0' }} %
+                </span>
+            </mat-list-item>
+        </mat-list>
+    </div>
 
-
-        </mat-list-item>
-    </mat-list>
-
-</div>
-
-<!-- Footer -->
-<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end">
-    <button mat-button (click)="onCloseClick()">
-        Close
-    </button>
+    <!-- Footer -->
+    <div fxAlign="end" fxLayout="row" fxLayoutAlign="end">
+        <button mat-button color="accent" (click)="onCloseClick()">
+            Close
+        </button>
+    </div>
 </div>
