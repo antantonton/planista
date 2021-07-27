@@ -6,7 +6,7 @@ import { RACE_BONUSES } from '../races'
 export const DEFAULT_RACE_DIALOG_CONFIG: MatDialogConfig = {
   autoFocus: false,
   restoreFocus: false,
-  width: '20%',
+  width: '300px',
 }
 
 @Component({

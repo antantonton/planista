@@ -6,9 +6,9 @@ export enum Attribute {
     STAMINA = 'STAMINA',
     STRENGTH = 'STRENGTH',
     ENDURANCE = 'ENDURANCE',
-    INITIATIVE = 'INITIATIVE',
-    DODGE = 'DODGE',
     SHIELD = 'SHIELD',
+    DODGE = 'DODGE',
+    INITIATIVE = 'INITIATIVE',
 }
 
 export enum WeaponSkill {

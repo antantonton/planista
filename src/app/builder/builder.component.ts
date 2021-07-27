@@ -31,7 +31,7 @@ export class BuilderComponent implements OnInit {
   ngOnInit(): void {
     // Initialize weapon form
     this.weaponSkillForm = this._formBuilder.group({
-      type: ['', Validators.required],
+      type: [''],
       skill: [null, Validators.min(0)],
     })
 

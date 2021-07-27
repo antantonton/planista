@@ -1,44 +1,43 @@
 <div
     class="builder-page"
     fxFill
-    fxLayout="row"
+    fxLayout="column"
+    fxLayout.gt-sm="row"
+    fxLayoutGap="32px"
 >
 
     <!-- Forms -->
     <div fxLayout="column">
 
-        <!-- Weapon Skill -->
-        <div 
-            fxLayout="row" fxLayoutGap="24px"
-            [formGroup]="weaponSkillForm"
-        >
-
-            <mat-form-field appearance="outline">
-                <mat-label>Weapon Type</mat-label>
-                <mat-select formControlName="type" required>
-                <mat-option *ngFor="let weaponSkill of weaponSkills" [value]="weaponSkill">
-                    {{ weaponSkill | titlecase}}
-                </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-                <mat-label>Weapon Skill</mat-label>
-                <input matInput type="number" min="0" formControlName="skill" autocomplete="off">
-            </mat-form-field>
-
-        </div>
-
         <!-- Attributes -->
         <div
-            fxLayout="row wrap" fxLayoutGap="24px"
-            [formGroup]="attributeForm"
+            fxLayout="row wrap" fxLayoutAlign="space-between"
+            
         >
+            <!-- Weapon Form -->
+            <ng-container [formGroup]="weaponSkillForm">
+                <mat-form-field appearance="outline" fxFlex="48">
+                    <mat-label>Weapon Type</mat-label>
+                    <mat-select formControlName="type">
+                    <mat-option *ngFor="let weaponSkill of weaponSkills" [value]="weaponSkill">
+                        {{ weaponSkill | titlecase}}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-            <mat-form-field appearance="outline" *ngFor="let attribute of attributes">
-                <mat-label>{{ attribute | titlecase }}</mat-label>
-                <input matInput type="number" min="0" [formControlName]="attribute" autocomplete="off">
-            </mat-form-field>
+                <mat-form-field appearance="outline"  fxFlex="48">
+                    <mat-label>Weapon Skill</mat-label>
+                    <input matInput type="number" min="0" formControlName="skill" autocomplete="off">
+                </mat-form-field>
+            </ng-container>
+
+            <!-- Attribute Form -->
+            <ng-container [formGroup]="attributeForm">
+                <mat-form-field appearance="outline" fxFlex="48" *ngFor="let attribute of attributes">
+                    <mat-label>{{ attribute | titlecase }}</mat-label>
+                    <input matInput type="number" min="0" [formControlName]="attribute" autocomplete="off">
+                </mat-form-field>
+            </ng-container>
 
         </div>
         
@@ -46,9 +45,9 @@
     </div>
 
     <!-- Results -->
-    <div fxFlex="40">
+    <div fxFlex fxFlex.gt-sm="40" fxLayout="row">
         <!-- Race List -->
-        <mat-action-list>
+        <mat-action-list fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm>
             <button mat-list-item
                 *ngFor="let race of races"
                 (click)="onRaceItemClicked(race)"
@@ -59,10 +58,7 @@
 
                 <div fxFlex></div>
 
-                <span
-                    fxLayoutAlign="end"
-                    [style.color]="getRemainingPontsColor(race)"
-                >
+                <span [style.color]="getRemainingPontsColor(race)">
                     {{ getRemainingPoints(race) | number: '1.0-0' }}
                 </span>
             </button>
