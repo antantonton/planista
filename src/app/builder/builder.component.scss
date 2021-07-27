@@ -1,3 +1,7 @@
 .builder-page {
     padding: 24px;
 }
+
+[mat-list-item] {
+    touch-action: auto !important;
+}
