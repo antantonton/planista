@@ -59,8 +59,6 @@ export class BuilderComponent implements OnInit {
     for (const weaponSkill in WeaponSkill) {
       this.attributeForm.addControl(weaponSkill, new FormControl(null, Validators.min(0)))
     }
-
-    console.log('attributeForm: ', this.attributeForm)
   }
 
   getRemainingPoints(race: Race): number {
