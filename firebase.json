@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/planista",
+    "public": "./dist/planista",
     "ignore": [
       "firebase.json",
       "**/.*",
