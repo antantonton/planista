@@ -32,7 +32,7 @@ export class AttributesService {
     // Calculate how many points haev to be sent to achieve the given attribute allocation
     let spentPoints: number = 0
     for (let [attribute, points] of Object.entries(attributes)) {
-      // Take the points and divide if with the corresponse race-attribute factor
+      // Take the points and divide if with the corresponding race-attribute factor
       spentPoints += points / RACE_BONUSES[race][attribute]
     }
 

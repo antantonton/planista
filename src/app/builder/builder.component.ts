@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
-import { Attribute } from '../shared/attributes/attributes'
+import { Attribute, WeaponSkill } from '../shared/attributes/attributes'
 import { AttributesService } from '../shared/attributes/attributes.service'
 import { DEFAULT_RACE_DIALOG_CONFIG, RaceDialogComponent } from '../shared/race/race-dialog/race-dialog.component'
 import { Race } from '../shared/race/races'
+import * as _ from 'lodash'
 
 @Component({
   selector: 'app-builder',
@@ -14,11 +15,12 @@ import { Race } from '../shared/race/races'
 export class BuilderComponent implements OnInit {
 
   attributes = Object.values(Attribute)
+  weaponSkills = Object.values(WeaponSkill)
   races = Object.values(Race)
 
   infoForm: FormGroup
   attributeForm: FormGroup
-  weaponTypeControl: FormControl = new FormControl('', Validators.required)
+  weaponSkillForm: FormGroup
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -27,20 +29,35 @@ export class BuilderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-
-    this.infoForm = this._formBuilder.group({
-      name: ['', Validators.required],
-      level: [0, Validators.min(0)],
+    // Initialize weapon form
+    this.weaponSkillForm = this._formBuilder.group({
+      type: ['', Validators.required],
+      skill: [null, Validators.min(0)],
     })
 
+    // Subscribe to weapon changes
+    this.weaponSkillForm.valueChanges.subscribe(data => {
+      // Only do something is type has been set
+      if (data.type) {
+        // Path all weapon skills to 0, then patch the selected skill to the current value
+        this.attributeForm.patchValue({
+          ..._.zipObject(this.weaponSkills, _.fill(Array(this.weaponSkills.length), null)),
+          [data.type]: data.skill
+        })
+      }
+    })
 
     // Initialize attribute form group
     this.attributeForm = new FormGroup({})
 
     // Add one form control per attribute
     for (const attribute in Attribute) {
-      this.attributeForm.addControl(attribute, new FormControl(0, Validators.min(0)))
+      this.attributeForm.addControl(attribute, new FormControl(null, Validators.min(0)))
+    }
+
+    // Add one form control per weapon skill
+    for (const weaponSkill in WeaponSkill) {
+      this.attributeForm.addControl(weaponSkill, new FormControl(null, Validators.min(0)))
     }
 
     console.log('attributeForm: ', this.attributeForm)

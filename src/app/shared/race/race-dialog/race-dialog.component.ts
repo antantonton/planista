@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { Attribute } from '../../attributes/attributes'
+import { Attribute, WeaponSkill } from '../../attributes/attributes'
 import { RACE_BONUSES } from '../races'
 
 export const DEFAULT_RACE_DIALOG_CONFIG: MatDialogConfig = {
@@ -16,7 +16,7 @@ export const DEFAULT_RACE_DIALOG_CONFIG: MatDialogConfig = {
 })
 export class RaceDialogComponent implements OnInit {
 
-  attributes = Object.values(Attribute)
+  attributes = [...Object.values(Attribute), ...Object.values(WeaponSkill)]
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,

@@ -6,8 +6,12 @@ export enum Attribute {
     STAMINA = 'STAMINA',
     STRENGTH = 'STRENGTH',
     ENDURANCE = 'ENDURANCE',
-    DODGE = 'DODGE',
     INITIATIVE = 'INITIATIVE',
+    DODGE = 'DODGE',
+    SHIELD = 'SHIELD',
+}
+
+export enum WeaponSkill {
     SPEAR = 'SPEAR',
     MACE = 'MACE',
     SWORD = 'SWORD',
@@ -15,5 +19,4 @@ export enum Attribute {
     CHAIN = 'CHAIN',
     STAVE = 'STAVE',
     FIST_WEAPON = 'FIST_WEAPON',
-    SHIELD = 'SHIELD',
 }

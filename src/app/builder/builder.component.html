@@ -5,30 +5,48 @@
 >
 
     <!-- Forms -->
-    <div
-        fxFlex
-        fxLayout="row wrap" fxLayoutGap="24px"
-        [formGroup]="attributeForm"
-    >
-        <!-- Attribute Loop -->
-        <div
-            fxFlex="25"
-            *ngFor="let attribute of attributes"
+    <div fxLayout="column">
+
+        <!-- Weapon Skill -->
+        <div 
+            fxLayout="row" fxLayoutGap="24px"
+            [formGroup]="weaponSkillForm"
         >
 
-            <mat-form-field appearance="outline" fxFill>
+            <mat-form-field appearance="outline">
+                <mat-label>Weapon Type</mat-label>
+                <mat-select formControlName="type" required>
+                <mat-option *ngFor="let weaponSkill of weaponSkills" [value]="weaponSkill">
+                    {{ weaponSkill | titlecase}}
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Weapon Skill</mat-label>
+                <input matInput type="number" min="0" formControlName="skill" autocomplete="off">
+            </mat-form-field>
+
+        </div>
+
+        <!-- Attributes -->
+        <div
+            fxLayout="row wrap" fxLayoutGap="24px"
+            [formGroup]="attributeForm"
+        >
+
+            <mat-form-field appearance="outline" *ngFor="let attribute of attributes">
                 <mat-label>{{ attribute | titlecase }}</mat-label>
                 <input matInput type="number" min="0" [formControlName]="attribute" autocomplete="off">
             </mat-form-field>
 
-
         </div>
+        
+
     </div>
 
-    <!-- Result -->
-    <div
-        fxFlex
-    >
+    <!-- Results -->
+    <div fxFlex="40">
         <!-- Race List -->
         <mat-action-list>
             <button mat-list-item
