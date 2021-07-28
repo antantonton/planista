@@ -11,6 +11,7 @@ import { Race, RACE_MODIFIERS } from 'src/app/shared/race/races'
 })
 export class ResultsComponent implements OnInit {
 
+
   races = Object.values(Race)
 
   @Input() attributes: {[attribute in Attribute]: number}
@@ -32,7 +33,7 @@ export class ResultsComponent implements OnInit {
    * @returns 
    */
   getDefinedAttributes(): string[] {
-    return Object.keys(this.attributes).filter(attribute => this.attributes[attribute])
+    return Object.values(Attribute).filter(attribute => this.attributes[attribute] || attribute === this.lockedAttribute)
   }
 
   /**
@@ -41,7 +42,12 @@ export class ResultsComponent implements OnInit {
    * @returns 
    */
   getAllocatedPoints(attribute: Attribute | WeaponSkill, race: Race): number {
-    return this.attributes[attribute] / RACE_MODIFIERS[race][attribute]
+    if (attribute === this.lockedAttribute) {
+      return this.getLockedAttributePoints(race) / RACE_MODIFIERS[race][attribute]
+    }
+    else {
+      return this.attributes[attribute] / RACE_MODIFIERS[race][attribute]
+    }
   }
 
   /**
