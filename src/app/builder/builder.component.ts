@@ -40,8 +40,10 @@ export class BuilderComponent implements OnInit {
     this.weaponSkillForm.valueChanges.subscribe(data => {
       // Only do something is type has been set
       if (data.type) {
-        // Enable the number field
-        this.weaponSkillForm.controls.skill.enable({emitEvent: false})
+        // Enable the number field if it the weapon field has not been locked
+        if (this.lockedAttribute) {
+          this.weaponSkillForm.controls.skill.enable({emitEvent: false})
+        }        
 
         // Path all weapon skills to 0, then patch the selected skill to the current value
         this.attributeForm.patchValue({
