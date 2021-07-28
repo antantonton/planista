@@ -16,9 +16,7 @@ export class ResultsComponent implements OnInit {
   @Input() attributes: {[attribute in Attribute]: number}
   @Input() lockedAttribute: Attribute | null
   @Input() weaponType: WeaponSkill
-
-  level: number = 25
-
+  @Input() level: number
 
   constructor(
     private _titleCasePipe: TitleCasePipe,
