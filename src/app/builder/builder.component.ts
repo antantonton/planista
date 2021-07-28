@@ -12,7 +12,8 @@ import { Race, RACE_MODIFIERS } from '../shared/race/races'
 })
 export class BuilderComponent implements OnInit {
 
-  level: number = 25
+  defaultLevel: number = 25
+  level: number = this.defaultLevel
 
   attributes = Object.values(Attribute)
   weaponSkills = Object.values(WeaponSkill)
@@ -100,6 +101,7 @@ export class BuilderComponent implements OnInit {
     this.weaponSkillForm.setValue({type: '', skill: null})
     Object.values(this.attributeForm.controls).forEach(control => control.setValue(null))
     this.lockedAttribute = this.defaultLockedAttrbute
+    this.level = this.defaultLevel
   }
 
   /**
