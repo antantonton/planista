@@ -101,6 +101,7 @@ export class BuilderComponent implements OnInit {
     this.weaponSkillForm.setValue({type: '', skill: null})
     Object.values(this.attributeForm.controls).forEach(control => control.setValue(null))
     this.lockedAttribute = this.defaultLockedAttrbute
+    this.attributeForm.controls[this.lockedAttribute].disable()
     this.level = this.defaultLevel
   }
 
