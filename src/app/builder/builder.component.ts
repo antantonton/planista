@@ -126,7 +126,8 @@ export class BuilderComponent implements OnInit {
    * @returns 
    */
   getDesiredAttributesTooltip(): string {
-    return `Enter the desired attribute points you want to have after racial modifiers have been applied`
+    return `Enter the desired attribute points you want to have after racial modifiers have been applied\n
+      Attributes can be locked for comparison`
   }
 
   /**
