@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { Attribute, WeaponSkill } from '../../attributes/attributes'
-import { RACE_BONUSES } from '../races'
+import { RACE_MODIFIERS } from '../races'
 
 export const DEFAULT_RACE_DIALOG_CONFIG: MatDialogConfig = {
   autoFocus: false,
@@ -28,7 +28,7 @@ export class RaceDialogComponent implements OnInit {
   }
 
   getFormattedAttributeFactor(attribute: Attribute): number {
-    return (1 - RACE_BONUSES[this.data.race][attribute]) * 100
+    return (1 - RACE_MODIFIERS[this.data.race][attribute]) * 100
   }
 
   onCloseClick(): void {

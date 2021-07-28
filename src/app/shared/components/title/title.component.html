@@ -1,0 +1,16 @@
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="6px">
+    
+    <!-- Title -->
+    <span class="title" [ngClass]="titleClass[level]">
+        {{ title }}
+    </span>
+
+    <!-- Info Icon -->
+    <mat-icon inline="true"
+        class="info-icon"
+        *ngIf="info"
+        [matTooltip]="info"
+    >
+        info
+    </mat-icon>
+</div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Race, RACE_BONUSES } from '../race/races'
+import { Race, RACE_MODIFIERS } from '../race/races'
 import { Attribute, POINT_PER_LEVEL, STARTING_POINTS } from './attributes'
 
 @Injectable({
@@ -33,7 +33,7 @@ export class AttributesService {
     let spentPoints: number = 0
     for (let [attribute, points] of Object.entries(attributes)) {
       // Take the points and divide if with the corresponding race-attribute factor
-      spentPoints += points / RACE_BONUSES[race][attribute]
+      spentPoints += points / RACE_MODIFIERS[race][attribute]
     }
 
     // Return the difference between total and spent points

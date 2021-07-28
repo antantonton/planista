@@ -34,13 +34,15 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { BuilderComponent } from './builder/builder.component';
-import { RaceDialogComponent } from './shared/race/race-dialog/race-dialog.component'
+import { RaceDialogComponent } from './shared/race/race-dialog/race-dialog.component';
+import { TitleComponent } from './shared/components/title/title.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     BuilderComponent,
-    RaceDialogComponent
+    RaceDialogComponent,
+    TitleComponent
   ],
   imports: [
     BrowserModule,

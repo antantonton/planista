@@ -7,7 +7,23 @@
 >
 
     <!-- Forms -->
-    <div fxLayout="column">
+    <div fxLayout="column" fxLayoutGap="12px">
+
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <!-- Title -->
+            <app-title
+                [title]="'Desired Attributes'"
+                [info]="getDesiredAttributesTooltip()"
+                [level]="1"
+            >
+            </app-title>
+
+            <!-- Reset Button -->
+            <button mat-stroked-button color="accent" (click)="onResetClick()">
+                Reset
+            </button>
+        </div>
+        
 
         <!-- Attributes -->
         <div
@@ -19,15 +35,23 @@
                 <mat-form-field appearance="outline" fxFlex="48">
                     <mat-label>Weapon Type</mat-label>
                     <mat-select formControlName="type">
-                    <mat-option *ngFor="let weaponSkill of weaponSkills" [value]="weaponSkill">
-                        {{ weaponSkill | titlecase}}
-                    </mat-option>
+                        <mat-option *ngFor="let weaponSkill of weaponSkills" [value]="weaponSkill">
+                            {{ weaponSkill | titlecase}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline"  fxFlex="48">
                     <mat-label>Weapon Skill</mat-label>
                     <input matInput type="number" min="0" formControlName="skill" autocomplete="off">
+
+                    <!-- Lock Icon -->
+                    <button mat-icon-button matSuffix
+                        (click)="onLockClick()"
+                        [disabled]="isWeaponSkillLocked() || !weaponSkillForm.value.type"
+                    >
+                        <mat-icon>{{ isWeaponSkillLocked() ? 'lock' : 'lock_open' }}</mat-icon>
+                    </button>
                 </mat-form-field>
             </ng-container>
 
@@ -36,6 +60,14 @@
                 <mat-form-field appearance="outline" fxFlex="48" *ngFor="let attribute of attributes">
                     <mat-label>{{ attribute | titlecase }}</mat-label>
                     <input matInput type="number" min="0" [formControlName]="attribute" autocomplete="off">
+
+                    <!-- Lock Icon -->
+                    <button mat-icon-button matSuffix
+                        (click)="onLockClick(attribute)"
+                        [disabled]="isAttributeLocked(attribute)"
+                    >
+                        <mat-icon>{{ isAttributeLocked(attribute) ? 'lock' : 'lock_open' }}</mat-icon>
+                    </button>
                 </mat-form-field>
             </ng-container>
 
@@ -45,24 +77,44 @@
     </div>
 
     <!-- Results -->
-    <div fxFlex fxFlex.gt-sm="40" fxLayout="row">
+    <div fxFlex fxFlex.gt-sm="40" fxLayout="column">
+
+        <!-- Title -->
+        <app-title
+            [title]="'Results'"
+            [info]="getResultsTooltip()"
+            [level]="1"
+        >
+        </app-title>
+
         <!-- Race List -->
-        <mat-action-list fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm>
-            <button mat-list-item
-                *ngFor="let race of races"
-                (click)="onRaceItemClicked(race)"
-                matTooltip="Display racial bonuses"
-            >
+        <div fxLayout="row">
+            <mat-action-list fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm>
+                <button mat-list-item
+                    *ngFor="let race of races"
+                    (click)="onRaceItemClicked(race)"
+                    matTooltip="Display racial modifiers"
+                >
+                    <span>{{ race | titlecase }}</span>
+    
+                    <div fxFlex></div>
+    
+                    <span [style.color]="getLockedAttributePointsColor(race)">
+                        {{ getLockedAttributePoints(race) | number: '1.0-0' }}
+                    </span>
 
-                <span>{{ race | titlecase }}</span>
+                    &nbsp;
+                    &nbsp;
+                    
+                    <span>
+                        {{ (lockedAttribute ? lockedAttribute : weaponSkillForm.value.type ) | titlecase }}
+                    </span>
 
-                <div fxFlex></div>
+                </button>
+            </mat-action-list>
+        </div>
 
-                <span [style.color]="getRemainingPontsColor(race)">
-                    {{ getRemainingPoints(race) | number: '1.0-0' }}
-                </span>
-            </button>
-        </mat-action-list>
     </div>
+
 
 </div>

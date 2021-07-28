@@ -9,7 +9,7 @@ export enum Race {
     TROLL = 'TROLL',
 }
 
-export const RACE_BONUSES: {[race in Race]: {[attribute in Attribute | WeaponSkill]: number}} = {
+export const RACE_MODIFIERS: {[race in Race]: {[attribute in Attribute | WeaponSkill]: number}} = {
     [Race.ELF]: {
         [Attribute.STAMINA]: 0.9,
         [Attribute.STRENGTH]: 0.9,
