@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
-import { MatDialog } from '@angular/material/dialog'
 import { Attribute, WeaponSkill } from '../shared/attributes/attributes'
-import { AttributesService } from '../shared/attributes/attributes.service'
-import { DEFAULT_RACE_DIALOG_CONFIG, RaceDialogComponent } from '../shared/race/race-dialog/race-dialog.component'
-import { Race, RACE_MODIFIERS } from '../shared/race/races'
 import * as _ from 'lodash'
 
 @Component({
@@ -16,20 +12,15 @@ export class BuilderComponent implements OnInit {
 
   attributes = Object.values(Attribute)
   weaponSkills = Object.values(WeaponSkill)
-  races = Object.values(Race)
 
   defaultLockedAttrbute: Attribute | WeaponSkill = Attribute.STAMINA
   lockedAttribute: Attribute | WeaponSkill = this.defaultLockedAttrbute
-  level: number = 25
 
-  infoForm: FormGroup
   attributeForm: FormGroup
   weaponSkillForm: FormGroup
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _attributesService: AttributesService,
-    private _dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -124,53 +115,11 @@ export class BuilderComponent implements OnInit {
   }
 
   /**
-   * Returns the points after modifiers for the locked attribute
-   * @param race 
-   * @returns 
-   */
-  getLockedAttributePoints(race: Race): number {
-    const lockedAttribute: Attribute | WeaponSkill = this.lockedAttribute ?? this.weaponSkillForm.value.type
-    return this._attributesService.getRemainingPoints(this.level, race, this.attributeForm.value) * RACE_MODIFIERS[race][lockedAttribute]
-  }
-
-  /**
-   * Returns the color to use for the remaining points
-   * @param race 
-   * @returns 
-   */
-  getLockedAttributePointsColor(race: Race): string {
-    return this.getLockedAttributePoints(race) < 0 ? 'red' : 'green'
-  }
-
-  /**
-   * Callback function for clicking a race list item
-   * @param race 
-   */
-  onRaceItemClicked(race: Race): void {
-    this._dialog.open(
-      RaceDialogComponent,
-      {
-        ...DEFAULT_RACE_DIALOG_CONFIG,
-        data: {race: race}
-      },
-    )
-  }
-
-  /**
    * Returns a tooltip for the results title
    * @returns 
    */
   getDesiredAttributesTooltip(): string {
-    return `Enter the desired attribute points you want to have after racial modifiers have been applied.`
-  }
-
-  /**
-   * Returns a tooltip for the results title
-   * @returns 
-   */
-  getResultsTooltip(): string {
-    return `Displays the amount remaining points after the desired attributes have been achieved for each race.
-      A negative result means that the desired attribute points can not be achieved for the given race and level.`
+    return `Enter the desired attribute points you want to have after racial modifiers have been applied`
   }
 
 }

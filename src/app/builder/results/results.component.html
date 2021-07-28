@@ -1,0 +1,35 @@
+<!-- Title -->
+<app-title
+    class="result-title"
+    [title]="'Results'"
+    [info]="getResultsTooltip()"
+    [level]="1"
+>
+</app-title>
+
+<!-- Race List -->
+<div fxLayout="row">
+    <mat-action-list fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm>
+        <button mat-list-item
+            *ngFor="let race of races"
+            (click)="onRaceItemClicked(race)"
+            matTooltip="Display racial modifiers"
+        >
+            <span>{{ race | titlecase }}</span>
+
+            <div fxFlex></div>
+
+            <span [style.color]="getLockedAttributePointsColor(race)">
+                {{ getLockedAttributePoints(race) | number: '1.0-0' }}
+            </span>
+
+            &nbsp;
+            &nbsp;
+            
+            <span>
+                {{ (lockedAttribute ? lockedAttribute : weaponType ) | titlecase }}
+            </span>
+
+        </button>
+    </mat-action-list>
+</div>

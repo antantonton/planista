@@ -7,7 +7,7 @@
 >
 
     <!-- Forms -->
-    <div fxLayout="column" fxLayoutGap="12px">
+    <div fxFlex fxLayout="column" fxLayoutGap="12px">
 
         <div fxLayout="row" fxLayoutAlign="space-between">
             <!-- Title -->
@@ -27,12 +27,11 @@
 
         <!-- Attributes -->
         <div
-            fxLayout="row wrap" fxLayoutAlign="space-between"
-            
+            fxLayout="row wrap" fxLayoutAlign="space-between"            
         >
             <!-- Weapon Form -->
             <ng-container [formGroup]="weaponSkillForm">
-                <mat-form-field appearance="outline" fxFlex="48">
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="48">
                     <mat-label>Weapon Type</mat-label>
                     <mat-select formControlName="type">
                         <mat-option *ngFor="let weaponSkill of weaponSkills" [value]="weaponSkill">
@@ -41,7 +40,7 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline"  fxFlex="48">
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="48">
                     <mat-label>Weapon Skill</mat-label>
                     <input matInput type="number" min="0" formControlName="skill" autocomplete="off">
 
@@ -57,7 +56,7 @@
 
             <!-- Attribute Form -->
             <ng-container [formGroup]="attributeForm">
-                <mat-form-field appearance="outline" fxFlex="48" *ngFor="let attribute of attributes">
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="48" *ngFor="let attribute of attributes">
                     <mat-label>{{ attribute | titlecase }}</mat-label>
                     <input matInput type="number" min="0" [formControlName]="attribute" autocomplete="off">
 
@@ -78,42 +77,11 @@
 
     <!-- Results -->
     <div fxFlex fxFlex.gt-sm="40" fxLayout="column">
-
-        <!-- Title -->
-        <app-title
-            [title]="'Results'"
-            [info]="getResultsTooltip()"
-            [level]="1"
-        >
-        </app-title>
-
-        <!-- Race List -->
-        <div fxLayout="row">
-            <mat-action-list fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm>
-                <button mat-list-item
-                    *ngFor="let race of races"
-                    (click)="onRaceItemClicked(race)"
-                    matTooltip="Display racial modifiers"
-                >
-                    <span>{{ race | titlecase }}</span>
-    
-                    <div fxFlex></div>
-    
-                    <span [style.color]="getLockedAttributePointsColor(race)">
-                        {{ getLockedAttributePoints(race) | number: '1.0-0' }}
-                    </span>
-
-                    &nbsp;
-                    &nbsp;
-                    
-                    <span>
-                        {{ (lockedAttribute ? lockedAttribute : weaponSkillForm.value.type ) | titlecase }}
-                    </span>
-
-                </button>
-            </mat-action-list>
-        </div>
-
+        <app-results
+            [attributes]="this.attributeForm.value"
+            [lockedAttribute]="lockedAttribute"
+            [weaponType]="this.weaponSkillForm.value.type"
+        ></app-results>
     </div>
 
 

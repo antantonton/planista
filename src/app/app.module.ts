@@ -35,14 +35,16 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { BuilderComponent } from './builder/builder.component';
 import { RaceDialogComponent } from './shared/race/race-dialog/race-dialog.component';
-import { TitleComponent } from './shared/components/title/title.component'
+import { TitleComponent } from './shared/components/title/title.component';
+import { ResultsComponent } from './builder/results/results.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     BuilderComponent,
     RaceDialogComponent,
-    TitleComponent
+    TitleComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,
