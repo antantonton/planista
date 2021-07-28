@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Attribute, WeaponSkill } from '../shared/attributes/attributes'
 import * as _ from 'lodash'
+import { AttributesService } from '../shared/attributes/attributes.service'
+import { Race, RACE_MODIFIERS } from '../shared/race/races'
 
 @Component({
   selector: 'app-builder',
@@ -9,6 +11,8 @@ import * as _ from 'lodash'
   styleUrls: ['./builder.component.scss']
 })
 export class BuilderComponent implements OnInit {
+
+  level: number = 25
 
   attributes = Object.values(Attribute)
   weaponSkills = Object.values(WeaponSkill)
@@ -21,6 +25,7 @@ export class BuilderComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
+    private _attributesService: AttributesService,
   ) { }
 
   ngOnInit(): void {
@@ -120,6 +125,14 @@ export class BuilderComponent implements OnInit {
    */
   getDesiredAttributesTooltip(): string {
     return `Enter the desired attribute points you want to have after racial modifiers have been applied`
+  }
+
+  /**
+   * Returns the total number of points that can be allocated for the given level
+   * @returns 
+   */
+  getTotalPoints(): number {
+    return this._attributesService.getPointsByLevel(this.level)
   }
 
 }

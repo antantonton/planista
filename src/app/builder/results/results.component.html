@@ -1,35 +1,61 @@
-<!-- Title -->
-<app-title
-    class="result-title"
-    [title]="'Results'"
-    [info]="getResultsTooltip()"
-    [level]="1"
->
-</app-title>
+<div fxFill fxLayout="column" fxLayoutGap="20px">
+    <!-- Title -->
+    <app-title
+        [title]="'Results'"
+        [info]="getResultsTooltip()"
+        [level]="1"
+    >
+    </app-title>
 
-<!-- Race List -->
-<div fxLayout="row">
-    <mat-action-list fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm>
-        <button mat-list-item
-            *ngFor="let race of races"
-            (click)="onRaceItemClicked(race)"
-            matTooltip="Display racial modifiers"
-        >
-            <span>{{ race | titlecase }}</span>
+    <!-- Race Accordion -->
+    <mat-accordion fxFlex>
+        <mat-expansion-panel *ngFor="let race of races">
+            <mat-expansion-panel-header>
+                <!-- Panel Title -->
+                <mat-panel-title>
+                    <app-title
+                        title="{{ race | titlecase }}"
+                        [info]="getRaceInfoTooltip(race)"
+                        [level]="3"
+                    >
+                    </app-title>
+                </mat-panel-title>
 
-            <div fxFlex></div>
+                <!-- Panel Description -->
+                <mat-panel-description>
+                    <div fxFill fxLayout="row" fxLayoutAlign="end" fxLayoutGap="8px">
+                        <span [style.color]="getLockedAttributePointsColor(race)">{{ getLockedAttributePoints(race) | number: '1.0-0' }}</span>
+                        <span>{{ (lockedAttribute ? lockedAttribute : weaponType ) | titlecase }}</span>
+                    </div>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
 
-            <span [style.color]="getLockedAttributePointsColor(race)">
-                {{ getLockedAttributePoints(race) | number: '1.0-0' }}
-            </span>
+            <!-- Panel Content -->
+            <div fxLayout="column">
+                <app-title
+                    [title]="'Allocated Points'"
+                    info="The points you need to allocated for the given race to achieve the desired attributes"
+                    level="4"
+                >            
+                </app-title>
 
-            &nbsp;
-            &nbsp;
-            
-            <span>
-                {{ (lockedAttribute ? lockedAttribute : weaponType ) | titlecase }}
-            </span>
+                <!-- Attribute List -->
+                <mat-list>
+                    <mat-list-item
+                        *ngFor="let attribute of getDefinedAttributes()"
+                    >
+                        <span>
+                            {{ attribute | titlecase}}
+                        </span>
 
-        </button>
-    </mat-action-list>
+                        <div fxFlex></div>
+
+                        <span>
+                            {{ getAllocatedPoints(attribute, race) | number: '1.0-0' }}
+                        </span>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>

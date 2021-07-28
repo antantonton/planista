@@ -23,6 +23,22 @@
                 Reset
             </button>
         </div>
+
+        <!-- Level -->
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <!-- Level Slider -->
+            <mat-slider fxFlex="48"
+                [thumbLabel]="true"
+                min="1" max="50" [(value)]="level"
+            ></mat-slider>
+
+            <!-- Level Display -->
+            <div fxFlex="48" fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="4px">
+                <span>Level {{level}}</span>
+                <span>{{ getTotalPoints() }} points</span>
+            </div>
+        </div>
+        
         
 
         <!-- Attributes -->

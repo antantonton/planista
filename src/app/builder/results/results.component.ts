@@ -1,8 +1,7 @@
+import { DecimalPipe, TitleCasePipe } from '@angular/common'
 import { Component, Input, OnInit } from '@angular/core'
-import { MatDialog } from '@angular/material/dialog'
 import { Attribute, WeaponSkill } from 'src/app/shared/attributes/attributes'
 import { AttributesService } from 'src/app/shared/attributes/attributes.service'
-import { DEFAULT_RACE_DIALOG_CONFIG, RaceDialogComponent } from 'src/app/shared/race/race-dialog/race-dialog.component'
 import { Race, RACE_MODIFIERS } from 'src/app/shared/race/races'
 
 @Component({
@@ -22,7 +21,8 @@ export class ResultsComponent implements OnInit {
 
 
   constructor(
-    private _dialog: MatDialog,
+    private _titleCasePipe: TitleCasePipe,
+    private _decimalPipe: DecimalPipe,
     private _attributesService: AttributesService,
   ) { }
 
@@ -30,17 +30,40 @@ export class ResultsComponent implements OnInit {
   }
 
   /**
-   * Callback function for clicking a race list item
-   * @param race 
+   * Returns a list of attributes that have a non zero value
+   * @returns 
    */
-  onRaceItemClicked(race: Race): void {
-    this._dialog.open(
-      RaceDialogComponent,
-      {
-        ...DEFAULT_RACE_DIALOG_CONFIG,
-        data: {race: race}
-      },
-    )
+  getDefinedAttributes(): string[] {
+    return Object.keys(this.attributes).filter(attribute => this.attributes[attribute])
+  }
+
+  /**
+   * Returns the allocated points needed to achieve the given attributes for the given race
+   * @param attribute 
+   * @returns 
+   */
+  getAllocatedPoints(attribute: Attribute | WeaponSkill, race: Race): number {
+    return this.attributes[attribute] / RACE_MODIFIERS[race][attribute]
+  }
+
+  /**
+   * Returns the tooltip for the titles info hover
+   * @returns 
+   */
+  getRaceInfoTooltip(race: Race): string {
+    const modifiers: string[] = Object.keys(this.attributes).map(attribute => {
+      return `${this._titleCasePipe.transform(attribute)}: ${this.getFormattedAttributeModifier(attribute, race)}%`
+    })
+    return modifiers.join('\n')
+  }
+
+  /**
+   * Returns the formatted attribute modifier
+   * @param attribute 
+   * @returns 
+   */
+  getFormattedAttributeModifier(attribute: Attribute | WeaponSkill | string, race: Race): string {
+    return this._decimalPipe.transform((1 - RACE_MODIFIERS[race][attribute]) * 100, '1.0-0')
   }
 
   /**
@@ -69,6 +92,4 @@ export class ResultsComponent implements OnInit {
   getResultsTooltip(): string {
     return `Displays the resulting attribute points after racial modifiers for the locked attribute`
   }
-
-
 }

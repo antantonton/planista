@@ -30,19 +30,19 @@ import { MatGridListModule } from '@angular/material/grid-list'
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule } from '@angular/material/menu'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatExpansionModule } from '@angular/material/expansion'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
-import { BuilderComponent } from './builder/builder.component';
-import { RaceDialogComponent } from './shared/race/race-dialog/race-dialog.component';
-import { TitleComponent } from './shared/components/title/title.component';
+import { BuilderComponent } from './builder/builder.component'
+import { TitleComponent } from './shared/components/title/title.component'
 import { ResultsComponent } from './builder/results/results.component'
+import { DecimalPipe, TitleCasePipe } from '@angular/common'
 
 @NgModule({
   declarations: [
     AppComponent,
     BuilderComponent,
-    RaceDialogComponent,
     TitleComponent,
     ResultsComponent
   ],
@@ -80,8 +80,12 @@ import { ResultsComponent } from './builder/results/results.component'
     MatDialogModule,
     MatMenuModule,
     MatSlideToggleModule,
+    MatExpansionModule,
   ],
-  providers: [],
+  providers: [
+    TitleCasePipe,
+    DecimalPipe,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
