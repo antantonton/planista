@@ -1,6 +1,6 @@
 # Planista
 
-Calcualtor tool for planning characters in the game [Lanista](https://beta.lanista.se/).
+Calculator tool for planning characters in the game [Lanista](https://beta.lanista.se/).
 
 ## Development server
 
