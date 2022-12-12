@@ -1,6 +1,6 @@
 <div fxLayout="column">
   <!-- Item Filter -->
-  <div class="item-filter" fxLayout="row" fxLayoutGap="8px" [formGroup]="filterForm">
+  <div class="item-filter" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" [formGroup]="filterForm">
     <!-- Level -->
     <mat-form-field appearance="outline" fxFlex="100px">
       <mat-label>Level</mat-label>
@@ -22,6 +22,17 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <!-- Name -->
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" autocomplete="off" />
+    </mat-form-field>
+
+    <!-- Clear Button-->
+    <div class="clear-button">
+      <button mat-icon-button (click)="onClearClick()"><mat-icon>close</mat-icon></button>
+    </div>
   </div>
 </div>
 <mat-list>

@@ -14,9 +14,11 @@ export class ItemsComponent implements OnInit {
   readonly filterForm: FormGroup<{
     type: FormControl<{ key: string; value: number }>
     level: FormControl<number>
+    name: FormControl<string>
   }> = new FormGroup({
     type: new FormControl(),
     level: new FormControl(),
+    name: new FormControl(),
   })
 
   readonly weaponTypes$: Observable<WeaponType> = this._itemApiService.getWeaponTypes()
@@ -30,7 +32,11 @@ export class ItemsComponent implements OnInit {
       const filteredWeapons = weapons.filter((weapon) => {
         const matchesLevel = filter.level ? weapon.required_level === filter.level : true
         const matchesType = filter.type ? weapon.type === filter.type.value : true
-        return matchesLevel && matchesType
+
+        const matchesName = filter.name
+          ? weapon.name.toLowerCase().trim().includes(filter.name.toLowerCase().trim())
+          : true
+        return matchesLevel && matchesType && matchesName
       })
       return filteredWeapons
     }),
@@ -46,4 +52,12 @@ export class ItemsComponent implements OnInit {
   constructor(private _itemApiService: ItemApiService) {}
 
   ngOnInit(): void {}
+
+  onClearClick(): void {
+    this.filterForm.setValue({
+      type: null,
+      level: null,
+      name: null,
+    })
+  }
 }
