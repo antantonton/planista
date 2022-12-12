@@ -17,6 +17,5 @@ export enum WeaponSkill {
     SWORD = 'SWORD',
     AXE = 'AXE',
     CHAIN = 'CHAIN',
-    STAVE = 'STAVE',
-    FIST_WEAPON = 'FIST_WEAPON',
+    STAVE = 'STAVE'
 }

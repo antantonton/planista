@@ -2,7 +2,7 @@
     <!-- Title -->
     <app-title
         [title]="'Results'"
-        [info]="getResultsTooltip()"
+        [info]="titleTooltip"
         [level]="1"
     >
     </app-title>
@@ -41,8 +41,10 @@
 
                 <!-- Attribute List -->
                 <mat-list>
-                    <mat-list-item
-                        *ngFor="let attribute of getDefinedAttributes()"
+
+                    <ng-container *ngFor="let attribute of allAttributesAndWeaponSkills">
+                    <mat-list-item *ngIf="getAllocatedPoints(attribute, race) > 0"
+                       
                     >
                         <span>
                             {{ attribute | titlecase}}
@@ -54,6 +56,7 @@
                             {{ getAllocatedPoints(attribute, race) | number: '1.0-0' }}
                         </span>
                     </mat-list-item>
+                    </ng-container>
                 </mat-list>
             </div>
         </mat-expansion-panel>

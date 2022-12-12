@@ -11,7 +11,9 @@ import { Race, RACE_MODIFIERS } from 'src/app/shared/race/races'
 })
 export class ResultsComponent implements OnInit {
 
+  readonly titleTooltip = `Displays the resulting attribute points after racial modifiers for the locked attribute`
 
+  allAttributesAndWeaponSkills = [...Object.values(Attribute), ...Object.values(WeaponSkill)]
   races = Object.values(Race)
 
   @Input() attributes: {[attribute in Attribute]: number}
@@ -29,14 +31,6 @@ export class ResultsComponent implements OnInit {
   }
 
   /**
-   * Returns a list of attributes that have a non zero value
-   * @returns 
-   */
-  getDefinedAttributes(): string[] {
-    return Object.values(Attribute).filter(attribute => this.attributes[attribute] || attribute === this.lockedAttribute)
-  }
-
-  /**
    * Returns the allocated points needed to achieve the given attributes for the given race
    * @param attribute 
    * @returns 
@@ -51,7 +45,7 @@ export class ResultsComponent implements OnInit {
   }
 
   /**
-   * Returns the tooltip for the titles info hover
+   * Returns the tooltip for the races info hover
    * @returns 
    */
   getRaceInfoTooltip(race: Race): string {
@@ -67,7 +61,7 @@ export class ResultsComponent implements OnInit {
    * @returns 
    */
   getFormattedAttributeModifier(attribute: Attribute | WeaponSkill | string, race: Race): string {
-    return this._decimalPipe.transform((1 - RACE_MODIFIERS[race][attribute]) * 100, '1.0-0')
+    return this._decimalPipe.transform((RACE_MODIFIERS[race][attribute] - 1) * 100, '1.0-0')
   }
 
   /**
@@ -87,13 +81,5 @@ export class ResultsComponent implements OnInit {
    */
   getLockedAttributePointsColor(race: Race): string {
     return this.getLockedAttributePoints(race) < 0 ? 'red' : 'green'
-  }
-
-  /**
-   * Returns a tooltip for the results title
-   * @returns 
-   */
-  getResultsTooltip(): string {
-    return `Displays the resulting attribute points after racial modifiers for the locked attribute`
   }
 }

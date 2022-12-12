@@ -22,7 +22,6 @@ export const RACE_MODIFIERS: {[race in Race]: {[attribute in Attribute | WeaponS
         [WeaponSkill.AXE]: 1,
         [WeaponSkill.CHAIN]: 1,
         [WeaponSkill.STAVE]: 1.2,
-        [WeaponSkill.FIST_WEAPON]: 0.7,
         [Attribute.SHIELD]: 1.25,
     },
 
@@ -38,7 +37,6 @@ export const RACE_MODIFIERS: {[race in Race]: {[attribute in Attribute | WeaponS
         [WeaponSkill.AXE]: 1.2,
         [WeaponSkill.CHAIN]: 1.1,
         [WeaponSkill.STAVE]: 1.1,
-        [WeaponSkill.FIST_WEAPON]: 1.1,
         [Attribute.SHIELD]: 1.2,
     },
 
@@ -54,7 +52,6 @@ export const RACE_MODIFIERS: {[race in Race]: {[attribute in Attribute | WeaponS
         [WeaponSkill.AXE]: 1,
         [WeaponSkill.CHAIN]: 1.1,
         [WeaponSkill.STAVE]: 1.15,
-        [WeaponSkill.FIST_WEAPON]: 1.2,
         [Attribute.SHIELD]: 1,
     },
 
@@ -70,7 +67,6 @@ export const RACE_MODIFIERS: {[race in Race]: {[attribute in Attribute | WeaponS
         [WeaponSkill.AXE]: 1.1,
         [WeaponSkill.CHAIN]: 1.1,
         [WeaponSkill.STAVE]: 0.85,
-        [WeaponSkill.FIST_WEAPON]: 0.9,
         [Attribute.SHIELD]: 0.95,
     },
 
@@ -86,7 +82,6 @@ export const RACE_MODIFIERS: {[race in Race]: {[attribute in Attribute | WeaponS
         [WeaponSkill.AXE]: 1.2,
         [WeaponSkill.CHAIN]: 1,
         [WeaponSkill.STAVE]: 0.85,
-        [WeaponSkill.FIST_WEAPON]: 0.85,
         [Attribute.SHIELD]: 1.1,
     },
 
@@ -102,7 +97,6 @@ export const RACE_MODIFIERS: {[race in Race]: {[attribute in Attribute | WeaponS
         [WeaponSkill.AXE]: 0.8,
         [WeaponSkill.CHAIN]: 0.85,
         [WeaponSkill.STAVE]: 0.65,
-        [WeaponSkill.FIST_WEAPON]: 0.6,
         [Attribute.SHIELD]: 0.8,
     },
 }

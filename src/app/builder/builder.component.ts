@@ -3,7 +3,6 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Attribute, WeaponSkill } from '../shared/attributes/attributes'
 import * as _ from 'lodash'
 import { AttributesService } from '../shared/attributes/attributes.service'
-import { Race, RACE_MODIFIERS } from '../shared/race/races'
 
 @Component({
   selector: 'app-builder',
