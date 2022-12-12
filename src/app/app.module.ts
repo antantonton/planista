@@ -37,14 +37,16 @@ import { AppComponent } from './app.component'
 import { BuilderComponent } from './builder/builder.component'
 import { TitleComponent } from './shared/components/title/title.component'
 import { ResultsComponent } from './builder/results/results.component'
-import { DecimalPipe, TitleCasePipe } from '@angular/common'
+import { DecimalPipe, TitleCasePipe } from '@angular/common';
+import { ItemsComponent } from './items/items.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     BuilderComponent,
     TitleComponent,
-    ResultsComponent
+    ResultsComponent,
+    ItemsComponent
   ],
   imports: [
     BrowserModule,

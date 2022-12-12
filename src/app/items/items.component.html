@@ -1,0 +1,34 @@
+<div fxLayout="column">
+  <!-- Item Filter -->
+  <div class="item-filter" fxLayout="row" fxLayoutGap="8px" [formGroup]="filterForm">
+    <!-- Level -->
+    <mat-form-field appearance="outline" fxFlex="100px">
+      <mat-label>Level</mat-label>
+      <mat-select formControlName="level">
+        <mat-option class="italic" [value]="null">Clear</mat-option>
+        <mat-option *ngFor="let level of levels$ | async" [value]="level">
+          {{ level }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Type -->
+    <mat-form-field appearance="outline" fxFlex="200px">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option class="italic" [value]="null">Clear</mat-option>
+        <mat-option *ngFor="let type of weaponTypes$ | async | keyvalue" [value]="type">
+          {{ type.key }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<mat-list>
+  <mat-list-item *ngFor="let weapon of filteredWeapons$ | async">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <span>{{ weapon.required_level }}</span>
+      <span>{{ weapon.name }}</span>
+    </div>
+  </mat-list-item>
+</mat-list>
