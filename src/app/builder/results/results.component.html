@@ -1,64 +1,60 @@
 <div fxFill fxLayout="column" fxLayoutGap="20px">
-    <!-- Title -->
-    <app-title
-        [title]="'Results'"
-        [info]="titleTooltip"
-        [level]="1"
-    >
-    </app-title>
+  <!-- Title -->
+  <app-title [title]="'Results'" [info]="titleTooltip" [level]="1"> </app-title>
 
-    <!-- Race Accordion -->
-    <mat-accordion fxFlex>
-        <mat-expansion-panel *ngFor="let race of races">
-            <mat-expansion-panel-header>
-                <!-- Panel Title -->
-                <mat-panel-title>
-                    <app-title
-                        title="{{ race | titlecase }}"
-                        [info]="getRaceInfoTooltip(race)"
-                        [level]="3"
-                    >
-                    </app-title>
-                </mat-panel-title>
+  <!-- Race Accordion -->
+  <mat-accordion fxFlex>
+    <mat-expansion-panel *ngFor="let race of races">
+      <mat-expansion-panel-header>
+        <!-- Panel Title -->
+        <mat-panel-title>
+          <app-title
+            title="{{ race | titlecase }}"
+            [info]="getRaceInfoTooltip(race)"
+            [level]="3"
+          >
+          </app-title>
+        </mat-panel-title>
 
-                <!-- Panel Description -->
-                <mat-panel-description>
-                    <div fxFill fxLayout="row" fxLayoutAlign="end" fxLayoutGap="8px">
-                        <span [style.color]="getLockedAttributePointsColor(race)">{{ getLockedAttributePoints(race) | number: '1.0-0' }}</span>
-                        <span>{{ (lockedAttribute ? lockedAttribute : weaponType ) | titlecase }}</span>
-                    </div>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
+        <!-- Panel Description -->
+        <mat-panel-description>
+          <div fxFill fxLayout="row" fxLayoutAlign="end" fxLayoutGap="8px">
+            <span [style.color]="getLockedAttributePointsColor(race)">{{
+              getLockedAttributePoints(race) | number : '1.0-0'
+            }}</span>
+            <span>{{
+              (lockedAttribute ? lockedAttribute : weaponType) | titlecase
+            }}</span>
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
 
-            <!-- Panel Content -->
-            <div fxLayout="column">
-                <app-title
-                    [title]="'Allocated Points'"
-                    info="The points you need to allocated for the given race to achieve the desired attributes"
-                    level="4"
-                >            
-                </app-title>
+      <!-- Panel Content -->
+      <div fxLayout="column">
+        <app-title
+          [title]="'Allocated Points'"
+          info="The points you need to allocated for the given race to achieve the desired attributes"
+          [level]="4"
+        >
+        </app-title>
 
-                <!-- Attribute List -->
-                <mat-list>
+        <!-- Attribute List -->
+        <mat-list>
+          <ng-container *ngFor="let attribute of allAttributesAndWeaponSkills">
+            <mat-list-item *ngIf="getAllocatedPoints(attribute, race) > 0">
+              <span>
+                {{ attribute | titlecase }}
+              </span>
 
-                    <ng-container *ngFor="let attribute of allAttributesAndWeaponSkills">
-                    <mat-list-item *ngIf="getAllocatedPoints(attribute, race) > 0"
-                       
-                    >
-                        <span>
-                            {{ attribute | titlecase}}
-                        </span>
+              <div fxFlex></div>
 
-                        <div fxFlex></div>
-
-                        <span>
-                            {{ getAllocatedPoints(attribute, race) | number: '1.0-0' }}
-                        </span>
-                    </mat-list-item>
-                    </ng-container>
-                </mat-list>
-            </div>
-        </mat-expansion-panel>
-    </mat-accordion>
+              <span>
+                {{ getAllocatedPoints(attribute, race) | number : '1.0-0' }}
+              </span>
+            </mat-list-item>
+          </ng-container>
+        </mat-list>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>

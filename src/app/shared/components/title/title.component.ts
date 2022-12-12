@@ -3,15 +3,14 @@ import { Component, Input, OnInit } from '@angular/core'
 @Component({
   selector: 'app-title',
   templateUrl: './title.component.html',
-  styleUrls: ['./title.component.scss']
+  styleUrls: ['./title.component.scss'],
 })
 export class TitleComponent implements OnInit {
-
-  @Input() title: string
-  @Input() info: string
+  @Input() title: string = ''
+  @Input() info: string = ''
   @Input() level: number = 1
 
-  titleClass: {[level: number]: string} = {
+  titleClass: { [level: number]: string } = {
     1: 'mat-headline',
     2: 'mat-title',
     3: 'mat-subheading-2',
@@ -20,8 +19,7 @@ export class TitleComponent implements OnInit {
     6: 'mat-h6',
   }
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

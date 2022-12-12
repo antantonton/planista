@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core'
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms'
 import { Attribute, WeaponSkill } from '../shared/attributes/attributes'
 import * as _ from 'lodash'
 import { AttributesService } from '../shared/attributes/attributes.service'
@@ -7,10 +13,9 @@ import { AttributesService } from '../shared/attributes/attributes.service'
 @Component({
   selector: 'app-builder',
   templateUrl: './builder.component.html',
-  styleUrls: ['./builder.component.scss']
+  styleUrls: ['./builder.component.scss'],
 })
 export class BuilderComponent implements OnInit {
-
   defaultLevel: number = 25
   level: number = this.defaultLevel
 
@@ -26,7 +31,7 @@ export class BuilderComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _attributesService: AttributesService,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     // Initialize weapon form
@@ -36,23 +41,25 @@ export class BuilderComponent implements OnInit {
     })
 
     // Subscribe to weapon changes
-    this.weaponSkillForm.valueChanges.subscribe(data => {
+    this.weaponSkillForm.valueChanges.subscribe((data) => {
       // Only do something is type has been set
       if (data.type) {
         // Enable the number field if it the weapon field has not been locked
         if (this.lockedAttribute) {
-          this.weaponSkillForm.controls.skill.enable({emitEvent: false})
-        }        
+          this.weaponSkillForm.get('skill').enable({ emitEvent: false })
+        }
 
         // Path all weapon skills to 0, then patch the selected skill to the current value
         this.attributeForm.patchValue({
-          ..._.zipObject(this.weaponSkills, _.fill(Array(this.weaponSkills.length), null)),
-          [data.type]: data.skill ?? null
+          ..._.zipObject(
+            this.weaponSkills,
+            _.fill(Array(this.weaponSkills.length), null),
+          ),
+          [data.type]: data.skill ?? null,
         })
-      }
-      else {
+      } else {
         // Disable the number field
-        this.weaponSkillForm.controls.skill.disable({emitEvent: false})
+        this.weaponSkillForm.get('skill').disable({ emitEvent: false })
       }
     })
 
@@ -63,7 +70,13 @@ export class BuilderComponent implements OnInit {
     for (const attribute in Attribute) {
       this.attributeForm.addControl(
         attribute,
-        new FormControl({ value: null, disabled: this.isAttributeLocked(attribute as Attribute) }, Validators.min(0))
+        new FormControl(
+          {
+            value: null,
+            disabled: this.isAttributeLocked(attribute as Attribute),
+          },
+          Validators.min(0),
+        ),
       )
     }
 
@@ -71,14 +84,17 @@ export class BuilderComponent implements OnInit {
     for (const weaponSkill in WeaponSkill) {
       this.attributeForm.addControl(
         weaponSkill,
-        new FormControl({ value: null, disabled: this.isWeaponSkillLocked() }, Validators.min(0))
+        new FormControl(
+          { value: null, disabled: this.isWeaponSkillLocked() },
+          Validators.min(0),
+        ),
       )
     }
   }
 
   /**
    * Callback function for clicks on the lock icon
-   * @param attribute 
+   * @param attribute
    */
   onLockClick(attribute?: Attribute): void {
     // Set the new locked attribute
@@ -89,18 +105,22 @@ export class BuilderComponent implements OnInit {
     this.attributeForm.enable()
 
     // Get the locked form, patch it to null, then disable it
-    const form: AbstractControl = this.lockedAttribute ? this.attributeForm.controls[attribute] : this.weaponSkillForm.controls.skill
+    const form: AbstractControl = this.lockedAttribute
+      ? this.attributeForm.controls[attribute]
+      : this.weaponSkillForm.get('skill')
     form.patchValue(null)
     form.disable()
   }
 
-   /**
+  /**
    * Callback function for the reset button
    */
   onResetClick(): void {
     // Reset all form and locked attribute to defaults
-    this.weaponSkillForm.setValue({type: '', skill: null})
-    Object.values(this.attributeForm.controls).forEach(control => control.setValue(null))
+    this.weaponSkillForm.setValue({ type: '', skill: null })
+    Object.values(this.attributeForm.controls).forEach((control) =>
+      control.setValue(null),
+    )
     this.lockedAttribute = this.defaultLockedAttrbute
     this.attributeForm.controls[this.lockedAttribute].disable()
     this.level = this.defaultLevel
@@ -108,8 +128,8 @@ export class BuilderComponent implements OnInit {
 
   /**
    * Checks if the given attribute is locked
-   * @param attribute 
-   * @returns 
+   * @param attribute
+   * @returns
    */
   isAttributeLocked(attribute: Attribute): boolean {
     return attribute === this.lockedAttribute
@@ -117,7 +137,7 @@ export class BuilderComponent implements OnInit {
 
   /**
    * Checks if weapon skill is locked
-   * @returns 
+   * @returns
    */
   isWeaponSkillLocked(): boolean {
     return !this.lockedAttribute
@@ -125,7 +145,7 @@ export class BuilderComponent implements OnInit {
 
   /**
    * Returns a tooltip for the results title
-   * @returns 
+   * @returns
    */
   getDesiredAttributesTooltip(): string {
     return `Enter the desired attribute points you want to have after racial modifiers have been applied\n
@@ -134,10 +154,9 @@ export class BuilderComponent implements OnInit {
 
   /**
    * Returns the total number of points that can be allocated for the given level
-   * @returns 
+   * @returns
    */
   getTotalPoints(): number {
     return this._attributesService.getPointsByLevel(this.level)
   }
-
 }
