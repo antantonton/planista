@@ -9,6 +9,7 @@ export class TitleComponent implements OnInit {
   @Input() title: string = ''
   @Input() info: string = ''
   @Input() level: number = 1
+  @Input() infoPosition: 'before' | 'after' = 'after'
 
   titleClass: { [level: number]: string } = {
     1: 'mat-headline',

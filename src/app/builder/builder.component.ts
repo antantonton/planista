@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms'
-import { Attribute, WeaponSkill } from '../shared/attributes/attributes'
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { Attribute, ATTRIBUTE_LABELS, WeaponSkill } from '../shared/attributes/attributes'
 import * as _ from 'lodash'
 import { AttributesService } from '../shared/attributes/attributes.service'
+import { RACE_LABELS } from '../shared/race/races'
 
 @Component({
   selector: 'app-builder',
@@ -16,11 +11,12 @@ import { AttributesService } from '../shared/attributes/attributes.service'
   styleUrls: ['./builder.component.scss'],
 })
 export class BuilderComponent implements OnInit {
-  defaultLevel: number = 25
+  readonly defaultLevel: number = 25
   level: number = this.defaultLevel
 
-  attributes = Object.values(Attribute)
-  weaponSkills = Object.values(WeaponSkill)
+  readonly attributes = Object.values(Attribute)
+  readonly weaponSkills = Object.values(WeaponSkill)
+  readonly attributeLabels = ATTRIBUTE_LABELS
 
   defaultLockedAttrbute: Attribute | WeaponSkill = Attribute.STAMINA
   lockedAttribute: Attribute | WeaponSkill = this.defaultLockedAttrbute
@@ -28,10 +24,7 @@ export class BuilderComponent implements OnInit {
   attributeForm: FormGroup
   weaponSkillForm: FormGroup
 
-  constructor(
-    private _formBuilder: FormBuilder,
-    private _attributesService: AttributesService,
-  ) {}
+  constructor(private _formBuilder: FormBuilder, private _attributesService: AttributesService) {}
 
   ngOnInit(): void {
     // Initialize weapon form
@@ -51,10 +44,7 @@ export class BuilderComponent implements OnInit {
 
         // Path all weapon skills to 0, then patch the selected skill to the current value
         this.attributeForm.patchValue({
-          ..._.zipObject(
-            this.weaponSkills,
-            _.fill(Array(this.weaponSkills.length), null),
-          ),
+          ..._.zipObject(this.weaponSkills, _.fill(Array(this.weaponSkills.length), null)),
           [data.type]: data.skill ?? null,
         })
       } else {
@@ -84,10 +74,7 @@ export class BuilderComponent implements OnInit {
     for (const weaponSkill in WeaponSkill) {
       this.attributeForm.addControl(
         weaponSkill,
-        new FormControl(
-          { value: null, disabled: this.isWeaponSkillLocked() },
-          Validators.min(0),
-        ),
+        new FormControl({ value: null, disabled: this.isWeaponSkillLocked() }, Validators.min(0)),
       )
     }
   }
@@ -118,9 +105,7 @@ export class BuilderComponent implements OnInit {
   onResetClick(): void {
     // Reset all form and locked attribute to defaults
     this.weaponSkillForm.setValue({ type: '', skill: null })
-    Object.values(this.attributeForm.controls).forEach((control) =>
-      control.setValue(null),
-    )
+    Object.values(this.attributeForm.controls).forEach((control) => control.setValue(null))
     this.lockedAttribute = this.defaultLockedAttrbute
     this.attributeForm.controls[this.lockedAttribute].disable()
     this.level = this.defaultLevel

@@ -1,16 +1,17 @@
 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="6px">
-    
-    <!-- Title -->
-    <span class="title" [ngClass]="titleClass[level]">
-        {{ title }}
-    </span>
+  <!-- Info Icon Before -->
+  <ng-container *ngIf="infoPosition === 'before'" [ngTemplateOutlet]="infoIcon"></ng-container>
 
-    <!-- Info Icon -->
-    <mat-icon inline="true"
-        class="info-icon"
-        *ngIf="info"
-        [matTooltip]="info"
-    >
-        info
-    </mat-icon>
+  <!-- Title -->
+  <span class="title" [ngClass]="titleClass[level]">
+    {{ title }}
+  </span>
+
+  <!-- Info Icon After -->
+  <ng-container *ngIf="infoPosition === 'after'" [ngTemplateOutlet]="infoIcon"></ng-container>
 </div>
+
+<!-- Info Icon Template -->
+<ng-template #infoIcon>
+  <mat-icon inline="true" class="info-icon" *ngIf="info" [matTooltip]="info"> info </mat-icon>
+</ng-template>

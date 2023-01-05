@@ -1,103 +1,77 @@
-<div
-    class="builder-page"
-    fxFill
-    fxLayout="column"
-    fxLayout.gt-sm="row"
-    fxLayoutGap="32px"
->
+<div class="builder-page" fxFill fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="32px">
+  <!-- Forms -->
+  <div fxFlex fxLayout="column" fxLayoutGap="12px">
+    <div fxLayout="row" fxLayoutAlign="space-between">
+      <!-- Title -->
+      <app-title [title]="'Desired Attributes'" [info]="getDesiredAttributesTooltip()" [level]="1"> </app-title>
 
-    <!-- Forms -->
-    <div fxFlex fxLayout="column" fxLayoutGap="12px">
-
-        <div fxLayout="row" fxLayoutAlign="space-between">
-            <!-- Title -->
-            <app-title
-                [title]="'Desired Attributes'"
-                [info]="getDesiredAttributesTooltip()"
-                [level]="1"
-            >
-            </app-title>
-
-            <!-- Reset Button -->
-            <button mat-stroked-button color="accent" (click)="onResetClick()">
-                Reset
-            </button>
-        </div>
-
-        <!-- Level -->
-        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-            <!-- Level Slider -->
-            <mat-slider fxFlex="48"
-                [thumbLabel]="true"
-                min="1" max="50" [(value)]="level"
-            ></mat-slider>
-
-            <!-- Level Display -->
-            <div fxFlex="48" fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="4px">
-                <span>Level {{level}}</span>
-                <span>{{ getTotalPoints() }} points</span>
-            </div>
-        </div>
-
-        <!-- Attributes -->
-        <div
-            fxLayout="row wrap" fxLayoutAlign="space-between"            
-        >
-            <!-- Weapon Form -->
-            <ng-container [formGroup]="weaponSkillForm">
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="48">
-                    <mat-label>Weapon Type</mat-label>
-                    <mat-select formControlName="type">
-                        <mat-option *ngFor="let weaponSkill of weaponSkills" [value]="weaponSkill">
-                            {{ weaponSkill | titlecase}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="48">
-                    <mat-label>Weapon Skill</mat-label>
-                    <input matInput type="number" min="0" formControlName="skill" autocomplete="off">
-
-                    <!-- Lock Icon -->
-                    <button mat-icon-button matSuffix
-                        (click)="onLockClick()"
-                        [disabled]="isWeaponSkillLocked() || !weaponSkillForm.value.type"
-                    >
-                        <mat-icon>{{ isWeaponSkillLocked() ? 'lock' : 'lock_open' }}</mat-icon>
-                    </button>
-                </mat-form-field>
-            </ng-container>
-
-            <!-- Attribute Form -->
-            <ng-container [formGroup]="attributeForm">
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="48" *ngFor="let attribute of attributes">
-                    <mat-label>{{ attribute | titlecase }}</mat-label>
-                    <input matInput type="number" min="0" [formControlName]="attribute" autocomplete="off">
-
-                    <!-- Lock Icon -->
-                    <button mat-icon-button matSuffix
-                        (click)="onLockClick(attribute)"
-                        [disabled]="isAttributeLocked(attribute)"
-                    >
-                        <mat-icon>{{ isAttributeLocked(attribute) ? 'lock' : 'lock_open' }}</mat-icon>
-                    </button>
-                </mat-form-field>
-            </ng-container>
-
-        </div>
-        
-
+      <!-- Reset Button -->
+      <button mat-stroked-button color="accent" (click)="onResetClick()">Reset</button>
     </div>
 
-    <!-- Results -->
-    <div fxFlex fxFlex.gt-sm="40" fxLayout="column">
-        <app-results
-            [attributes]="this.attributeForm.value"
-            [lockedAttribute]="lockedAttribute"
-            [weaponType]="this.weaponSkillForm.value.type"
-            [level]="level"
-        ></app-results>
+    <!-- Level -->
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <!-- Level Slider -->
+      <mat-slider fxFlex="48" [thumbLabel]="true" min="1" max="50" [(value)]="level"></mat-slider>
+
+      <!-- Level Display -->
+      <div fxFlex="48" fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="4px">
+        <span>Level {{ level }}</span>
+        <span>{{ getTotalPoints() }} points</span>
+      </div>
     </div>
 
+    <!-- Attributes -->
+    <div fxLayout="row wrap" fxLayoutAlign="space-between">
+      <!-- Weapon Form -->
+      <ng-container [formGroup]="weaponSkillForm">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="48">
+          <mat-label>Weapon Type</mat-label>
+          <mat-select formControlName="type">
+            <mat-option *ngFor="let weaponSkill of weaponSkills" [value]="weaponSkill">
+              {{ attributeLabels[weaponSkill] | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="48">
+          <mat-label>Weapon Skill</mat-label>
+          <input matInput type="number" min="0" formControlName="skill" autocomplete="off" />
+
+          <!-- Lock Icon -->
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="onLockClick()"
+            [disabled]="isWeaponSkillLocked() || !weaponSkillForm.value.type"
+          >
+            <mat-icon>{{ isWeaponSkillLocked() ? 'lock' : 'lock_open' }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </ng-container>
+
+      <!-- Attribute Form -->
+      <ng-container [formGroup]="attributeForm">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-sm="48" *ngFor="let attribute of attributes">
+          <mat-label>{{ attributeLabels[attribute] | titlecase }}</mat-label>
+          <input matInput type="number" min="0" [formControlName]="attribute" autocomplete="off" />
+
+          <!-- Lock Icon -->
+          <button mat-icon-button matSuffix (click)="onLockClick(attribute)" [disabled]="isAttributeLocked(attribute)">
+            <mat-icon>{{ isAttributeLocked(attribute) ? 'lock' : 'lock_open' }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div fxFlex fxFlex.gt-sm="40" fxLayout="column">
+    <app-results
+      [attributes]="this.attributeForm.value"
+      [lockedAttribute]="lockedAttribute"
+      [weaponType]="this.weaponSkillForm.value.type"
+      [level]="level"
+    ></app-results>
+  </div>
 </div>

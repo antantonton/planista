@@ -38,8 +38,9 @@
 <mat-list>
   <mat-list-item *ngFor="let weapon of filteredWeapons$ | async">
     <div fxLayout="row" fxLayoutGap="8px">
-      <span>{{ weapon.required_level }}</span>
-      <span>{{ weapon.name }}</span>
+      <span fxFlex="50px">{{ weapon.required_level }}</span>
+      <span fxFlex="100px">{{ weapon.type_name | titlecase }}</span>
+      <span fxFlex="300px">{{ weapon.name }}</span>
     </div>
   </mat-list-item>
 </mat-list>

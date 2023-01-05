@@ -1,8 +1,8 @@
 import { DecimalPipe, TitleCasePipe } from '@angular/common'
 import { Component, Input, OnInit } from '@angular/core'
-import { Attribute, WeaponSkill } from 'src/app/shared/attributes/attributes'
+import { Attribute, ATTRIBUTE_LABELS, WeaponSkill } from 'src/app/shared/attributes/attributes'
 import { AttributesService } from 'src/app/shared/attributes/attributes.service'
-import { Race, RACE_MODIFIERS } from 'src/app/shared/race/races'
+import { Race, RACE_LABELS, RACE_MODIFIERS } from 'src/app/shared/race/races'
 
 @Component({
   selector: 'app-results',
@@ -12,11 +12,10 @@ import { Race, RACE_MODIFIERS } from 'src/app/shared/race/races'
 export class ResultsComponent implements OnInit {
   readonly titleTooltip = `Displays the resulting attribute points after racial modifiers for the locked attribute`
 
-  allAttributesAndWeaponSkills = [
-    ...Object.values(Attribute),
-    ...Object.values(WeaponSkill),
-  ]
-  races = Object.values(Race)
+  readonly allAttributesAndWeaponSkills = [...Object.values(Attribute), ...Object.values(WeaponSkill)]
+  readonly races = Object.values(Race)
+  readonly attributeLabels = ATTRIBUTE_LABELS
+  readonly raceLabels = RACE_LABELS
 
   @Input() attributes!: {
     [attribute in Attribute | WeaponSkill]?: number
@@ -40,9 +39,7 @@ export class ResultsComponent implements OnInit {
    */
   getAllocatedPoints(attribute: Attribute | WeaponSkill, race: Race): number {
     if (attribute === this.lockedAttribute) {
-      return (
-        this.getLockedAttributePoints(race) / RACE_MODIFIERS[race][attribute]
-      )
+      return this.getLockedAttributePoints(race) / RACE_MODIFIERS[race][attribute]
     } else {
       return this.attributes?.[attribute] ?? 0 / RACE_MODIFIERS[race][attribute]
     }
@@ -53,13 +50,12 @@ export class ResultsComponent implements OnInit {
    * @returns
    */
   getRaceInfoTooltip(race: Race): string {
-    const modifiers: string[] = Object.keys(this.attributes).map(
-      (attribute) => {
-        return `${this._titleCasePipe.transform(
-          attribute,
-        )}: ${this.getFormattedAttributeModifier(attribute, race)}%`
-      },
-    )
+    const modifiers: string[] = Object.keys(this.attributes).map((attribute) => {
+      return `${this._titleCasePipe.transform(this.attributeLabels[attribute])}: ${this.getFormattedAttributeModifier(
+        attribute,
+        race,
+      )}%`
+    })
     return modifiers.join('\n')
   }
 
@@ -68,16 +64,8 @@ export class ResultsComponent implements OnInit {
    * @param attribute
    * @returns
    */
-  getFormattedAttributeModifier(
-    attribute: Attribute | WeaponSkill | string,
-    race: Race,
-  ): string {
-    return (
-      this._decimalPipe.transform(
-        (RACE_MODIFIERS[race][attribute] - 1) * 100,
-        '1.0-0',
-      ) ?? ''
-    )
+  getFormattedAttributeModifier(attribute: Attribute | WeaponSkill | string, race: Race): string {
+    return this._decimalPipe.transform((RACE_MODIFIERS[race][attribute] - 1) * 100, '1.0-0') ?? ''
   }
 
   /**
@@ -86,14 +74,10 @@ export class ResultsComponent implements OnInit {
    * @returns
    */
   getLockedAttributePoints(race: Race): number {
-    const lockedAttribute: Attribute | WeaponSkill =
-      this.lockedAttribute ?? this.weaponType
+    const lockedAttribute: Attribute | WeaponSkill = this.lockedAttribute ?? this.weaponType
     return (
-      this._attributesService.getRemainingPoints(
-        this.level,
-        race,
-        this.attributes,
-      ) * RACE_MODIFIERS[race][lockedAttribute]
+      this._attributesService.getRemainingPoints(this.level, race, this.attributes) *
+      RACE_MODIFIERS[race][lockedAttribute]
     )
   }
 
