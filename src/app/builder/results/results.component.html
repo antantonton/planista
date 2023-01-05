@@ -1,6 +1,10 @@
 <div fxFill fxLayout="column" fxLayoutGap="20px">
   <!-- Title -->
-  <app-title [title]="'Results'" [info]="titleTooltip" [level]="1"> </app-title>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <app-title [title]="'Results'" [info]="titleTooltip" [level]="1"> </app-title>
+
+    <mat-slide-toggle (change)="onToggleUndead($event.checked)" labelPosition="before">Show Undead</mat-slide-toggle>
+  </div>
 
   <!-- Race Accordion -->
   <mat-accordion fxFlex>

@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { HttpClientModule } from '@angular/common/http'
 
+import { FormsModule } from '@angular/forms'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatIconModule } from '@angular/material/icon'
@@ -37,17 +38,11 @@ import { AppComponent } from './app.component'
 import { BuilderComponent } from './builder/builder.component'
 import { TitleComponent } from './shared/components/title/title.component'
 import { ResultsComponent } from './builder/results/results.component'
-import { DecimalPipe, TitleCasePipe } from '@angular/common';
+import { DecimalPipe, TitleCasePipe } from '@angular/common'
 import { ItemsComponent } from './items/items.component'
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BuilderComponent,
-    TitleComponent,
-    ResultsComponent,
-    ItemsComponent
-  ],
+  declarations: [AppComponent, BuilderComponent, TitleComponent, ResultsComponent, ItemsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -56,7 +51,8 @@ import { ItemsComponent } from './items/items.component'
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
-    
+
+    FormsModule,
     ReactiveFormsModule,
     MatToolbarModule,
     MatIconModule,
@@ -84,10 +80,7 @@ import { ItemsComponent } from './items/items.component'
     MatSlideToggleModule,
     MatExpansionModule,
   ],
-  providers: [
-    TitleCasePipe,
-    DecimalPipe,
-  ],
-  bootstrap: [AppComponent]
+  providers: [TitleCasePipe, DecimalPipe],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

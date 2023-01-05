@@ -2,7 +2,7 @@ import { DecimalPipe, TitleCasePipe } from '@angular/common'
 import { Component, Input, OnInit } from '@angular/core'
 import { Attribute, ATTRIBUTE_LABELS, WeaponSkill } from 'src/app/shared/attributes/attributes'
 import { AttributesService } from 'src/app/shared/attributes/attributes.service'
-import { Race, RACE_LABELS, RACE_MODIFIERS } from 'src/app/shared/race/races'
+import { NON_UNDEAD_RACES, Race, RACES, RACE_LABELS, RACE_MODIFIERS } from 'src/app/shared/race/races'
 
 @Component({
   selector: 'app-results',
@@ -13,9 +13,10 @@ export class ResultsComponent implements OnInit {
   readonly titleTooltip = `Displays the resulting attribute points after racial modifiers for the locked attribute`
 
   readonly allAttributesAndWeaponSkills = [...Object.values(Attribute), ...Object.values(WeaponSkill)]
-  readonly races = Object.values(Race)
   readonly attributeLabels = ATTRIBUTE_LABELS
   readonly raceLabels = RACE_LABELS
+
+  races = NON_UNDEAD_RACES
 
   @Input() attributes!: {
     [attribute in Attribute | WeaponSkill]?: number
@@ -31,6 +32,10 @@ export class ResultsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
+  onToggleUndead(checked: boolean): void {
+    this.races = checked ? RACES : NON_UNDEAD_RACES
+  }
 
   /**
    * Returns the allocated points needed to achieve the given attributes for the given race

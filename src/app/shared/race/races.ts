@@ -16,6 +16,17 @@ export enum Race {
   UNDEAD_TROLL = 'UNDEAD_TROLL',
 }
 
+export const NON_UNDEAD_RACES: Race[] = [Race.ELF, Race.HUMAN, Race.GOBLIN, Race.ORC, Race.DWARF, Race.TROLL]
+export const UNDEAD_RACES: Race[] = [
+  Race.UNDEAD_ELF,
+  Race.UNDEAD_HUMAN,
+  Race.UNDEAD_GOBLIN,
+  Race.UNDEAD_ORC,
+  Race.UNDEAD_DWARF,
+  Race.UNDEAD_TROLL,
+]
+export const RACES: Race[] = [...NON_UNDEAD_RACES, ...UNDEAD_RACES]
+
 export const RACE_LABELS: { [race in Race]: string } = {
   [Race.ELF]: 'Elf',
   [Race.HUMAN]: 'Human',
