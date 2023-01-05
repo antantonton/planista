@@ -46,7 +46,7 @@ export class ResultsComponent implements OnInit {
     if (attribute === this.lockedAttribute) {
       return this.getLockedAttributePoints(race) / RACE_MODIFIERS[race][attribute]
     } else {
-      return this.attributes?.[attribute] ?? 0 / RACE_MODIFIERS[race][attribute]
+      return (this.attributes?.[attribute] ?? 0) / RACE_MODIFIERS[race][attribute]
     }
   }
 
