@@ -65,7 +65,7 @@ export class ResultsComponent implements OnInit {
    * @returns
    */
   getFormattedAttributeModifier(attribute: Attribute | WeaponSkill | string, race: Race): string {
-    return this._decimalPipe.transform((RACE_MODIFIERS[race][attribute] - 1) * 100, '1.0-0') ?? ''
+    return this._decimalPipe.transform((RACE_MODIFIERS[race][attribute] - 1) * 100, '1.0-2') ?? ''
   }
 
   /**

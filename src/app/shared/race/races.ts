@@ -134,10 +134,16 @@ const UNDEAD_ESSENCE_MODIFIERS: { [race in Race]?: { [attribute in Attribute | W
 }
 
 const getUndeadModifiers = (race: Race): { [attribute in Attribute | WeaponSkill]: number } => {
-  return _.mapValues(
-    Attribute,
-    (attribute: Attribute) => UNDEAD_RACE_MODIFIERS[attribute] * UNDEAD_ESSENCE_MODIFIERS[race][attribute],
-  )
+  return {
+    ..._.mapValues(
+      Attribute,
+      (attribute: Attribute) => UNDEAD_RACE_MODIFIERS[attribute] * UNDEAD_ESSENCE_MODIFIERS[race][attribute],
+    ),
+    ..._.mapValues(
+      WeaponSkill,
+      (weaponSkill: WeaponSkill) => UNDEAD_RACE_MODIFIERS[weaponSkill] * UNDEAD_ESSENCE_MODIFIERS[race][weaponSkill],
+    ),
+  }
 }
 
 export const RACE_MODIFIERS: { [race in Race]: { [attribute in Attribute | WeaponSkill]: number } } = {
