@@ -55,9 +55,9 @@ export class ResultsComponent implements OnInit {
    * @returns
    */
   getRaceInfoTooltip(race: Race): string {
-    const modifiers: string[] = Object.keys(this.attributes).map((attribute) => {
-      return `${this._titleCasePipe.transform(this.attributeLabels[attribute])}: ${this.getFormattedAttributeModifier(
-        attribute,
+    const modifiers: string[] = Object.keys(RACE_MODIFIERS[race]).map((attribue) => {
+      return `${this._titleCasePipe.transform(this.attributeLabels[attribue])}: ${this.getFormattedAttributeModifier(
+        attribue,
         race,
       )}%`
     })
