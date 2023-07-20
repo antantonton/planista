@@ -164,7 +164,7 @@ export const RACE_MODIFIERS: { [race in Race]: { [attribute in Attribute | Weapo
     [Attribute.ENDURANCE]: 1.3,
     [Attribute.DODGE]: 1.55,
     [Attribute.INITIATIVE]: 1.25,
-    [WeaponSkill.SPEAR]: 1.3,
+    [WeaponSkill.SPEAR]: 1.25,
     [WeaponSkill.MACE]: 1,
     [WeaponSkill.SWORD]: 1.15,
     [WeaponSkill.AXE]: 1,
@@ -205,7 +205,7 @@ export const RACE_MODIFIERS: { [race in Race]: { [attribute in Attribute | Weapo
   [Race.ORC]: {
     [Attribute.STAMINA]: 1.2,
     [Attribute.STRENGTH]: 1.3,
-    [Attribute.ENDURANCE]: 0.9,
+    [Attribute.ENDURANCE]: 1,
     [Attribute.DODGE]: 0.7,
     [Attribute.INITIATIVE]: 0.95,
     [WeaponSkill.SPEAR]: 0.95,
@@ -218,7 +218,7 @@ export const RACE_MODIFIERS: { [race in Race]: { [attribute in Attribute | Weapo
   },
   [Race.DWARF]: {
     [Attribute.STAMINA]: 1.3,
-    [Attribute.STRENGTH]: 1.2,
+    [Attribute.STRENGTH]: 1.15,
     [Attribute.ENDURANCE]: 0.9,
     [Attribute.DODGE]: 0.6,
     [Attribute.INITIATIVE]: 0.85,
