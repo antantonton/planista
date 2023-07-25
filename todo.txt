@@ -1,2 +1,2 @@
+- selected stat in allocated stats popup
 - Error handling (lanista api), empty state
-- hosting/auto-deploy
