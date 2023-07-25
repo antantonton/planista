@@ -1,0 +1,8 @@
+<div fxLayout="column" fxLayoutGap="12px">
+  <app-race-result
+    *ngFor="let race of races"
+    [config]="config"
+    [race]="race"
+    [plannerForm]="plannerForm"
+  ></app-race-result>
+</div>

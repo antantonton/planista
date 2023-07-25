@@ -1,0 +1,24 @@
+<div fxLayout="column" fxLayoutGap="4px">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <!-- Label -->
+    <span class="text-lg">{{ label }}</span>
+
+    <div fxLayout="row" fxLayoutGap="8px">
+      <!-- Action -->
+      <p-button
+        [icon]="actionIcon"
+        styleClass="p-button-rounded p-button-text p-button-danger"
+        (click)="onActionClicked()"
+        [pTooltip]="actionTooltip"
+        tooltipPosition="left"
+        [showDelay]="150"
+      ></p-button>
+
+      <!-- Info -->
+      <app-info-button *ngIf="infoText" [label]="label" [text]="[infoText]"></app-info-button>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <p-divider styleClass="mt-0 mb-0"></p-divider>
+</div>

@@ -1,0 +1,18 @@
+<div [pTooltip]="text.join('\n')" tooltipPosition="left" [showDelay]="150">
+  <p-button [icon]="icon" styleClass="p-button-rounded p-button-text" (click)="showDialog()"></p-button>
+</div>
+
+<p-dialog
+  header="Header"
+  [modal]="true"
+  [dismissableMask]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [header]="label"
+  [(visible)]="dialogVisible"
+  [style]="{ width: '100%', 'max-width': '500px' }"
+>
+  <div fxLayout="column">
+    <span *ngFor="let row of text">{{ row }}</span>
+  </div>
+</p-dialog>

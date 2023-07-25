@@ -1,0 +1,23 @@
+:host ::ng-deep .stat-input {
+  .p-inputnumber {
+    width: 100% !important;
+  }
+
+  .p-inputnumber-button {
+    width: 24px !important;
+  }
+}
+
+:host ::ng-deep .no-border-radius-left {
+  .p-inputnumber-input {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+}
+
+:host ::ng-deep .no-border-radius-right {
+  .p-inputnumber-input {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+}

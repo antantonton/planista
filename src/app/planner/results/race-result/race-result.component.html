@@ -1,0 +1,23 @@
+<div class="race-result-row" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px">
+  <!-- Modifiers -->
+  <app-info-button
+    [icon]="'pi pi-percentage'"
+    [label]="raceLabel + ' - Modifiers'"
+    [text]="modifiersText"
+  ></app-info-button>
+  <!-- Label -->
+  <span class="text-md">{{ raceLabel }}</span>
+
+  <!-- Spacer -->
+  <div fxFlex></div>
+
+  <!-- Points -->
+  <span class="text-md">{{ selectedAttributePoints | number : '1.0-0' }} {{ selectedAttributeName | label }}</span>
+
+  <!-- Allocated Points -->
+  <app-info-button
+    [icon]="'pi pi-sliders-h'"
+    [label]="raceLabel + ' - Allocated Points'"
+    [text]="allocatedPointsText"
+  ></app-info-button>
+</div>
