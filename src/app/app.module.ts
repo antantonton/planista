@@ -26,7 +26,8 @@ import { LevelToPointsPipe } from './shared/pipes/level-to-points.pipe'
 import { DividerHeaderComponent } from './shared/components/divider-header/divider-header.component'
 import { ResultsComponent } from './planner/results/results.component'
 import { RaceResultComponent } from './planner/results/race-result/race-result.component'
-import { InfoButtonComponent } from './shared/components/info-button/info-button.component'
+import { InfoButtonComponent } from './shared/components/info-button/info-button.component';
+import { EquipmentComponent } from './planner/equipment/equipment.component'
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { InfoButtonComponent } from './shared/components/info-button/info-button
     ResultsComponent,
     RaceResultComponent,
     InfoButtonComponent,
+    EquipmentComponent,
   ],
   imports: [
     BrowserModule,

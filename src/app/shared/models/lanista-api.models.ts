@@ -6,11 +6,35 @@ export enum AttributeType {
   WEAPON_SKILL = 'WEAPON_SKILL',
 }
 
+export type ArmorSlot = {
+  name: string
+  type: number
+}
+
+export type Equipment = {
+  id: number
+  type: number
+  name: string
+  // bonuses: EquipmentBonuses
+}
+
+export type EquipmentBonuses = {
+  stats: EquipmentBonus[]
+  weapon_skills: EquipmentBonus[]
+}
+
+export type EquipmentBonus = {
+  type: number
+  value: number
+}
+
 export type Config = {
   races: Race[]
   stats: Stat[]
   weapon_skills: WeaponSkill[]
   grouped_stats: GroupedStats
+  blockable_armor_types: ArmorTypes
+  trinket_armor_types: ArmorTypes
 }
 
 export type GroupedStats = {
@@ -45,4 +69,8 @@ export type WeaponSkill = {
   name: string
   type: number
   visible: boolean
+}
+
+export type ArmorTypes = {
+  [name: string]: number
 }

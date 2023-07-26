@@ -1,0 +1,5 @@
+:host ::ng-deep .equipment-selector {
+  .p-dropdown {
+    width: 100% !important;
+  }
+}

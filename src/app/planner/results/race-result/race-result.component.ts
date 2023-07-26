@@ -42,7 +42,7 @@ export class RaceResultComponent implements OnInit, OnDestroy {
   private _refreshDisplayData(): void {
     this.raceLabel = this._labelPipe.transform(this.race.name)
     this.modifiersText = this._lanistaHelpersService.getModifiersLabelForRaceFromConfig(this.race, this.config)
-    this.allocatedPointsText = this._lanistaHelpersService.getAllocatedPointsLabelforRace(this.race, this.plannerForm)
+    this.allocatedPointsText = this._lanistaHelpersService.getAllocatedPointsLabelForRace(this.race, this.plannerForm)
     this.selectedAttributeName = this._lanistaHelpersService.getNameForAttribute(
       this.plannerForm.controls.selectedAttribute.controls.attributeType.value,
       this.plannerForm.controls.selectedAttribute.controls.type.value,

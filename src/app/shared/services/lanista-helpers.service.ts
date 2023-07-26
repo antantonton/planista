@@ -1,14 +1,16 @@
 import { Injectable, inject } from '@angular/core'
 import {
+  ArmorSlot,
   AttributeType,
   Config,
+  Equipment,
   POINTS_PER_LEVEL,
   Race,
   STARTING_POINTS,
   Stat,
   WeaponSkill,
 } from '../models/lanista-api.models'
-import { sortBy } from 'lodash'
+import { groupBy, sortBy } from 'lodash'
 import { LabelPipe } from '../pipes/label.pipe'
 import { DecimalPipe } from '@angular/common'
 import { PlannerForm } from 'src/app/planner/planner.models'
@@ -47,6 +49,24 @@ export class LanistaHelpersService {
     return sortBy(config.races, (race) => race.type)
   }
 
+  getArmorSlotsFromConfig(config: Config): ArmorSlot[] {
+    return sortBy(
+      Object.entries(config.blockable_armor_types).map(([key, value]) => {
+        return { name: key, type: value }
+      }),
+      (slot) => slot.type,
+    )
+  }
+
+  getTrinketSlotsFromConfig(config: Config): ArmorSlot[] {
+    return sortBy(
+      Object.entries(config.trinket_armor_types).map(([key, value]) => {
+        return { name: key, type: value }
+      }),
+      (slot) => slot.type,
+    )
+  }
+
   getPointsForLevel(level: number): number {
     return STARTING_POINTS + POINTS_PER_LEVEL * (level - 1)
   }
@@ -65,7 +85,7 @@ export class LanistaHelpersService {
     }
   }
 
-  getAllocatedPointsLabelforRace(race: Race, plannerForm: PlannerForm): string[] {
+  getAllocatedPointsLabelForRace(race: Race, plannerForm: PlannerForm): string[] {
     const pointsLabels: string[] = []
 
     // Stats
@@ -75,9 +95,12 @@ export class LanistaHelpersService {
     ]) {
       const modifier =
         race.bonuses.stats.find((statModifier) => statModifier.type === statForm.controls.type.value)?.value ?? 1
-      const points = statForm.controls.value.value ?? 0
+
       const nameLabel = this._labelPipe.transform(statForm.controls.name.value)
-      const pointsLabel = this._decimalPipe.transform(points / modifier, '1.0-0')
+      const desiredPoints = statForm.controls.value.value ?? 0
+      const isSelected = plannerForm.controls.selectedAttribute.controls.type.value === statForm.controls.type.value
+      const points = isSelected ? this._getRemainingPoints(race, plannerForm) : Math.ceil(desiredPoints / modifier)
+      const pointsLabel = this._decimalPipe.transform(points, '1.0-0')
       pointsLabels.push(`${nameLabel}: ${pointsLabel}`)
     }
 
@@ -85,13 +108,16 @@ export class LanistaHelpersService {
     pointsLabels.push('‎')
 
     // Weapon skills
-    for (const weaponSkillForm of plannerForm.controls.weaponSkills.controls) {
+    for (const statForm of plannerForm.controls.weaponSkills.controls) {
       const modifier =
-        race.bonuses.weapon_skills.find((statModifier) => statModifier.type === weaponSkillForm.controls.type.value)
-          ?.value ?? 1
-      const points = weaponSkillForm.controls.value.value ?? 0
-      const nameLabel = this._labelPipe.transform(weaponSkillForm.controls.name.value)
-      const pointsLabel = this._decimalPipe.transform(points / modifier, '1.0-0')
+        race.bonuses.weapon_skills.find((statModifier) => statModifier.type === statForm.controls.type.value)?.value ??
+        1
+
+      const nameLabel = this._labelPipe.transform(statForm.controls.name.value)
+      const desiredPoints = statForm.controls.value.value ?? 0
+      const isSelected = plannerForm.controls.selectedAttribute.controls.type.value === statForm.controls.type.value
+      const points = isSelected ? this._getRemainingPoints(race, plannerForm) : Math.ceil(desiredPoints / modifier)
+      const pointsLabel = this._decimalPipe.transform(points, '1.0-0')
       pointsLabels.push(`${nameLabel}: ${pointsLabel}`)
     }
 
@@ -156,7 +182,7 @@ export class LanistaHelpersService {
       const modifier =
         race.bonuses.stats.find((statModifier) => statModifier.type === statForm.controls.type.value)?.value ?? 1
       const points = statForm.controls.value.value ?? 0
-      spentPoints = spentPoints + points / modifier
+      spentPoints = spentPoints + Math.ceil(points / modifier)
     }
 
     // Weapon skills
@@ -165,7 +191,7 @@ export class LanistaHelpersService {
         race.bonuses.weapon_skills.find((statModifier) => statModifier.type === weaponSkillForm.controls.type.value)
           ?.value ?? 1
       const points = weaponSkillForm.controls.value.value ?? 0
-      spentPoints = spentPoints + points / modifier
+      spentPoints = spentPoints + Math.ceil(points / modifier)
     }
 
     // Return the difference between total and spent points

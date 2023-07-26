@@ -19,13 +19,13 @@
   class="p-3 lg:p-5"
   fxLayout="row"
   fxLayout.lt-md="column"
-  fxLayoutGap="32px"
+  fxLayoutGap="24px"
   [formGroup]="plannerForm"
 >
   <!-- Desired Stats -->
-  <div fxFlex fxLayout="column" fxLayoutGap="48px">
+  <div fxFlex fxLayout="column" fxLayoutGap="24px">
     <div fxLayout="column" fxLayoutGap="24px">
-      <!-- Header -->
+      <!-- Stats Header -->
       <app-divider-header
         [label]="'Desired Stats'"
         [infoText]="statsInfoText"
@@ -90,6 +90,12 @@
           (onSelected)="onStatSelected(AttributeType.WEAPON_SKILL, weaponSkillForm)"
         ></app-stat-input>
       </div>
+    </div>
+
+    <!-- Equipment -->
+    <div *ngIf="config" fxFlex fxLayout="column" fxLayoutGap="32px">
+      <app-divider-header [label]="'Equipment'" [infoText]="equipmentInfoText"></app-divider-header>
+      <app-equipment [plannerForm]="plannerForm" [config]="config"></app-equipment>
     </div>
   </div>
 

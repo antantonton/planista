@@ -1,2 +1,11 @@
-- selected stat in allocated stats popup
+General
+- Refactor lanista-helpers.service, move form related functions to separate service
 - Error handling (lanista api), empty state
+- Move stat related functionality to child component of planner
+- Move self created types from lanista models to separate file
+
+Equipment
+- Get equipment bonuses from API (waiting for API implementation)
+- Make equipment section toggle-able
+- Add equipment bonuses to calculation
+- Add reset button for equipment

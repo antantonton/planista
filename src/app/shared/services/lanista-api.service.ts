@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Config } from '../models/lanista-api.models'
+import { Config, Equipment } from '../models/lanista-api.models'
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class LanistaApiService {
     return fetch('https://beta.lanista.se/api/external/items/weapons/all').then((response) => response.json())
   }
 
-  async getArmors(): Promise<unknown> {
+  async getArmors(): Promise<Equipment[]> {
     return fetch('https://beta.lanista.se/api/external/items/armors/all').then((response) => response.json())
   }
 

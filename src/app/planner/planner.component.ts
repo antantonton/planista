@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { LanistaApiService } from '../shared/services/lanista-api.service'
 import { FormArray, FormControl, FormGroup } from '@angular/forms'
-import { PlannerForm, StatForm } from './planner.models'
+import { EquipmentForm, PlannerForm, StatForm } from './planner.models'
 import { LanistaHelpersService } from '../shared/services/lanista-helpers.service'
-import { AttributeType, Config, Stat } from '../shared/models/lanista-api.models'
+import { ArmorSlot, AttributeType, Config, Equipment, Stat } from '../shared/models/lanista-api.models'
 import { Subscription } from 'rxjs'
 
 @Component({
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./planner.component.css'],
 })
 export class PlannerComponent implements OnInit, OnDestroy {
-  readonly githubLink = 'https://github.com/antantonton/planista2'
+  readonly githubLink = 'https://github.com/antantonton/planista'
   readonly AttributeType = AttributeType
   private readonly _subscriptions = new Subscription()
   private readonly _lanistaApiService = inject(LanistaApiService)
@@ -21,6 +21,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
 
   readonly statsInfoText = `Enter the desired stat points you want to have after racial modifiers have been applied.\nRemaining points will be allocated to the selected stat for comparison.`
   readonly resultsInfoText = `Displays the resulting stat points (after racial modifiers) for the selected stat.`
+  readonly equipmentInfoText = `TODO`
 
   readonly plannerForm: PlannerForm = new FormGroup({
     level: new FormControl(this._defaultLevel, { nonNullable: true }),
@@ -31,6 +32,8 @@ export class PlannerComponent implements OnInit, OnDestroy {
     staminaStats: new FormArray<StatForm>([]),
     agilityStats: new FormArray<StatForm>([]),
     weaponSkills: new FormArray<StatForm>([]),
+    armors: new FormArray<EquipmentForm>([]),
+    trinkets: new FormArray<EquipmentForm>([]),
   })
 
   config: Config | undefined
@@ -51,6 +54,14 @@ export class PlannerComponent implements OnInit, OnDestroy {
       this._initializeAttributeFormArray(
         this.plannerForm.controls.weaponSkills,
         this._lanistaHelpersService.getWeaponSkillsFromConfig(config),
+      )
+      this._initializeEquipmentFormArray(
+        this.plannerForm.controls.armors,
+        this._lanistaHelpersService.getArmorSlotsFromConfig(config),
+      )
+      this._initializeEquipmentFormArray(
+        this.plannerForm.controls.trinkets,
+        this._lanistaHelpersService.getTrinketSlotsFromConfig(config),
       )
       this._toggleAttributeForms()
     })
@@ -80,6 +91,19 @@ export class PlannerComponent implements OnInit, OnDestroy {
           name: new FormControl(stat.name, { nonNullable: true }),
           type: new FormControl(stat.type, { nonNullable: true }),
           value: new FormControl<number | null>(null),
+        }),
+      )
+    }
+  }
+
+  private _initializeEquipmentFormArray(formArray: FormArray<EquipmentForm>, armorSlots: ArmorSlot[]): void {
+    formArray.clear()
+    for (const armorSlot of armorSlots) {
+      formArray.push(
+        new FormGroup({
+          name: new FormControl(armorSlot.name, { nonNullable: true }),
+          type: new FormControl(armorSlot.type, { nonNullable: true }),
+          equipment: new FormControl<Equipment | null>(null),
         }),
       )
     }
@@ -128,6 +152,5 @@ export class PlannerComponent implements OnInit, OnDestroy {
     this.plannerForm.controls.agilityStats.controls.forEach((form) => form.controls.value.setValue(null))
     this.plannerForm.controls.weaponSkills.controls.forEach((form) => form.controls.value.setValue(null))
     this._toggleAttributeForms()
-    this.plannerForm.markAsPristine()
   }
 }

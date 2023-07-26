@@ -1,0 +1,38 @@
+<div fxLayout.lt-md="column" fxLayout="row" fxLayoutGap="32px">
+  <!-- Armor -->
+  <div fxFlex fxLayout="column" fxLayoutGap="32px">
+    <ng-container
+      *ngFor="let form of plannerForm.controls.armors.controls"
+      [ngTemplateOutlet]="equipmentSelector"
+      [ngTemplateOutletContext]="{ form: form }"
+    ></ng-container>
+  </div>
+
+  <!-- Trinkets -->
+  <div fxFlex fxLayout="column" fxLayoutGap="32px">
+    <ng-container
+      *ngFor="let form of plannerForm.controls.trinkets.controls"
+      [ngTemplateOutlet]="equipmentSelector"
+      [ngTemplateOutletContext]="{ form: form }"
+    ></ng-container>
+  </div>
+</div>
+
+<ng-template #equipmentSelector let-form="form">
+  <span class="p-float-label w-full equipment-selector" [formGroup]="form">
+    <p-dropdown
+      inputId="selector"
+      formControlName="equipment"
+      [showClear]="true"
+      [options]="armorsByType[form.controls.type.value]"
+      optionLabel="name"
+      dataKey="id"
+      scrollHeight="200px"
+      [autoDisplayFirst]="false"
+      [filter]="true"
+      filterBy="name"
+    >
+    </p-dropdown>
+    <label for="selector">{{ form.controls.name.value | label }}</label>
+  </span>
+</ng-template>
