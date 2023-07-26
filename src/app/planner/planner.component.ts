@@ -21,7 +21,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
 
   readonly statsInfoText = `Enter the desired stat points you want to have after racial modifiers have been applied.\nRemaining points will be allocated to the selected stat for comparison.`
   readonly resultsInfoText = `Displays the resulting stat points (after racial modifiers) for the selected stat.`
-  readonly equipmentInfoText = `TODO`
+  readonly equipmentInfoText = `Add equipment to see how it affects your stats. Bonuses from equipment are used to reach the desired stat points.`
 
   readonly plannerForm: PlannerForm = new FormGroup({
     level: new FormControl(this._defaultLevel, { nonNullable: true }),
@@ -32,6 +32,8 @@ export class PlannerComponent implements OnInit, OnDestroy {
     staminaStats: new FormArray<StatForm>([]),
     agilityStats: new FormArray<StatForm>([]),
     weaponSkills: new FormArray<StatForm>([]),
+    mainHand: new FormControl<Equipment | null>(null),
+    offHand: new FormControl<Equipment | null>(null),
     armors: new FormArray<EquipmentForm>([]),
     trinkets: new FormArray<EquipmentForm>([]),
   })

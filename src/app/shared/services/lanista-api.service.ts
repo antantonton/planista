@@ -15,7 +15,7 @@ export class LanistaApiService {
     return fetch(' https://beta.lanista.se/api/races').then((response) => response.json())
   }
 
-  async getWeapons(): Promise<unknown> {
+  async getWeapons(): Promise<Equipment[]> {
     return fetch('https://beta.lanista.se/api/external/items/weapons/all').then((response) => response.json())
   }
 

@@ -5,6 +5,7 @@ General
 - Move self created types from lanista models to separate file
 
 Equipment
+- Add weapon selectors
 - Get equipment bonuses from API (waiting for API implementation)
 - Make equipment section toggle-able
 - Add equipment bonuses to calculation

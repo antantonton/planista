@@ -20,12 +20,14 @@ export class EquipmentComponent implements OnInit {
   armorSlots: ArmorSlot[] = []
 
   armorsByType: { [type: number]: Equipment[] } = {}
+  weapons: Equipment[] = []
 
   ngOnInit(): void {
     this.armorSlots = this._lanistaHelpersService.getArmorSlotsFromConfig(this.config)
 
     this._lanistaApiService.getWeapons().then((weapons) => {
       console.log('Weapons from Lanista API: ', weapons)
+      this.weapons = weapons
     })
 
     this._lanistaApiService.getArmors().then((armors) => {

@@ -10,6 +10,10 @@ export type PlannerForm = FormGroup<{
   staminaStats: FormArray<StatForm>
   agilityStats: FormArray<StatForm>
   weaponSkills: FormArray<StatForm>
+
+  // Equipment
+  mainHand: FormControl<Equipment | null>
+  offHand: FormControl<Equipment | null>
   armors: FormArray<EquipmentForm>
   trinkets: FormArray<EquipmentForm>
 }>
