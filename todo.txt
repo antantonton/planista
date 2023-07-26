@@ -10,3 +10,4 @@ Equipment
 - Make equipment section toggle-able
 - Add equipment bonuses to calculation
 - Add reset button for equipment
+- equipment selectors should not grow beyond 50%
