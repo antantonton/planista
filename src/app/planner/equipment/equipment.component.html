@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutGap="32px" style="max-width: 100%">
-  <div fxLayout="row" fxLayoutGap="32px" [formGroup]="plannerForm">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="32px" [formGroup]="plannerForm">
     <!-- Main Hand -->
     <div fxFlex="0 0 calc(50% - 16px)">
       <ng-container
@@ -77,7 +77,7 @@
       scrollHeight="300px"
       [virtualScroll]="true"
       [virtualScrollItemSize]="56"
-      [panelStyle]="{ width: '400px' }"
+      [panelStyle]="{ width: '400px', 'max-width': '90vw' }"
       [autoDisplayFirst]="false"
       [filter]="true"
       filterBy="name"
