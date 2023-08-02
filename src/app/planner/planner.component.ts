@@ -81,8 +81,12 @@ export class PlannerComponent implements OnInit, OnDestroy {
     this._toggleAttributeForms()
   }
 
-  onResetClick(): void {
-    this._resetForm()
+  onResetStatsClick(): void {
+    this._resetStatForms()
+  }
+
+  onResetEquipmentClick(): void {
+    this._resetEquipmentForms()
   }
 
   private _initializeAttributeFormArray(formArray: FormArray<StatForm>, stats: Stat[]): void {
@@ -142,9 +146,9 @@ export class PlannerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Resets the form values to their initial state
+   * Resets the stat form values to their initial state
    */
-  private _resetForm(): void {
+  private _resetStatForms(): void {
     this.plannerForm.controls.level.setValue(this._defaultLevel)
     this.plannerForm.controls.selectedAttribute.setValue({
       attributeType: AttributeType.STAT,
@@ -154,5 +158,15 @@ export class PlannerComponent implements OnInit, OnDestroy {
     this.plannerForm.controls.agilityStats.controls.forEach((form) => form.controls.value.setValue(null))
     this.plannerForm.controls.weaponSkills.controls.forEach((form) => form.controls.value.setValue(null))
     this._toggleAttributeForms()
+  }
+
+  /**
+   * Resets the equipment form values to their initial state
+   */
+  private _resetEquipmentForms(): void {
+    this.plannerForm.controls.mainHand.setValue(null)
+    this.plannerForm.controls.offHand.setValue(null)
+    this.plannerForm.controls.armors.controls.forEach((form) => form.controls.equipment.setValue(null))
+    this.plannerForm.controls.trinkets.controls.forEach((form) => form.controls.equipment.setValue(null))
   }
 }

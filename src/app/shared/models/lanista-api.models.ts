@@ -15,6 +15,11 @@ export type Equipment = {
   id: number
   type: number
   name: string
+  is_weapon: boolean
+  is_two_handed: boolean
+  is_shield: boolean
+  can_dual_wield: boolean
+  is_ranged: boolean
   // bonuses: EquipmentBonuses
 }
 

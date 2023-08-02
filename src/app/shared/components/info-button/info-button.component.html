@@ -1,4 +1,4 @@
-<div [pTooltip]="text.join('\n')" tooltipPosition="left" [showDelay]="150">
+<div [pTooltip]="text.join('\n')" [tooltipPosition]="tooltipPosition" [showDelay]="150">
   <p-button [icon]="icon" styleClass="p-button-rounded p-button-text" (click)="showDialog()"></p-button>
 </div>
 
@@ -9,6 +9,7 @@
   [draggable]="false"
   [resizable]="false"
   [header]="label"
+  appendTo="body"
   [(visible)]="dialogVisible"
   [style]="{ width: '100%', 'max-width': '500px' }"
 >

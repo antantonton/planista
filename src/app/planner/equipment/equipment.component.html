@@ -1,86 +1,115 @@
-<div fxLayout="column" fxLayoutGap="32px">
-  <!-- Weapons -->
-  <div fxFlex fxLayout="column" fxLayoutGap="32px">
-    <app-divider-header [label]="'Weapons'"></app-divider-header>
+<div fxLayout="column" fxLayoutGap="32px" style="max-width: 100%">
+  <div fxLayout="row" fxLayoutGap="32px" [formGroup]="plannerForm">
+    <!-- Main Hand -->
+    <div fxFlex="0 0 calc(50% - 16px)">
+      <ng-container
+        [ngTemplateOutlet]="equipmentSelector"
+        [ngTemplateOutletContext]="{
+          formGroup: plannerForm,
+          formControlName: 'mainHand',
+          options: mainHandWeapons,
+          label: 'Main Hand'
+        }"
+      ></ng-container>
+    </div>
 
-    <div fxLayout="row" fxLayoutGap="32px" [formGroup]="plannerForm">
-      <!-- Main Hand -->
-      <span class="p-float-label w-full equipment-selector">
-        <p-dropdown
-          inputId="selector"
-          formControlName="mainHand"
-          [showClear]="true"
-          [options]="weapons"
-          optionLabel="name"
-          dataKey="id"
-          scrollHeight="200px"
-          [autoDisplayFirst]="false"
-          [filter]="true"
-          filterBy="name"
-        >
-        </p-dropdown>
-        <label for="selector">Main Hand</label>
-      </span>
-
-      <!-- Off Hand -->
-      <span class="p-float-label w-full equipment-selector">
-        <p-dropdown
-          inputId="selector"
-          formControlName="offHand"
-          [showClear]="true"
-          [options]="weapons"
-          optionLabel="name"
-          dataKey="id"
-          scrollHeight="200px"
-          [autoDisplayFirst]="false"
-          [filter]="true"
-          filterBy="name"
-        >
-        </p-dropdown>
-        <label for="selector">Off Hand</label>
-      </span>
+    <!-- Off Hand -->
+    <div fxFlex="0 0 calc(50% - 16px)">
+      <ng-container
+        [ngTemplateOutlet]="equipmentSelector"
+        [ngTemplateOutletContext]="{
+          formGroup: plannerForm,
+          formControlName: 'offHand',
+          options: offHandWeapons,
+          label: 'Off Hand'
+        }"
+      ></ng-container>
     </div>
   </div>
 
-  <div fxLayout.lt-md="column" fxLayout="row" fxLayoutGap="32px">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="32px">
     <!-- Armor -->
-    <div fxFlex fxLayout="column" fxLayoutGap="32px">
-      <app-divider-header [label]="'Armor'"></app-divider-header>
+    <div fxFlex="0 0 calc(50% - 16px)" fxLayout="column" fxLayoutGap="32px">
       <ng-container
         *ngFor="let form of plannerForm.controls.armors.controls"
-        [ngTemplateOutlet]="armorSelector"
-        [ngTemplateOutletContext]="{ form: form }"
+        [ngTemplateOutlet]="equipmentSelector"
+        [ngTemplateOutletContext]="{
+          formGroup: form,
+          formControlName: 'equipment',
+          options: armorsByType[form.controls.type.value],
+          label: form.controls.name.value
+        }"
       ></ng-container>
     </div>
 
     <!-- Trinkets -->
-    <div fxFlex fxLayout="column" fxLayoutGap="32px">
-      <app-divider-header [label]="'Items'"></app-divider-header>
+    <div fxFlex="0 0 calc(50% - 16px)" fxLayout="column" fxLayoutGap="32px">
       <ng-container
         *ngFor="let form of plannerForm.controls.trinkets.controls"
-        [ngTemplateOutlet]="armorSelector"
-        [ngTemplateOutletContext]="{ form: form }"
+        [ngTemplateOutlet]="equipmentSelector"
+        [ngTemplateOutletContext]="{
+          formGroup: form,
+          formControlName: 'equipment',
+          options: armorsByType[form.controls.type.value],
+          label: form.controls.name.value
+        }"
       ></ng-container>
     </div>
   </div>
 </div>
 
-<!-- Armor Selector -->
-<ng-template #armorSelector let-form="form">
-  <span class="p-float-label w-full equipment-selector" [formGroup]="form">
+<!-- Equipment Selector -->
+<ng-template
+  #equipmentSelector
+  let-formGroup="formGroup"
+  let-formControlName="formControlName"
+  let-options="options"
+  let-label="label"
+>
+  <span [formGroup]="formGroup" class="p-float-label equipment-selector">
     <p-dropdown
       inputId="selector"
-      formControlName="equipment"
+      [formControlName]="formControlName"
       [showClear]="true"
-      [options]="armorsByType[form.controls.type.value]"
+      [options]="options"
       optionLabel="name"
       dataKey="id"
-      scrollHeight="200px"
+      scrollHeight="300px"
+      [virtualScroll]="true"
+      [virtualScrollItemSize]="56"
+      [panelStyle]="{ width: '400px' }"
       [autoDisplayFirst]="false"
       [filter]="true"
       filterBy="name"
     >
+      <!-- Selected Label -->
+      <ng-template let-item pTemplate="selectedItem">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+          <app-info-button
+            [icon]="'pi pi-percentage'"
+            [label]="item.name"
+            [text]="item.modifiers"
+            [tooltipPosition]="'top'"
+            (click)="$event.stopPropagation()"
+          ></app-info-button>
+          <div>{{ item.name }}</div>
+        </div>
+      </ng-template>
+
+      <!-- Option Label -->
+      <ng-template let-item pTemplate="item">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div>{{ item.name }}</div>
+          <app-info-button
+            [icon]="'pi pi-percentage'"
+            [label]="item.name"
+            [text]="item.modifiers"
+            [tooltipPosition]="'right'"
+            (click)="$event.stopPropagation()"
+          ></app-info-button>
+        </div>
+      </ng-template>
     </p-dropdown>
-    <label for="selector">{{ form.controls.name.value | label }}</label>
+    <label for="selector">{{ label | label }}</label>
   </span>
 </ng-template>

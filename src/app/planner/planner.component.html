@@ -23,7 +23,7 @@
   [formGroup]="plannerForm"
 >
   <!-- Desired Stats -->
-  <div fxFlex fxLayout="column" fxLayoutGap="24px">
+  <div fxFlex="0 0 50" fxLayout="column" fxLayoutGap="24px">
     <div fxLayout="column" fxLayoutGap="24px">
       <!-- Stats Header -->
       <app-divider-header
@@ -31,7 +31,7 @@
         [infoText]="statsInfoText"
         [actionIcon]="'pi pi-undo'"
         [actionTooltip]="'Reset'"
-        (actionClick)="onResetClick()"
+        (actionClick)="onResetStatsClick()"
       ></app-divider-header>
 
       <!-- Level -->
@@ -93,8 +93,14 @@
     </div>
 
     <!-- Equipment -->
-    <div *ngIf="config" fxFlex fxLayout="column" fxLayoutGap="32px">
-      <!-- <app-divider-header [label]="'Equipment'" [infoText]="equipmentInfoText"></app-divider-header> -->
+    <div *ngIf="config" fxFlex="0 0 50" fxLayout="column" fxLayoutGap="32px">
+      <app-divider-header
+        [label]="'Equipment'"
+        [infoText]="equipmentInfoText"
+        [actionIcon]="'pi pi-undo'"
+        [actionTooltip]="'Reset'"
+        (actionClick)="onResetEquipmentClick()"
+      ></app-divider-header>
       <app-equipment [plannerForm]="plannerForm" [config]="config"></app-equipment>
     </div>
   </div>

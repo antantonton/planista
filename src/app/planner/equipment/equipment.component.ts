@@ -5,6 +5,8 @@ import { LanistaApiService } from 'src/app/shared/services/lanista-api.service'
 import { LanistaHelpersService } from 'src/app/shared/services/lanista-helpers.service'
 import { groupBy } from 'lodash'
 
+type EqipmentDisplayObject = Equipment & { modifiers: string[] }
+
 @Component({
   selector: 'app-equipment',
   templateUrl: './equipment.component.html',
@@ -19,20 +21,39 @@ export class EquipmentComponent implements OnInit {
 
   armorSlots: ArmorSlot[] = []
 
-  armorsByType: { [type: number]: Equipment[] } = {}
-  weapons: Equipment[] = []
+  armorsByType: { [type: number]: EqipmentDisplayObject[] } = {}
+  mainHandWeapons: EqipmentDisplayObject[] = []
+  offHandWeapons: EqipmentDisplayObject[] = []
 
   ngOnInit(): void {
     this.armorSlots = this._lanistaHelpersService.getArmorSlotsFromConfig(this.config)
 
     this._lanistaApiService.getWeapons().then((weapons) => {
       console.log('Weapons from Lanista API: ', weapons)
-      this.weapons = weapons
+      this.mainHandWeapons = this._mapEquipmentToDisplayObject(
+        this._lanistaHelpersService.getMainHandWeaponsFromWeapons(weapons),
+      )
+      this.offHandWeapons = this._mapEquipmentToDisplayObject(
+        this._lanistaHelpersService.getOffHandWeaponsFromWeapons(weapons),
+      )
     })
 
     this._lanistaApiService.getArmors().then((armors) => {
       console.log('Armors from Lanista API: ', armors)
-      this.armorsByType = groupBy(armors, (armor) => armor.type)
+      this.armorsByType = groupBy(this._mapEquipmentToDisplayObject(armors), (armor) => armor.type)
+    })
+
+    // this._lanistaApiService.getConsumables().then((consumables) => {
+    //   console.log('Consumables from Lanista API: ', consumables)
+    // })
+  }
+
+  private _mapEquipmentToDisplayObject(equipment: Equipment[]): EqipmentDisplayObject[] {
+    return equipment.map((e) => {
+      return {
+        ...e,
+        modifiers: this._lanistaHelpersService.getModifiersLabelForEquipmentFromConfig(e, this.config),
+      }
     })
   }
 }
