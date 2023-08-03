@@ -15,22 +15,18 @@ export type Equipment = {
   id: number
   type: number
   name: string
+  bonuses: EquipmentBonus[]
   is_weapon: boolean
   is_two_handed: boolean
   is_shield: boolean
   can_dual_wield: boolean
   is_ranged: boolean
-  // bonuses: EquipmentBonuses
-}
-
-export type EquipmentBonuses = {
-  stats: EquipmentBonus[]
-  weapon_skills: EquipmentBonus[]
 }
 
 export type EquipmentBonus = {
-  type: number
-  value: number
+  type: string
+  additive: number
+  multiplier: number
 }
 
 export type Config = {

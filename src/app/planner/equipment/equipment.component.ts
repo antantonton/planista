@@ -52,7 +52,7 @@ export class EquipmentComponent implements OnInit {
     return equipment.map((e) => {
       return {
         ...e,
-        modifiers: this._lanistaHelpersService.getModifiersLabelForEquipmentFromConfig(e, this.config),
+        modifiers: this._lanistaHelpersService.getModifiersLabelForEquipmentFromConfig(e),
       }
     })
   }

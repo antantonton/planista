@@ -147,8 +147,14 @@ export class LanistaHelpersService {
     return modifierLabels
   }
 
-  getModifiersLabelForEquipmentFromConfig(equipment: Equipment, config: Config): string[] {
-    const modifierLabels: string[] = ['TODO']
+  getModifiersLabelForEquipmentFromConfig(equipment: Equipment): string[] {
+    const modifierLabels: string[] = []
+    for (const bonus of equipment.bonuses) {
+      const nameLabel = this._labelPipe.transform(bonus.type)
+      const modifierLabel = bonus.multiplier ? this._getModifierLabel(bonus.multiplier) : `${bonus.additive}`
+      modifierLabels.push(`${nameLabel}: ${modifierLabel}`)
+      modifierLabels.push()
+    }
     return modifierLabels
   }
 
