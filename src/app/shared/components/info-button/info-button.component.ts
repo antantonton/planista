@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 
 @Component({
   selector: 'app-info-button',
@@ -10,9 +10,9 @@ export class InfoButtonComponent {
   @Input() label = ''
   @Input() text: string[] = []
   @Input() tooltipPosition: 'top' | 'bottom' | 'left' | 'right' = 'left'
-  dialogVisible = false
+  @Output() onClick = new EventEmitter<void>()
 
-  showDialog() {
-    this.dialogVisible = true
+  onInfoButtonClick(): void {
+    this.onClick.emit()
   }
 }

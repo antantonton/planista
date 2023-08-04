@@ -6,6 +6,7 @@
     <div fxLayout="row" fxLayoutGap="8px">
       <!-- Action -->
       <p-button
+        *ngIf="actionIcon"
         [icon]="actionIcon"
         styleClass="p-button-rounded p-button-text p-button-danger"
         (click)="onActionClicked()"
@@ -15,7 +16,12 @@
       ></p-button>
 
       <!-- Info -->
-      <app-info-button *ngIf="infoText" [label]="label" [text]="[infoText]"></app-info-button>
+      <app-info-button
+        *ngIf="infoText"
+        [label]="label"
+        [text]="[infoText]"
+        (onClick)="onInfoClicked()"
+      ></app-info-button>
     </div>
   </div>
 

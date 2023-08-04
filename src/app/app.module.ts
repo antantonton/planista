@@ -11,6 +11,8 @@ import { RadioButtonModule } from 'primeng/radiobutton'
 import { ButtonModule } from 'primeng/button'
 import { DialogModule } from 'primeng/dialog'
 import { ToolbarModule } from 'primeng/toolbar'
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
+import { TableModule } from 'primeng/table'
 import { TooltipModule } from 'primeng/tooltip'
 import { DropdownModule } from 'primeng/dropdown'
 import { AppComponent } from './app.component'
@@ -26,8 +28,10 @@ import { LevelToPointsPipe } from './shared/pipes/level-to-points.pipe'
 import { DividerHeaderComponent } from './shared/components/divider-header/divider-header.component'
 import { ResultsComponent } from './planner/results/results.component'
 import { RaceResultComponent } from './planner/results/race-result/race-result.component'
-import { InfoButtonComponent } from './shared/components/info-button/info-button.component';
+import { InfoButtonComponent } from './shared/components/info-button/info-button.component'
 import { EquipmentComponent } from './planner/equipment/equipment.component'
+import { EquipmentListComponent } from './equipment-list/equipment-list.component'
+import { InfoDialogComponent } from './shared/components/info-dialog/info-dialog.component'
 
 @NgModule({
   declarations: [
@@ -41,6 +45,8 @@ import { EquipmentComponent } from './planner/equipment/equipment.component'
     RaceResultComponent,
     InfoButtonComponent,
     EquipmentComponent,
+    EquipmentListComponent,
+    InfoDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +56,8 @@ import { EquipmentComponent } from './planner/equipment/equipment.component'
     HttpClientModule,
     ToolbarModule,
     ProgressSpinnerModule,
+    TableModule,
+    DynamicDialogModule,
     FormsModule,
     DialogModule,
     ReactiveFormsModule,
@@ -63,7 +71,7 @@ import { EquipmentComponent } from './planner/equipment/equipment.component'
     RadioButtonModule,
     ButtonModule,
   ],
-  providers: [TitleCasePipe, DecimalPipe, LabelPipe],
+  providers: [TitleCasePipe, DecimalPipe, LabelPipe, DialogService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -4,7 +4,9 @@
     [icon]="'pi pi-percentage'"
     [label]="raceLabel + ' - Modifiers'"
     [text]="modifiersText"
+    (onClick)="onModifiersInfoClick()"
   ></app-info-button>
+
   <!-- Label -->
   <span class="text-md">{{ raceLabel }}</span>
 
@@ -19,5 +21,6 @@
     [icon]="'pi pi-sliders-h'"
     [label]="raceLabel + ' - Allocated Points'"
     [text]="allocatedPointsText"
+    (onClick)="onAllocatedPointsInfoClick()"
   ></app-info-button>
 </div>

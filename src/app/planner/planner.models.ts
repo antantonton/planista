@@ -6,6 +6,7 @@ export type PlannerForm = FormGroup<{
   selectedAttribute: FormGroup<{
     attributeType: FormControl<AttributeType>
     type: FormControl<number>
+    name: FormControl<string>
   }>
   staminaStats: FormArray<StatForm>
   agilityStats: FormArray<StatForm>

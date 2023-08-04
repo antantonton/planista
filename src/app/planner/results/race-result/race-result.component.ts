@@ -5,6 +5,7 @@ import { LabelPipe } from 'src/app/shared/pipes/label.pipe'
 import { LanistaHelpersService } from 'src/app/shared/services/lanista-helpers.service'
 import { Subscription } from 'rxjs'
 import { PlannerFormHelpersService } from '../../planner-form-helpers.service'
+import { InfoDialogService } from 'src/app/shared/components/info-dialog/info-dialog.service'
 
 @Component({
   selector: 'app-race-result',
@@ -13,6 +14,7 @@ import { PlannerFormHelpersService } from '../../planner-form-helpers.service'
 })
 export class RaceResultComponent implements OnInit, OnDestroy {
   private readonly _subscriptions = new Subscription()
+  private readonly _infoDialogService = inject(InfoDialogService)
   private readonly _labelPipe = inject(LabelPipe)
   private readonly _lanistaHelpersService = inject(LanistaHelpersService)
   private readonly _plannerFormHelpersService = inject(PlannerFormHelpersService)
@@ -40,6 +42,14 @@ export class RaceResultComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this._subscriptions.unsubscribe()
+  }
+
+  onModifiersInfoClick(): void {
+    this._infoDialogService.open(this.raceLabel + ' - Modifiers', this.modifiersText)
+  }
+
+  onAllocatedPointsInfoClick(): void {
+    this._infoDialogService.open(this.raceLabel + ' - Allocated Points', this.allocatedPointsText)
   }
 
   private _refreshDisplayData(): void {

@@ -1,9 +1,12 @@
-import { Component, Input, OnInit, inject } from '@angular/core'
+import { Component, Input, OnInit, TemplateRef, inject } from '@angular/core'
 import { PlannerForm } from '../planner.models'
 import { ArmorSlot, Config, Equipment } from 'src/app/shared/models/lanista-api.models'
 import { LanistaApiService } from 'src/app/shared/services/lanista-api.service'
 import { LanistaHelpersService } from 'src/app/shared/services/lanista-helpers.service'
-import { groupBy } from 'lodash'
+import { drop, groupBy } from 'lodash'
+import { Dropdown } from 'primeng/dropdown'
+import { InfoDialogService } from 'src/app/shared/components/info-dialog/info-dialog.service'
+import { DialogService } from 'primeng/dynamicdialog'
 
 type EqipmentDisplayObject = Equipment & { modifiers: string[] }
 
@@ -13,6 +16,7 @@ type EqipmentDisplayObject = Equipment & { modifiers: string[] }
   styleUrls: ['./equipment.component.css'],
 })
 export class EquipmentComponent implements OnInit {
+  private readonly _infoDialogService = inject(InfoDialogService)
   private readonly _lanistaApiService = inject(LanistaApiService)
   private readonly _lanistaHelpersService = inject(LanistaHelpersService)
 
@@ -46,6 +50,18 @@ export class EquipmentComponent implements OnInit {
     // this._lanistaApiService.getConsumables().then((consumables) => {
     //   console.log('Consumables from Lanista API: ', consumables)
     // })
+  }
+
+  onEquipmentClear(dropdown: Dropdown): void {
+    dropdown.resetFilter()
+  }
+
+  async onInfoClick(item: EqipmentDisplayObject, dropdown?: Dropdown): Promise<void> {
+    setTimeout(() => {
+      dropdown?.hide()
+    }, 0)
+    await this._infoDialogService.open(item.name, item.modifiers)
+    dropdown?.show()
   }
 
   private _mapEquipmentToDisplayObject(equipment: Equipment[]): EqipmentDisplayObject[] {

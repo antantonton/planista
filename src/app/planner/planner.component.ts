@@ -28,6 +28,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
     selectedAttribute: new FormGroup({
       attributeType: new FormControl<AttributeType>(AttributeType.STAT, { nonNullable: true }),
       type: new FormControl(0, { nonNullable: true }),
+      name: new FormControl('', { nonNullable: true }),
     }),
     staminaStats: new FormArray<StatForm>([]),
     agilityStats: new FormArray<StatForm>([]),
@@ -77,6 +78,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
     this.plannerForm.controls.selectedAttribute.setValue({
       attributeType: type,
       type: form.controls.type.value ?? 0,
+      name: form.controls.name.value ?? '',
     })
     this._toggleAttributeForms()
   }
@@ -153,6 +155,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
     this.plannerForm.controls.selectedAttribute.setValue({
       attributeType: AttributeType.STAT,
       type: 0,
+      name: '',
     })
     this.plannerForm.controls.staminaStats.controls.forEach((form) => form.controls.value.setValue(null))
     this.plannerForm.controls.agilityStats.controls.forEach((form) => form.controls.value.setValue(null))

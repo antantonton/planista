@@ -30,7 +30,7 @@ export class PlannerFormHelpersService {
       const points = isSelected
         ? this._getRemainingPoints(race, plannerForm)
         : this._getPointsToAllocate(desiredPoints, modifier, additiveFromEquipment, multiplierFromEquipment)
-      const pointsLabel = this._decimalPipe.transform(Math.max(points, 0), '1.0-0')
+      const pointsLabel = this._decimalPipe.transform(points, '1.0-0')
       pointsLabels.push(`${nameLabel}: ${pointsLabel}`)
     }
 
@@ -51,7 +51,7 @@ export class PlannerFormHelpersService {
       const points = isSelected
         ? this._getRemainingPoints(race, plannerForm)
         : this._getPointsToAllocate(desiredPoints, modifier, additiveFromEquipment, multiplierFromEquipment)
-      const pointsLabel = this._decimalPipe.transform(Math.max(points, 0), '1.0-0')
+      const pointsLabel = this._decimalPipe.transform(points, '1.0-0')
       pointsLabels.push(`${nameLabel}: ${pointsLabel}`)
     }
 
@@ -71,7 +71,20 @@ export class PlannerFormHelpersService {
           (statModifier) => statModifier.type === plannerForm.controls.selectedAttribute.controls.type.value,
         )?.value ?? 1
     }
-    return this._getRemainingPoints(race, plannerForm) * modifier
+    const additiveFromEquipment = this._getAdditiveFromEquipment(
+      plannerForm.controls.selectedAttribute.controls.name.value,
+      plannerForm,
+    )
+    const multiplierFromEquipment = this._getMultiplierFromEquipment(
+      plannerForm.controls.selectedAttribute.controls.name.value,
+      plannerForm,
+    )
+    return this._getActualPoints(
+      this._getRemainingPoints(race, plannerForm),
+      modifier,
+      additiveFromEquipment,
+      multiplierFromEquipment,
+    )
   }
 
   private _getRemainingPoints(race: Race, plannerForm: PlannerForm): number {
@@ -83,6 +96,9 @@ export class PlannerFormHelpersService {
 
     // Stats
     for (const form of [...plannerForm.controls.staminaStats.controls, ...plannerForm.controls.agilityStats.controls]) {
+      if (form.controls.type.value === plannerForm.controls.selectedAttribute.controls.type.value) {
+        continue
+      }
       const desiredPoints = form.controls.value.value ?? 0
       const additiveFromEquipment = this._getAdditiveFromEquipment(form.controls.name.value, plannerForm)
       const multiplierFromEquipment = this._getMultiplierFromEquipment(form.controls.name.value, plannerForm)
@@ -94,6 +110,9 @@ export class PlannerFormHelpersService {
 
     // Weapon skills
     for (const form of plannerForm.controls.weaponSkills.controls) {
+      if (form.controls.type.value === plannerForm.controls.selectedAttribute.controls.type.value) {
+        continue
+      }
       const desiredPoints = form.controls.value.value ?? 0
       const additiveFromEquipment = this._getAdditiveFromEquipment(form.controls.name.value, plannerForm)
       const multiplierFromEquipment = this._getMultiplierFromEquipment(form.controls.name.value, plannerForm)
@@ -144,9 +163,24 @@ export class PlannerFormHelpersService {
     equipmentAdditive: number,
     equipmentMultiplier: number,
   ): number {
+    if (desiredPoints === 0) {
+      return 0
+    }
     const pointsBeforeAdditive = desiredPoints - equipmentAdditive
     const pointsBeforeMultiplier = pointsBeforeAdditive / equipmentMultiplier
     const pointsBeforeModifier = pointsBeforeMultiplier / raceModifier
     return Math.ceil(pointsBeforeModifier)
+  }
+
+  private _getActualPoints(
+    allocatedPoints: number,
+    raceModifier: number,
+    equipmentAdditive: number,
+    equipmentMultiplier: number,
+  ): number {
+    const pointsAfterModifier = allocatedPoints * raceModifier
+    const pointsAfterMultiplier = pointsAfterModifier * equipmentMultiplier
+    const pointsAfterAdditive = pointsAfterMultiplier + equipmentAdditive
+    return pointsAfterAdditive
   }
 }

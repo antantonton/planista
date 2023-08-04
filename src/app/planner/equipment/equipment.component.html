@@ -68,6 +68,7 @@
 >
   <span [formGroup]="formGroup" class="p-float-label equipment-selector">
     <p-dropdown
+      #dropdown
       inputId="selector"
       [formControlName]="formControlName"
       [showClear]="true"
@@ -81,6 +82,7 @@
       [autoDisplayFirst]="false"
       [filter]="true"
       filterBy="name"
+      (onClear)="onEquipmentClear(dropdown)"
     >
       <!-- Selected Label -->
       <ng-template let-item pTemplate="selectedItem">
@@ -90,6 +92,7 @@
             [label]="item.name"
             [text]="item.modifiers"
             [tooltipPosition]="'top'"
+            (onClick)="onInfoClick(item)"
             (click)="$event.stopPropagation()"
           ></app-info-button>
           <div>{{ item.name }}</div>
@@ -105,6 +108,7 @@
             [label]="item.name"
             [text]="item.modifiers"
             [tooltipPosition]="'right'"
+            (onClick)="onInfoClick(item, dropdown)"
             (click)="$event.stopPropagation()"
           ></app-info-button>
         </div>

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core'
+import { InfoDialogService } from '../info-dialog/info-dialog.service'
 
 @Component({
   selector: 'app-divider-header',
@@ -6,6 +7,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
   styleUrls: ['./divider-header.component.css'],
 })
 export class DividerHeaderComponent {
+  private readonly _infoDialogService = inject(InfoDialogService)
+
   @Input() label = ''
   @Input() infoText = ''
   @Input() actionIcon = ''
@@ -14,5 +17,9 @@ export class DividerHeaderComponent {
 
   onActionClicked(): void {
     this.actionClick.emit()
+  }
+
+  onInfoClicked(): void {
+    this._infoDialogService.open(this.label, [this.infoText])
   }
 }
