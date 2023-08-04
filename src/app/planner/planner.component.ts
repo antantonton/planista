@@ -66,6 +66,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
         this.plannerForm.controls.trinkets,
         this._lanistaHelpersService.getTrinketSlotsFromConfig(config),
       )
+      this.onStatSelected(AttributeType.STAT, this.plannerForm.controls.staminaStats.controls[0])
       this._toggleAttributeForms()
     })
   }
