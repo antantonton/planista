@@ -169,7 +169,7 @@ export class PlannerFormHelpersService {
     const pointsBeforeAdditive = desiredPoints - equipmentAdditive
     const pointsBeforeMultiplier = pointsBeforeAdditive / equipmentMultiplier
     const pointsBeforeModifier = pointsBeforeMultiplier / raceModifier
-    return Math.ceil(pointsBeforeModifier)
+    return Math.max(Math.ceil(pointsBeforeModifier), 0)
   }
 
   private _getActualPoints(
