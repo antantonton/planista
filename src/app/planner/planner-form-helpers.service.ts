@@ -79,6 +79,10 @@ export class PlannerFormHelpersService {
       plannerForm.controls.selectedAttribute.controls.name.value,
       plannerForm,
     )
+    console.log('this._getRemainingPoints(race, plannerForm): ', this._getRemainingPoints(race, plannerForm))
+    console.log('modifier', modifier)
+    console.log('additiveFromEquipment', additiveFromEquipment)
+    console.log('multiplierFromEquipment', multiplierFromEquipment)
     return this._getActualPoints(
       this._getRemainingPoints(race, plannerForm),
       modifier,
@@ -96,7 +100,10 @@ export class PlannerFormHelpersService {
 
     // Stats
     for (const form of [...plannerForm.controls.staminaStats.controls, ...plannerForm.controls.agilityStats.controls]) {
-      if (form.controls.type.value === plannerForm.controls.selectedAttribute.controls.type.value) {
+      const isSelected =
+        plannerForm.controls.selectedAttribute.controls.attributeType.value === AttributeType.STAT &&
+        plannerForm.controls.selectedAttribute.controls.type.value === form.controls.type.value
+      if (isSelected) {
         continue
       }
       const desiredPoints = form.controls.value.value ?? 0
@@ -110,7 +117,10 @@ export class PlannerFormHelpersService {
 
     // Weapon skills
     for (const form of plannerForm.controls.weaponSkills.controls) {
-      if (form.controls.type.value === plannerForm.controls.selectedAttribute.controls.type.value) {
+      const isSelected =
+        plannerForm.controls.selectedAttribute.controls.attributeType.value === AttributeType.WEAPON_SKILL &&
+        plannerForm.controls.selectedAttribute.controls.type.value === form.controls.type.value
+      if (isSelected) {
         continue
       }
       const desiredPoints = form.controls.value.value ?? 0
