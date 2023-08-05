@@ -79,10 +79,6 @@ export class PlannerFormHelpersService {
       plannerForm.controls.selectedAttribute.controls.name.value,
       plannerForm,
     )
-    console.log('this._getRemainingPoints(race, plannerForm): ', this._getRemainingPoints(race, plannerForm))
-    console.log('modifier', modifier)
-    console.log('additiveFromEquipment', additiveFromEquipment)
-    console.log('multiplierFromEquipment', multiplierFromEquipment)
     return this._getActualPoints(
       this._getRemainingPoints(race, plannerForm),
       modifier,
