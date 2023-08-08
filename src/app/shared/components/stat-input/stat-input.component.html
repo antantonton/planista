@@ -1,0 +1,20 @@
+<!-- <form [formGroup]="statForm" class="stat-input"> -->
+<div class="p-inputgroup stat-input no-border-radius-right" [class.no-border-radius-left]="showToggle">
+  <!-- <button type="button" pButton icon="pi pi-lock" styleClass="p-button-outlined"></button> -->
+  <span *ngIf="showToggle" class="p-inputgroup-addon">
+    <p-radioButton [ngModel]="selected" [value]="true" (onClick)="onRadioButtonClick()"></p-radioButton>
+  </span>
+
+  <span class="p-float-label w-full" [formGroup]="statForm">
+    <p-inputNumber
+      inputId="inputnumber"
+      formControlName="value"
+      class="w-full"
+      [showButtons]="true"
+      [min]="0"
+      [step]="5"
+    ></p-inputNumber>
+    <label for="inputnumber">{{ statForm.value.name | label }}</label>
+  </span>
+</div>
+<!-- </form> -->

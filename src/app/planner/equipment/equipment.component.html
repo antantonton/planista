@@ -1,0 +1,119 @@
+<div fxLayout="column" fxLayoutGap="32px" style="max-width: 100%">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="32px" [formGroup]="plannerForm">
+    <!-- Main Hand -->
+    <div fxFlex="0 0 calc(50% - 16px)">
+      <ng-container
+        [ngTemplateOutlet]="equipmentSelector"
+        [ngTemplateOutletContext]="{
+          formGroup: plannerForm,
+          formControlName: 'mainHand',
+          options: mainHandWeapons,
+          label: 'Main Hand'
+        }"
+      ></ng-container>
+    </div>
+
+    <!-- Off Hand -->
+    <div fxFlex="0 0 calc(50% - 16px)">
+      <ng-container
+        [ngTemplateOutlet]="equipmentSelector"
+        [ngTemplateOutletContext]="{
+          formGroup: plannerForm,
+          formControlName: 'offHand',
+          options: offHandWeapons,
+          label: 'Off Hand'
+        }"
+      ></ng-container>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="32px">
+    <!-- Armor -->
+    <div fxFlex="0 0 calc(50% - 16px)" fxLayout="column" fxLayoutGap="32px">
+      <ng-container
+        *ngFor="let form of plannerForm.controls.armors.controls"
+        [ngTemplateOutlet]="equipmentSelector"
+        [ngTemplateOutletContext]="{
+          formGroup: form,
+          formControlName: 'equipment',
+          options: armorsByType[form.controls.type.value],
+          label: form.controls.name.value
+        }"
+      ></ng-container>
+    </div>
+
+    <!-- Trinkets -->
+    <div fxFlex="0 0 calc(50% - 16px)" fxLayout="column" fxLayoutGap="32px">
+      <ng-container
+        *ngFor="let form of plannerForm.controls.trinkets.controls"
+        [ngTemplateOutlet]="equipmentSelector"
+        [ngTemplateOutletContext]="{
+          formGroup: form,
+          formControlName: 'equipment',
+          options: armorsByType[form.controls.type.value],
+          label: form.controls.name.value
+        }"
+      ></ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- Equipment Selector -->
+<ng-template
+  #equipmentSelector
+  let-formGroup="formGroup"
+  let-formControlName="formControlName"
+  let-options="options"
+  let-label="label"
+>
+  <span [formGroup]="formGroup" class="p-float-label equipment-selector">
+    <p-dropdown
+      #dropdown
+      inputId="selector"
+      [formControlName]="formControlName"
+      [showClear]="true"
+      [options]="options"
+      optionLabel="name"
+      dataKey="id"
+      scrollHeight="300px"
+      [virtualScroll]="true"
+      [virtualScrollItemSize]="56"
+      [panelStyle]="{ width: '400px', 'max-width': '90vw' }"
+      [autoDisplayFirst]="false"
+      [filter]="true"
+      filterBy="name"
+      (onClear)="onEquipmentClear(dropdown)"
+    >
+      <!-- Selected Label -->
+      <ng-template let-item pTemplate="selectedItem">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+          <app-info-button
+            [icon]="'pi pi-percentage'"
+            [label]="item.name"
+            [text]="item.modifiers"
+            [tooltipPosition]="'top'"
+            (onClick)="onInfoClick(item)"
+            (click)="$event.stopPropagation()"
+          ></app-info-button>
+          <div>{{ item.name }}</div>
+        </div>
+      </ng-template>
+
+      <!-- Option Label -->
+      <ng-template let-item pTemplate="item">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div>{{ item.name }}</div>
+          <app-info-button
+            [icon]="'pi pi-percentage'"
+            [label]="item.name"
+            [text]="item.modifiers"
+            [tooltipPosition]="'right'"
+            (onClick)="onInfoClick(item, dropdown)"
+            (click)="$event.stopPropagation()"
+          ></app-info-button>
+        </div>
+      </ng-template>
+    </p-dropdown>
+    <label for="selector">{{ label | label }}</label>
+  </span>
+</ng-template>

@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core'
-import { Routes, RouterModule } from '@angular/router'
-import { BuilderComponent } from './builder/builder.component'
+import { RouterModule, Routes } from '@angular/router'
+import { PlannerComponent } from './planner/planner.component'
 
+export const ROUTE = {
+  PLANNER: '',
+}
 
 const routes: Routes = [
   {
-    path: '',
-    component: BuilderComponent,
-  }
+    path: ROUTE.PLANNER,
+    component: PlannerComponent,
+  },
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

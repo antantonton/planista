@@ -1,0 +1,6 @@
+General
+- Do not show % hover on equipment without bonuses
+- Error handling (lanista api), empty state
+- Move stat related functionality to child component of planner
+- Move self created types from lanista models to separate file
+- Warning when building

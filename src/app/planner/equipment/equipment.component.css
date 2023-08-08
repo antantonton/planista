@@ -1,0 +1,22 @@
+:host ::ng-deep .equipment-selector {
+  .p-dropdown {
+    width: 100% !important;
+    height: 58px;
+  }
+
+  .p-dropdown-item {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .p-inputwrapper-filled {
+    .p-inputtext {
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+
+    .p-dropdown-label {
+      padding-left: 4px;
+    }
+  }
+}

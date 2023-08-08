@@ -1,86 +1,77 @@
-import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
-import { RouterModule } from '@angular/router'
+import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { FlexLayoutModule } from '@angular/flex-layout'
 import { HttpClientModule } from '@angular/common/http'
-
-import { FormsModule } from '@angular/forms'
-import { ReactiveFormsModule } from '@angular/forms'
-import { MatToolbarModule } from '@angular/material/toolbar'
-import { MatIconModule } from '@angular/material/icon'
-import { MatButtonModule } from '@angular/material/button'
-import { MatTooltipModule } from '@angular/material/tooltip'
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatInputModule } from '@angular/material/input'
-import { MatStepperModule } from '@angular/material/stepper'
-import { MatRadioModule } from '@angular/material/radio'
-import { MatSelectModule } from '@angular/material/select'
-import { MatSliderModule } from '@angular/material/slider'
-import { MatSnackBarModule } from '@angular/material/snack-bar'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { MatSidenavModule } from '@angular/material/sidenav'
-import { MatListModule } from '@angular/material/list'
-import { MatDividerModule } from '@angular/material/divider'
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet'
-import { MatBadgeModule } from '@angular/material/badge'
-import { MatProgressBarModule } from '@angular/material/progress-bar'
-import { MatCardModule } from '@angular/material/card'
-import { MatRippleModule } from '@angular/material/core'
-import { MatGridListModule } from '@angular/material/grid-list'
-import { MatDialogModule } from '@angular/material/dialog'
-import { MatMenuModule } from '@angular/material/menu'
-import { MatSlideToggleModule } from '@angular/material/slide-toggle'
-import { MatExpansionModule } from '@angular/material/expansion'
-
-import { AppRoutingModule } from './app-routing.module'
+import { InputNumberModule } from 'primeng/inputnumber'
+import { InputTextModule } from 'primeng/inputtext'
+import { DividerModule } from 'primeng/divider'
+import { ProgressSpinnerModule } from 'primeng/progressspinner'
+import { SliderModule } from 'primeng/slider'
+import { RadioButtonModule } from 'primeng/radiobutton'
+import { ButtonModule } from 'primeng/button'
+import { DialogModule } from 'primeng/dialog'
+import { ToolbarModule } from 'primeng/toolbar'
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
+import { TableModule } from 'primeng/table'
+import { TooltipModule } from 'primeng/tooltip'
+import { DropdownModule } from 'primeng/dropdown'
 import { AppComponent } from './app.component'
-import { BuilderComponent } from './builder/builder.component'
-import { TitleComponent } from './shared/components/title/title.component'
-import { ResultsComponent } from './builder/results/results.component'
+import { PlannerComponent } from './planner/planner.component'
+import { AppRoutingModule } from './app-routing.module'
+import { StatInputComponent } from './shared/components/stat-input/stat-input.component'
+import { FlexLayoutModule } from '@angular/flex-layout'
+import { RouterModule } from '@angular/router'
 import { DecimalPipe, TitleCasePipe } from '@angular/common'
-import { ItemsComponent } from './items/items.component'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { LabelPipe } from './shared/pipes/label.pipe'
+import { LevelToPointsPipe } from './shared/pipes/level-to-points.pipe'
+import { DividerHeaderComponent } from './shared/components/divider-header/divider-header.component'
+import { ResultsComponent } from './planner/results/results.component'
+import { RaceResultComponent } from './planner/results/race-result/race-result.component'
+import { InfoButtonComponent } from './shared/components/info-button/info-button.component'
+import { EquipmentComponent } from './planner/equipment/equipment.component'
+import { EquipmentListComponent } from './equipment-list/equipment-list.component'
+import { InfoDialogComponent } from './shared/components/info-dialog/info-dialog.component'
 
 @NgModule({
-  declarations: [AppComponent, BuilderComponent, TitleComponent, ResultsComponent, ItemsComponent],
+  declarations: [
+    AppComponent,
+    PlannerComponent,
+    StatInputComponent,
+    LabelPipe,
+    LevelToPointsPipe,
+    DividerHeaderComponent,
+    ResultsComponent,
+    RaceResultComponent,
+    InfoButtonComponent,
+    EquipmentComponent,
+    EquipmentListComponent,
+    InfoDialogComponent,
+  ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    AppRoutingModule,
     RouterModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
-
+    ToolbarModule,
+    ProgressSpinnerModule,
+    TableModule,
+    DynamicDialogModule,
     FormsModule,
+    DialogModule,
     ReactiveFormsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatStepperModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatSnackBarModule,
-    MatProgressSpinnerModule,
-    MatSidenavModule,
-    MatListModule,
-    MatDividerModule,
-    MatBottomSheetModule,
-    MatBadgeModule,
-    MatProgressBarModule,
-    MatCardModule,
-    MatRippleModule,
-    MatGridListModule,
-    MatDialogModule,
-    MatMenuModule,
-    MatSlideToggleModule,
-    MatExpansionModule,
+    TooltipModule,
+    AppRoutingModule,
+    SliderModule,
+    DividerModule,
+    InputNumberModule,
+    DropdownModule,
+    InputTextModule,
+    RadioButtonModule,
+    ButtonModule,
   ],
-  providers: [TitleCasePipe, DecimalPipe],
+  providers: [TitleCasePipe, DecimalPipe, LabelPipe, DialogService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

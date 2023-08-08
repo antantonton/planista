@@ -1,0 +1,113 @@
+<p-toolbar styleClass="px-3 lg:px-5 py-2">
+  <div class="p-toolbar-group-start">
+    <span class="text-2xl font-medium">Planista</span>
+  </div>
+  <div class="p-toolbar-group-end" fxLayout="row" fxLayoutGap="8px">
+    <!-- Github Link -->
+    <a
+      pButton
+      label="View on GitHub"
+      icon="pi pi-github"
+      iconPos="right"
+      class="p-button-text p-button-secondary no-underline"
+      [href]="githubLink"
+    ></a>
+  </div>
+</p-toolbar>
+<div
+  *ngIf="config"
+  class="p-3 lg:p-5"
+  fxLayout="row"
+  fxLayout.lt-md="column"
+  fxLayoutGap="24px"
+  [formGroup]="plannerForm"
+>
+  <!-- Desired Stats -->
+  <div fxFlex="0 0 50" fxLayout="column" fxLayoutGap="24px">
+    <div fxLayout="column" fxLayoutGap="24px">
+      <!-- Stats Header -->
+      <app-divider-header
+        [label]="'Desired Stats'"
+        [infoText]="statsInfoText"
+        [actionIcon]="'pi pi-undo'"
+        [actionTooltip]="'Reset stats'"
+        (actionClick)="onResetStatsClick()"
+      ></app-divider-header>
+
+      <!-- Level -->
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="32px">
+        <div fxFlex.gt-sm fxLayout="column" fxLayoutGap="12px">
+          <!-- Level/Points Label -->
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="text-lg">Level {{ plannerForm.controls.level.value }}</span>
+            <span class="text-lg">{{ plannerForm.controls.level.value | levelToPoints }} points</span>
+          </div>
+
+          <!-- Level Slider -->
+          <p-slider fxFlex formControlName="level" [min]="1" [max]="50"></p-slider>
+        </div>
+
+        <!-- TODO: Age Selector -->
+        <div fxFlex fxHide.lt-md></div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div fxLayout="row" fxLayoutGap="32px" fxLayoutGap.lt-md="12px">
+      <div fxFlex fxLayout="column" fxLayoutGap="32px">
+        <!-- Stamina Stats -->
+        <app-stat-input
+          *ngFor="let form of plannerForm.controls.staminaStats.controls"
+          [statForm]="form"
+          [selected]="
+            plannerForm.controls.selectedAttribute.controls.attributeType.value === AttributeType.STAT &&
+            plannerForm.controls.selectedAttribute.controls.type.value === form.controls.type.value
+          "
+          (onSelected)="onStatSelected(AttributeType.STAT, form)"
+        ></app-stat-input>
+
+        <!-- Agility Stats -->
+        <app-stat-input
+          *ngFor="let form of plannerForm.controls.agilityStats.controls"
+          [statForm]="form"
+          [selected]="
+            plannerForm.controls.selectedAttribute.controls.attributeType.value === AttributeType.STAT &&
+            plannerForm.controls.selectedAttribute.controls.type.value === form.controls.type.value
+          "
+          (onSelected)="onStatSelected(AttributeType.STAT, form)"
+        ></app-stat-input>
+      </div>
+
+      <div fxFlex fxLayout="column" fxLayoutGap="32px">
+        <!-- Weapon Skills -->
+        <app-stat-input
+          *ngFor="let weaponSkillForm of plannerForm.controls.weaponSkills.controls"
+          [statForm]="weaponSkillForm"
+          [selected]="
+            plannerForm.controls.selectedAttribute.controls.attributeType.value === AttributeType.WEAPON_SKILL &&
+            plannerForm.controls.selectedAttribute.controls.type.value === weaponSkillForm.controls.type.value
+          "
+          (onSelected)="onStatSelected(AttributeType.WEAPON_SKILL, weaponSkillForm)"
+        ></app-stat-input>
+      </div>
+    </div>
+
+    <!-- Equipment -->
+    <div *ngIf="config" fxFlex="0 0 50" fxLayout="column" fxLayoutGap="32px">
+      <app-divider-header
+        [label]="'Equipment'"
+        [infoText]="equipmentInfoText"
+        [actionIcon]="'pi pi-undo'"
+        [actionTooltip]="'Reset equipment'"
+        (actionClick)="onResetEquipmentClick()"
+      ></app-divider-header>
+      <app-equipment [plannerForm]="plannerForm" [config]="config"></app-equipment>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div fxFlex fxLayout="column" fxLayoutGap="12px">
+    <app-divider-header [label]="'Results'" [infoText]="resultsInfoText"></app-divider-header>
+    <app-results [plannerForm]="plannerForm" [config]="config"></app-results>
+  </div>
+</div>
