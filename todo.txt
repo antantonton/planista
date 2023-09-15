@@ -1,3 +1,7 @@
+Features
+- Ranged weapons and enchants
+- Show bonuses in results even if no points are spent
+
 General
 - Do not show % hover on equipment without bonuses
 - Error handling (lanista api), empty state
