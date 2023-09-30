@@ -1,4 +1,4 @@
-# Planista
+# [Planista](https://planista-f6eda.web.app/)
 
 Calculator tool for planning characters in the game [Lanista](https://beta.lanista.se/) using data fetched from Lanistas external API.
 
