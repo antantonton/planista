@@ -4,6 +4,7 @@
 
     <!-- Planner -->
     <button
+      fxHide.lt-md
       pButton
       class="p-button-text p-button-secondary"
       label="Planner"
@@ -12,8 +13,19 @@
       [disabled]="url === Route.PLANNER"
     ></button>
 
+    <!-- Planner (Icon Only) -->
+    <button
+      fxHide.gt-sm
+      pButton
+      class="p-button-text p-button-secondary"
+      icon="pi pi-calculator"
+      [routerLink]="Route.PLANNER"
+      [disabled]="url === Route.PLANNER"
+    ></button>
+
     <!-- Weapon Comparison -->
     <button
+      fxHide.lt-md
       pButton
       class="p-button-text p-button-secondary"
       label="Weapon Comparison"
@@ -21,8 +33,18 @@
       [routerLink]="Route.WEAPON_COMPARISON"
       [disabled]="url === Route.WEAPON_COMPARISON"
     ></button>
+
+    <!-- Weapon Comparison (Icon Only)-->
+    <button
+      fxHide.gt-sm
+      pButton
+      class="p-button-text p-button-secondary"
+      icon="pi pi-table"
+      [routerLink]="Route.WEAPON_COMPARISON"
+      [disabled]="url === Route.WEAPON_COMPARISON"
+    ></button>
   </div>
-  <div class="p-toolbar-group-end" fxLayout="row" fxLayoutGap="8px">
+  <div fxHide.lt-sm class="p-toolbar-group-end" fxLayout="row" fxLayoutGap="8px">
     <!-- Github Link -->
     <a
       pButton
