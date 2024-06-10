@@ -1,4 +1,4 @@
-import { Form, FormArray, FormControl, FormGroup } from '@angular/forms'
+import { FormArray, FormControl, FormGroup } from '@angular/forms'
 import { AttributeType, Equipment } from '../shared/models/lanista-api.models'
 
 export type PlannerForm = FormGroup<{

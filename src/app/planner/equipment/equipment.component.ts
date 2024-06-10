@@ -7,6 +7,7 @@ import { Dropdown } from 'primeng/dropdown'
 import { InfoDialogService } from 'src/app/shared/components/info-dialog/info-dialog.service'
 import { EquipmentService } from 'src/app/shared/services/equipment.service'
 import { Subscription } from 'rxjs'
+import { ConsumableService } from 'src/app/shared/services/consumable.service'
 
 type EqipmentDisplayObject = Equipment & { modifiers: string[] }
 
@@ -20,6 +21,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   private readonly _infoDialogService = inject(InfoDialogService)
   private readonly _equipmentService = inject(EquipmentService)
   private readonly _lanistaHelpersService = inject(LanistaHelpersService)
+  private readonly _consumableService = inject(ConsumableService)
 
   @Input() plannerForm!: PlannerForm
   @Input() config!: Config

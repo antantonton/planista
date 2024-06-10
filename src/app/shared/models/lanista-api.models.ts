@@ -31,6 +31,11 @@ export type Equipment = {
   type_name: string
 }
 
+export type Consumable = {
+  id: number
+  name: string
+}
+
 export type EquipmentBonus = {
   type: string
   additive: number
