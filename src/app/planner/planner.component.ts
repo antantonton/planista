@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
-import { LanistaApiService } from '../shared/services/lanista-api.service'
 import { FormArray, FormControl, FormGroup } from '@angular/forms'
 import { EquipmentForm, PlannerForm, StatForm } from './planner.models'
 import { LanistaHelpersService } from '../shared/services/lanista-helpers.service'
 import { ArmorSlot, AttributeType, Config, Equipment, Stat } from '../shared/models/lanista-api.models'
-import { Subscription } from 'rxjs'
+import { firstValueFrom, Subscription } from 'rxjs'
+import { ConfigService } from '../shared/services/config.service'
 
 @Component({
   selector: 'app-planner',
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs'
 export class PlannerComponent implements OnInit, OnDestroy {
   readonly AttributeType = AttributeType
   private readonly _subscriptions = new Subscription()
-  private readonly _lanistaApiService = inject(LanistaApiService)
+  private readonly _configService = inject(ConfigService)
   private readonly _lanistaHelpersService = inject(LanistaHelpersService)
   private readonly _defaultLevel = 25
 
@@ -41,8 +41,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
   config: Config | undefined
 
   ngOnInit(): void {
-    this._lanistaApiService.getConfig().then((config) => {
-      console.log('Config from Lanista API: ', config)
+    firstValueFrom(this._configService.getConfig()).then((config) => {
       this.config = config
 
       this._initializeAttributeFormArray(
