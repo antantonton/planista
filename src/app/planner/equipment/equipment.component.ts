@@ -1,12 +1,12 @@
-import { Component, Input, OnInit, TemplateRef, inject } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, TemplateRef, inject } from '@angular/core'
 import { PlannerForm } from '../planner.models'
 import { ArmorSlot, Config, Equipment } from 'src/app/shared/models/lanista-api.models'
-import { LanistaApiService } from 'src/app/shared/services/lanista-api.service'
 import { LanistaHelpersService } from 'src/app/shared/services/lanista-helpers.service'
-import { drop, groupBy } from 'lodash'
+import { groupBy } from 'lodash'
 import { Dropdown } from 'primeng/dropdown'
 import { InfoDialogService } from 'src/app/shared/components/info-dialog/info-dialog.service'
-import { DialogService } from 'primeng/dynamicdialog'
+import { EquipmentService } from 'src/app/shared/services/equipment.service'
+import { Subscription } from 'rxjs'
 
 type EqipmentDisplayObject = Equipment & { modifiers: string[] }
 
@@ -15,9 +15,10 @@ type EqipmentDisplayObject = Equipment & { modifiers: string[] }
   templateUrl: './equipment.component.html',
   styleUrls: ['./equipment.component.css'],
 })
-export class EquipmentComponent implements OnInit {
+export class EquipmentComponent implements OnInit, OnDestroy {
+  private readonly _subscriptions = new Subscription()
   private readonly _infoDialogService = inject(InfoDialogService)
-  private readonly _lanistaApiService = inject(LanistaApiService)
+  private readonly _equipmentService = inject(EquipmentService)
   private readonly _lanistaHelpersService = inject(LanistaHelpersService)
 
   @Input() plannerForm!: PlannerForm
@@ -32,24 +33,30 @@ export class EquipmentComponent implements OnInit {
   ngOnInit(): void {
     this.armorSlots = this._lanistaHelpersService.getArmorSlotsFromConfig(this.config)
 
-    this._lanistaApiService.getWeapons().then((weapons) => {
-      console.log('Weapons from Lanista API: ', weapons)
-      this.mainHandWeapons = this._mapEquipmentToDisplayObject(
-        this._lanistaHelpersService.getMainHandWeaponsFromWeapons(weapons),
-      )
-      this.offHandWeapons = this._mapEquipmentToDisplayObject(
-        this._lanistaHelpersService.getOffHandWeaponsFromWeapons(weapons),
-      )
-    })
+    this._subscriptions.add(
+      this._equipmentService.getWeapons().subscribe((weapons) => {
+        this.mainHandWeapons = this._mapEquipmentToDisplayObject(
+          this._lanistaHelpersService.getMainHandWeaponsFromWeapons(weapons),
+        )
+        this.offHandWeapons = this._mapEquipmentToDisplayObject(
+          this._lanistaHelpersService.getOffHandWeaponsFromWeapons(weapons),
+        )
+      }),
+    )
 
-    this._lanistaApiService.getArmors().then((armors) => {
-      console.log('Armors from Lanista API: ', armors)
-      this.armorsByType = groupBy(this._mapEquipmentToDisplayObject(armors), (armor) => armor.type)
-    })
+    this._subscriptions.add(
+      this._equipmentService.getArmors().subscribe((armors) => {
+        this.armorsByType = groupBy(this._mapEquipmentToDisplayObject(armors), (armor) => armor.type)
+      }),
+    )
 
     // this._lanistaApiService.getConsumables().then((consumables) => {
     //   console.log('Consumables from Lanista API: ', consumables)
     // })
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe()
   }
 
   onEquipmentClear(dropdown: Dropdown): void {

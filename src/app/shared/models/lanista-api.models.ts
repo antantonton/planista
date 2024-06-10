@@ -21,6 +21,14 @@ export type Equipment = {
   is_shield: boolean
   can_dual_wield: boolean
   is_ranged: boolean
+  base_damage_min: number
+  base_damage_max: number
+  damage_roof: number
+  durability: number
+  weight: number
+  actions: number
+  required_level: number
+  type_name: string
 }
 
 export type EquipmentBonus = {

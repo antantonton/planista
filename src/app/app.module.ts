@@ -32,6 +32,10 @@ import { InfoButtonComponent } from './shared/components/info-button/info-button
 import { EquipmentComponent } from './planner/equipment/equipment.component'
 import { EquipmentListComponent } from './equipment-list/equipment-list.component'
 import { InfoDialogComponent } from './shared/components/info-dialog/info-dialog.component'
+import { ToolbarComponent } from './shared/components/toolbar/toolbar.component'
+import { WeaponComparisonComponent } from './weapon-comparison/weapon-comparison.component'
+import { MultiSelectModule } from 'primeng/multiselect'
+import { BadgeModule } from 'primeng/badge'
 
 @NgModule({
   declarations: [
@@ -47,6 +51,8 @@ import { InfoDialogComponent } from './shared/components/info-dialog/info-dialog
     EquipmentComponent,
     EquipmentListComponent,
     InfoDialogComponent,
+    ToolbarComponent,
+    WeaponComparisonComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +76,8 @@ import { InfoDialogComponent } from './shared/components/info-dialog/info-dialog
     InputTextModule,
     RadioButtonModule,
     ButtonModule,
+    MultiSelectModule,
+    BadgeModule,
   ],
   providers: [TitleCasePipe, DecimalPipe, LabelPipe, DialogService],
   bootstrap: [AppComponent],

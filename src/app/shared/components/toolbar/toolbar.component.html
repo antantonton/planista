@@ -1,0 +1,36 @@
+<p-toolbar styleClass="px-3 lg:px-5 py-2">
+  <div class="p-toolbar-group-start" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px">
+    <span class="text-2xl font-medium mr-5">Planista</span>
+
+    <!-- Planner -->
+    <button
+      pButton
+      class="p-button-text p-button-secondary"
+      label="Planner"
+      icon="pi pi-calculator"
+      [routerLink]="Route.PLANNER"
+      [disabled]="url === Route.PLANNER"
+    ></button>
+
+    <!-- Weapon Comparison -->
+    <button
+      pButton
+      class="p-button-text p-button-secondary"
+      label="Weapon Comparison"
+      icon="pi pi-table"
+      [routerLink]="Route.WEAPON_COMPARISON"
+      [disabled]="url === Route.WEAPON_COMPARISON"
+    ></button>
+  </div>
+  <div class="p-toolbar-group-end" fxLayout="row" fxLayoutGap="8px">
+    <!-- Github Link -->
+    <a
+      pButton
+      label="View on GitHub"
+      icon="pi pi-github"
+      iconPos="right"
+      class="p-button-text p-button-secondary no-underline"
+      [href]="githubLink"
+    ></a>
+  </div>
+</p-toolbar>

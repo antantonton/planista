@@ -1,0 +1,64 @@
+<!-- Toolbar -->
+<app-toolbar></app-toolbar>
+
+<!-- Content -->
+<p-table
+  *ngIf="weapons$ | async as weapons"
+  [columns]="selectedColumns"
+  [value]="weapons"
+  [resizableColumns]="true"
+  [paginator]="true"
+  [rows]="10"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="{first}-{last} of {totalRecords}"
+  [rowsPerPageOptions]="[10, 25, 50]"
+  styleClass="p-datatable-striped"
+>
+  <!-- Caption -->
+  <ng-template pTemplate="caption">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <!-- Column Selection -->
+      <p-multiSelect
+        [options]="columns"
+        [(ngModel)]="selectedColumns"
+        optionLabel="header"
+        selectedItemsLabel="{0} columns visible"
+        placeholder="Select columns"
+      ></p-multiSelect>
+
+      <!-- Beta Badge -->
+      <p-badge [value]="'BETA'" severity="warning"></p-badge>
+    </div>
+  </ng-template>
+
+  <!-- Data -->
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <!-- Name Column -->
+      <th pResizableColumn>Weapon</th>
+
+      <!-- Selected Columns -->
+      <th *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+        <p-columnFilter
+          *ngIf="col.filterType"
+          [type]="col.filterType"
+          [field]="col.field"
+          display="menu"
+        ></p-columnFilter>
+        {{ col.header }}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <!-- Name Column Data -->
+      <td>{{ rowData.name }}</td>
+
+      <!-- Selected Columns Data -->
+      <td *ngFor="let col of columns">
+        {{ rowData[col.field] }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./planner.component.css'],
 })
 export class PlannerComponent implements OnInit, OnDestroy {
-  readonly githubLink = 'https://github.com/antantonton/planista'
   readonly AttributeType = AttributeType
   private readonly _subscriptions = new Subscription()
   private readonly _lanistaApiService = inject(LanistaApiService)
