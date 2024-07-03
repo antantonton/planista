@@ -15,7 +15,7 @@ export type Equipment = {
   id: number
   type: number
   name: string
-  bonuses: EquipmentBonus[]
+  bonuses: ItemBonus[]
   is_weapon: boolean
   is_two_handed: boolean
   is_shield: boolean
@@ -34,9 +34,11 @@ export type Equipment = {
 export type Consumable = {
   id: number
   name: string
+  for_live_battle: boolean
+  bonuses: ItemBonus[]
 }
 
-export type EquipmentBonus = {
+export type ItemBonus = {
   type: string
   additive: number
   multiplier: number
@@ -87,4 +89,8 @@ export type WeaponSkill = {
 
 export type ArmorTypes = {
   [name: string]: number
+}
+
+export type Enchant = {
+  name: string
 }

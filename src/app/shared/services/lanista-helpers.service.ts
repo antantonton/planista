@@ -4,6 +4,7 @@ import {
   AttributeType,
   Config,
   Equipment,
+  ItemBonus,
   POINTS_PER_LEVEL,
   Race,
   STARTING_POINTS,
@@ -147,9 +148,9 @@ export class LanistaHelpersService {
     return modifierLabels
   }
 
-  getModifiersLabelForEquipmentFromConfig(equipment: Equipment): string[] {
+  getModifiersLabelFromConfig(bonuses: ItemBonus[]): string[] {
     const modifierLabels: string[] = []
-    for (const bonus of equipment.bonuses) {
+    for (const bonus of bonuses) {
       const nameLabel = this._labelPipe.transform(bonus.type)
       const modifierLabel = bonus.multiplier ? this._getModifierLabel(bonus.multiplier) : `${bonus.additive}`
       modifierLabels.push(`${nameLabel}: ${modifierLabel}`)

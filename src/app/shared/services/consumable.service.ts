@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core'
 
 import { LanistaApiService } from './lanista-api.service'
-import { BehaviorSubject, Observable } from 'rxjs'
-import { Consumable, Equipment } from '../models/lanista-api.models'
+import { BehaviorSubject, map, Observable } from 'rxjs'
+import { Consumable } from '../models/lanista-api.models'
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,11 @@ export class ConsumableService {
     })
   }
 
-  getConsumables(): Observable<Consumable[]> {
-    return this._consumables$.asObservable()
+  getConsumables(onlyStandard = true): Observable<Consumable[]> {
+    return this._consumables$
+      .asObservable()
+      .pipe(
+        map((consumables) => consumables.filter((consumable) => (onlyStandard ? !consumable.for_live_battle : true))),
+      )
   }
 }

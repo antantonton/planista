@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { FormArray, FormControl, FormGroup } from '@angular/forms'
-import { EquipmentForm, PlannerForm, StatForm } from './planner.models'
+import { ConsumableForm, EquipmentForm, PlannerForm, StatForm } from './planner.models'
 import { LanistaHelpersService } from '../shared/services/lanista-helpers.service'
-import { ArmorSlot, AttributeType, Config, Equipment, Stat } from '../shared/models/lanista-api.models'
+import { ArmorSlot, AttributeType, Config, Consumable, Equipment, Stat } from '../shared/models/lanista-api.models'
 import { firstValueFrom, Subscription } from 'rxjs'
 import { ConfigService } from '../shared/services/config.service'
 
@@ -36,6 +36,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
     offHand: new FormControl<Equipment | null>(null),
     armors: new FormArray<EquipmentForm>([]),
     trinkets: new FormArray<EquipmentForm>([]),
+    consumables: new FormArray<ConsumableForm>([]),
   })
 
   config: Config | undefined
@@ -64,6 +65,7 @@ export class PlannerComponent implements OnInit, OnDestroy {
         this.plannerForm.controls.trinkets,
         this._lanistaHelpersService.getTrinketSlotsFromConfig(config),
       )
+      this._initializeConsumableFormArray(this.plannerForm.controls.consumables)
       this.onStatSelected(AttributeType.STAT, this.plannerForm.controls.staminaStats.controls[0])
       this._toggleAttributeForms()
     })
@@ -111,6 +113,18 @@ export class PlannerComponent implements OnInit, OnDestroy {
           name: new FormControl(armorSlot.name, { nonNullable: true }),
           type: new FormControl(armorSlot.type, { nonNullable: true }),
           equipment: new FormControl<Equipment | null>(null),
+        }),
+      )
+    }
+  }
+
+  private _initializeConsumableFormArray(formArray: FormArray<ConsumableForm>, numberOfConsumables = 3): void {
+    formArray.clear()
+    for (let i = 0; i < numberOfConsumables; i++) {
+      formArray.push(
+        new FormGroup({
+          name: new FormControl(`Consumable #${i + 1}`, { nonNullable: true }),
+          consumable: new FormControl<Consumable | null>(null),
         }),
       )
     }

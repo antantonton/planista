@@ -56,6 +56,22 @@
       ></ng-container>
     </div>
   </div>
+
+  <!-- Consumables -->
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="32px">
+    <div fxFlex="0 0 calc(50% - 16px)" fxLayout="column" fxLayoutGap="32px">
+      <ng-container
+        *ngFor="let form of plannerForm.controls.consumables.controls"
+        [ngTemplateOutlet]="equipmentSelector"
+        [ngTemplateOutletContext]="{
+          formGroup: form,
+          formControlName: 'consumable',
+          options: consumables,
+          label: form.controls.name.value
+        }"
+      ></ng-container>
+    </div>
+  </div>
 </div>
 
 <!-- Equipment Selector -->

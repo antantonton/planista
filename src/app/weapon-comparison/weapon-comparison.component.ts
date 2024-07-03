@@ -102,7 +102,7 @@ export class WeaponComparisonComponent {
       actions: weapon.actions,
       durability: weapon.durability,
       weight: weapon.weight,
-      modifiers: this._lanistaHelpersService.getModifiersLabelForEquipmentFromConfig(weapon).join(', '),
+      modifiers: this._lanistaHelpersService.getModifiersLabelFromConfig(weapon.bonuses).join(', '),
     }
   }
 }

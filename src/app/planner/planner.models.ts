@@ -1,5 +1,5 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms'
-import { AttributeType, Equipment } from '../shared/models/lanista-api.models'
+import { AttributeType, Consumable, Equipment } from '../shared/models/lanista-api.models'
 
 export type PlannerForm = FormGroup<{
   level: FormControl<number>
@@ -17,6 +17,7 @@ export type PlannerForm = FormGroup<{
   offHand: FormControl<Equipment | null>
   armors: FormArray<EquipmentForm>
   trinkets: FormArray<EquipmentForm>
+  consumables: FormArray<ConsumableForm>
 }>
 
 export type StatForm = FormGroup<{
@@ -29,4 +30,9 @@ export type EquipmentForm = FormGroup<{
   name: FormControl<string>
   type: FormControl<number>
   equipment: FormControl<Equipment | null>
+}>
+
+export type ConsumableForm = FormGroup<{
+  name: FormControl<string>
+  consumable: FormControl<Consumable | null>
 }>

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core'
 import { LabelPipe } from '../shared/pipes/label.pipe'
 import { DecimalPipe } from '@angular/common'
-import { AttributeType, EquipmentBonus, Race } from '../shared/models/lanista-api.models'
+import { AttributeType, ItemBonus, Race } from '../shared/models/lanista-api.models'
 import { PlannerForm } from './planner.models'
 import { LanistaHelpersService } from '../shared/services/lanista-helpers.service'
 
@@ -154,12 +154,13 @@ export class PlannerFormHelpersService {
     return multiplierFromEquipment
   }
 
-  private _getAllEquipmentBonuses(plannerForm: PlannerForm): EquipmentBonus[] {
+  private _getAllEquipmentBonuses(plannerForm: PlannerForm): ItemBonus[] {
     return [
       ...(plannerForm.controls.mainHand.value?.bonuses ?? []),
       ...(plannerForm.controls.offHand.value?.bonuses ?? []),
       ...plannerForm.controls.armors.controls.flatMap((form) => form.value.equipment?.bonuses ?? []),
       ...plannerForm.controls.trinkets.controls.flatMap((form) => form.value.equipment?.bonuses ?? []),
+      ...plannerForm.controls.consumables.controls.flatMap((form) => form.value.consumable?.bonuses ?? []),
     ]
   }
 

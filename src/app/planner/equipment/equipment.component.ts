@@ -1,6 +1,6 @@
-import { Component, Input, OnDestroy, OnInit, TemplateRef, inject } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core'
 import { PlannerForm } from '../planner.models'
-import { ArmorSlot, Config, Equipment } from 'src/app/shared/models/lanista-api.models'
+import { ArmorSlot, Config, Consumable, Equipment } from 'src/app/shared/models/lanista-api.models'
 import { LanistaHelpersService } from 'src/app/shared/services/lanista-helpers.service'
 import { groupBy } from 'lodash'
 import { Dropdown } from 'primeng/dropdown'
@@ -8,8 +8,10 @@ import { InfoDialogService } from 'src/app/shared/components/info-dialog/info-di
 import { EquipmentService } from 'src/app/shared/services/equipment.service'
 import { Subscription } from 'rxjs'
 import { ConsumableService } from 'src/app/shared/services/consumable.service'
+import { EnchantService } from 'src/app/shared/services/enchant.service'
 
 type EqipmentDisplayObject = Equipment & { modifiers: string[] }
+type ConsumableDisplayObject = Consumable & { modifiers: string[] }
 
 @Component({
   selector: 'app-equipment',
@@ -22,6 +24,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   private readonly _equipmentService = inject(EquipmentService)
   private readonly _lanistaHelpersService = inject(LanistaHelpersService)
   private readonly _consumableService = inject(ConsumableService)
+  private readonly _enchantService = inject(EnchantService)
 
   @Input() plannerForm!: PlannerForm
   @Input() config!: Config
@@ -31,6 +34,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   armorsByType: { [type: number]: EqipmentDisplayObject[] } = {}
   mainHandWeapons: EqipmentDisplayObject[] = []
   offHandWeapons: EqipmentDisplayObject[] = []
+  consumables: ConsumableDisplayObject[] = []
 
   ngOnInit(): void {
     this.armorSlots = this._lanistaHelpersService.getArmorSlotsFromConfig(this.config)
@@ -52,9 +56,16 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       }),
     )
 
-    // this._lanistaApiService.getConsumables().then((consumables) => {
-    //   console.log('Consumables from Lanista API: ', consumables)
-    // })
+    this._subscriptions.add(
+      this._consumableService.getConsumables().subscribe((consumables) => {
+        this.consumables = consumables.map((c) => {
+          return {
+            ...c,
+            modifiers: this._lanistaHelpersService.getModifiersLabelFromConfig(c.bonuses),
+          }
+        })
+      }),
+    )
   }
 
   ngOnDestroy(): void {
@@ -77,7 +88,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     return equipment.map((e) => {
       return {
         ...e,
-        modifiers: this._lanistaHelpersService.getModifiersLabelForEquipmentFromConfig(e),
+        modifiers: this._lanistaHelpersService.getModifiersLabelFromConfig(e.bonuses),
       }
     })
   }
