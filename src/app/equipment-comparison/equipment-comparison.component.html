@@ -1,0 +1,33 @@
+<!-- Toolbar -->
+<app-toolbar></app-toolbar>
+
+<!-- Navbar -->
+<p-toolbar styleClass=" py-2">
+  <div class="p-toolbar-group-start" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px">
+    <!-- Weapon -->
+    <button
+      pButton
+      class="p-button-text p-button-secondary"
+      label="Weapons"
+      [routerLink]="Route.WEAPON_COMPARISON"
+      [disabled]="(url$ | async)?.endsWith(Route.WEAPON_COMPARISON)"
+    ></button>
+
+    <!-- Items -->
+    <button
+      pButton
+      class="p-button-text p-button-secondary"
+      label="Items"
+      [routerLink]="Route.ITEM_COMPARISON"
+      [disabled]="(url$ | async)?.endsWith(Route.ITEM_COMPARISON)"
+    ></button>
+  </div>
+
+  <div class="p-toolbar-group-end" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px">
+    <!-- Beta Badge -->
+    <p-badge [value]="'BETA'" severity="warning"></p-badge>
+  </div>
+</p-toolbar>
+
+<!-- Router Outlet -->
+<router-outlet></router-outlet>

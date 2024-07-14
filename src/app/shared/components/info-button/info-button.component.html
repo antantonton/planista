@@ -1,3 +1,8 @@
 <div [pTooltip]="text.join('\n')" [tooltipPosition]="tooltipPosition" [showDelay]="150">
-  <p-button [icon]="icon" styleClass="p-button-rounded p-button-text" (click)="onInfoButtonClick()"></p-button>
+  <p-button
+    [icon]="icon"
+    styleClass="p-button-rounded p-button-text"
+    styles="padding: 0"
+    (click)="onInfoButtonClick()"
+  ></p-button>
 </div>

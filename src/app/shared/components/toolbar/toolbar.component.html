@@ -23,25 +23,25 @@
       [disabled]="url === Route.PLANNER"
     ></button>
 
-    <!-- Weapon Comparison -->
+    <!-- Equipment -->
     <button
       fxHide.lt-md
       pButton
       class="p-button-text p-button-secondary"
-      label="Weapon Comparison"
+      label="Equipment"
       icon="pi pi-table"
-      [routerLink]="Route.WEAPON_COMPARISON"
-      [disabled]="url === Route.WEAPON_COMPARISON"
+      [routerLink]="'/' + Route.EQUIPMENT"
+      [disabled]="url.startsWith(Route.EQUIPMENT)"
     ></button>
 
-    <!-- Weapon Comparison (Icon Only)-->
+    <!-- Equipment (Icon Only)-->
     <button
       fxHide.gt-sm
       pButton
       class="p-button-text p-button-secondary"
       icon="pi pi-table"
-      [routerLink]="Route.WEAPON_COMPARISON"
-      [disabled]="url === Route.WEAPON_COMPARISON"
+      [routerLink]="'/' + Route.EQUIPMENT"
+      [disabled]="url.startsWith(Route.EQUIPMENT)"
     ></button>
   </div>
   <div fxHide.lt-sm class="p-toolbar-group-end" fxLayout="row" fxLayoutGap="8px">

@@ -1,8 +1,8 @@
 <!-- Content -->
 <p-table
-  *ngIf="weapons$ | async as weapons"
-  [columns]="columns"
-  [value]="weapons"
+  *ngIf="items$ | async as items"
+  [columns]="(columns$ | async) ?? []"
+  [value]="items"
   [resizableColumns]="true"
   [paginator]="true"
   [rows]="10"
@@ -11,16 +11,11 @@
   [rowsPerPageOptions]="[10, 25, 50]"
   styleClass="p-datatable-striped"
 >
-  <!-- Caption -->
-  <!-- <ng-template pTemplate="caption">
-    <app-equipment-comparison></app-equipment-comparison>
-  </ng-template> -->
-
   <!-- Data -->
   <ng-template pTemplate="header" let-columns>
     <tr>
       <!-- Name Column -->
-      <th pResizableColumn>Weapon</th>
+      <th pResizableColumn>Item</th>
 
       <!-- Selected Columns -->
       <th *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
@@ -38,7 +33,9 @@
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
       <!-- Name Column Data -->
-      <td>{{ rowData.name }}</td>
+      <td fxLayout="row" fxLayoutAlign="start center">
+        {{ rowData.name }}
+      </td>
 
       <!-- Selected Columns Data -->
       <td *ngFor="let col of columns">

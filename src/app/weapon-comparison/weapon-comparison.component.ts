@@ -87,7 +87,6 @@ export class WeaponComparisonComponent {
       filterType: 'text',
     },
   ]
-  selectedColumns: { field: string; header: string }[] = this.columns
 
   private _mapWeaponToDisplayObject(weapon: Equipment): EquipmentDisplayObject {
     return {

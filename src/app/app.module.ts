@@ -30,12 +30,13 @@ import { ResultsComponent } from './planner/results/results.component'
 import { RaceResultComponent } from './planner/results/race-result/race-result.component'
 import { InfoButtonComponent } from './shared/components/info-button/info-button.component'
 import { EquipmentComponent } from './planner/equipment/equipment.component'
-import { EquipmentListComponent } from './equipment-list/equipment-list.component'
 import { InfoDialogComponent } from './shared/components/info-dialog/info-dialog.component'
 import { ToolbarComponent } from './shared/components/toolbar/toolbar.component'
 import { WeaponComparisonComponent } from './weapon-comparison/weapon-comparison.component'
 import { MultiSelectModule } from 'primeng/multiselect'
 import { BadgeModule } from 'primeng/badge'
+import { ItemComparisonComponent } from './item-comparison/item-comparison.component';
+import { EquipmentComparisonComponent } from './equipment-comparison/equipment-comparison.component'
 
 @NgModule({
   declarations: [
@@ -49,10 +50,11 @@ import { BadgeModule } from 'primeng/badge'
     RaceResultComponent,
     InfoButtonComponent,
     EquipmentComponent,
-    EquipmentListComponent,
     InfoDialogComponent,
     ToolbarComponent,
     WeaponComparisonComponent,
+    ItemComparisonComponent,
+    EquipmentComparisonComponent,
   ],
   imports: [
     BrowserModule,
