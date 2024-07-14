@@ -84,7 +84,7 @@ export class ItemComparisonComponent {
           }
 
           if (bonus.additive) {
-            return bonus.additive * (raceModifier.value === 0 ? 1 : raceModifier.value)
+            return bonus.additive / (raceModifier.value === 0 ? 1 : raceModifier.value)
           } else {
             return 0
           }
