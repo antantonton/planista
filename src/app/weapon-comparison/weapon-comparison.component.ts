@@ -58,7 +58,7 @@ export class WeaponComparisonComponent {
     },
     {
       field: 'damageMax',
-      header: 'Damage min',
+      header: 'Damage max',
     },
     {
       field: 'damageRoof',
