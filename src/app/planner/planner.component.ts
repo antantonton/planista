@@ -5,6 +5,21 @@ import { LanistaHelpersService } from '../shared/services/lanista-helpers.servic
 import { ArmorSlot, AttributeType, Config, Consumable, Equipment, Stat } from '../shared/models/lanista-api.models'
 import { firstValueFrom, Subscription } from 'rxjs'
 import { ConfigService } from '../shared/services/config.service'
+import { ActivatedRoute, Router } from '@angular/router'
+import { state } from '@angular/animations'
+
+export type FormState = {
+  level?: number | null
+  selectedAttribute?: number | null
+  staminaStats?: (number | undefined | null)[]
+  agilityStats?: (number | undefined | null)[]
+  weaponSkills?: (number | undefined | null)[]
+  mainHand?: number | null
+  offHand?: number | null
+  armors?: (number | undefined | null)[]
+  trinkets?: (number | undefined | null)[]
+  consumables?: (number | undefined | null)[]
+}
 
 @Component({
   selector: 'app-planner',
@@ -16,6 +31,8 @@ export class PlannerComponent implements OnInit, OnDestroy {
   private readonly _subscriptions = new Subscription()
   private readonly _configService = inject(ConfigService)
   private readonly _lanistaHelpersService = inject(LanistaHelpersService)
+  private readonly _route = inject(ActivatedRoute)
+  private readonly _router = inject(Router)
   private readonly _defaultLevel = 25
 
   readonly statsInfoText = `Enter the desired stat points you want to have after racial modifiers have been applied.\nRemaining points will be allocated to the selected stat for comparison.`
@@ -42,6 +59,29 @@ export class PlannerComponent implements OnInit, OnDestroy {
   config: Config | undefined
 
   ngOnInit(): void {
+    const savedBuild = this._route.snapshot.queryParams?.['build']
+    if (savedBuild) {
+      const stateStrings = savedBuild.split('-')
+
+      // const decodedBuild = atob(savedBuild)
+      // const formState = JSON.parse(decodedBuild) as FormState
+      // console.log('formState from url: ', formState)
+      // this.plannerForm.controls.level.setValue(formState.level ?? this._defaultLevel)
+      // this.plannerForm.controls.selectedAttribute.setValue({
+      //   attributeType: formState.selectedAttribute ?? AttributeType.STAT,
+      //   type: formState.selectedAttribute ?? 0,
+      //   name: '',
+      // })
+      // this._initializeAttributeFormArray(this.plannerForm.controls.staminaStats, formState.staminaStats ?? [])
+      // this._initializeAttributeFormArray(this.plannerForm.controls.agilityStats, formState.agilityStats ?? [])
+      // this._initializeAttributeFormArray(this.plannerForm.controls.weaponSkills, formState.weaponSkills ?? [])
+      // this._initializeEquipmentFormArray(this.plannerForm.controls.armors, formState.armors ?? [])
+      // this._initializeEquipmentFormArray(this.plannerForm.controls.trinkets, formState.trinkets ?? [])
+      // this._initializeConsumableFormArray(this.plannerForm.controls.consumables)
+      // this.onStatSelected(AttributeType.STAT, this.plannerForm.controls.staminaStats.controls[0])
+      // this._toggleAttributeForms()
+    }
+
     firstValueFrom(this._configService.getConfig()).then((config) => {
       this.config = config
 
@@ -68,7 +108,86 @@ export class PlannerComponent implements OnInit, OnDestroy {
       this._initializeConsumableFormArray(this.plannerForm.controls.consumables)
       this.onStatSelected(AttributeType.STAT, this.plannerForm.controls.staminaStats.controls[0])
       this._toggleAttributeForms()
+
+      this._subscriptions.add(
+        this.plannerForm.valueChanges.subscribe((value) => {
+          // level-selectedAttribute-staminaStats-agilityStats-weaponSkills-mainHand-offHand-armors-trinkets-consumables
+          const stateStrings: string[] = []
+          stateStrings.push(value?.level?.toString()?.padStart(2, '0') ?? '00')
+          stateStrings.push(value?.selectedAttribute?.type?.toString()?.padStart(2, '0') ?? '00')
+
+          // Stats
+          stateStrings.push(
+            [
+              ...(value?.staminaStats?.map((stat) => stat.value?.toString()?.padStart(3, '0') ?? '000').join('') ?? ''),
+              ...(value?.agilityStats?.map((stat) => stat.value?.toString()?.padStart(3, '0') ?? '000').join('') ?? ''),
+              ...(value?.weaponSkills?.map((stat) => stat.value?.toString()?.padStart(3, '0') ?? '000').join('') ?? ''),
+            ].join(''),
+          )
+
+          // Equipment
+          stateStrings.push(
+            [
+              value?.mainHand?.id?.toString()?.padStart(3, '0') ?? '000',
+              value?.offHand?.id?.toString()?.padStart(3, '0') ?? '000',
+              ...(value?.armors?.map((armor) => armor.equipment?.id?.toString()?.padStart(3, '0') ?? '000').join('') ??
+                ''),
+              ...(value?.trinkets
+                ?.map((trinket) => trinket.equipment?.id?.toString()?.padStart(3, '0') ?? '000')
+                .join('') ?? ''),
+              ...(value?.consumables
+                ?.map((consumable) => consumable.consumable?.id?.toString()?.padStart(3, '0') ?? '000')
+                ?.join('') ?? ''),
+            ].join(''),
+          )
+
+          const stateString = stateStrings.join('-')
+          console.log('stateString: ', stateString)
+
+          const formState: FormState = {
+            level: value.level,
+            selectedAttribute: value?.selectedAttribute?.type,
+            staminaStats: value?.staminaStats?.map((stat) => stat.value),
+            agilityStats: value?.agilityStats?.map((stat) => stat.value),
+            weaponSkills: value?.weaponSkills?.map((stat) => stat.value),
+            mainHand: value.mainHand?.id,
+            offHand: value.offHand?.id,
+            armors: value?.armors?.map((armor) => armor.equipment?.id),
+            trinkets: value?.trinkets?.map((trinket) => trinket.equipment?.id),
+            consumables: value?.consumables?.map((consumable) => consumable.consumable?.id),
+          }
+
+          console.log('formState: ', formState)
+
+          const stringifiedValue = JSON.stringify(formState, null, 2)
+          // console.log('stringifiedValue: ', stringifiedValue)
+
+          const base64Value = btoa(stringifiedValue)
+          // console.log('base64Value: ', base64Value)
+          console.log('base64Value.length: ', base64Value.length)
+
+          const queryString = this.objectToQueryString(formState)
+          console.log('queryString.length: ', queryString.length)
+          this._router.navigate([], {
+            relativeTo: this._route,
+            // queryParams: { build: base64Value },
+            // queryParams: { build: this.objectToQueryString(formState) },
+            queryParams: { build: stateString },
+            // queryParamsHandling: 'merge',
+            // skipLocationChange: true,
+          })
+        }),
+      )
     })
+  }
+
+  objectToQueryString(obj: any): string {
+    const keys = Object.keys(obj)
+    const keyValuePairs = keys.map((key) => {
+      return encodeURIComponent(key) + '=' + encodeURIComponent(obj[key])
+    })
+    // more code goes here
+    return keyValuePairs.join('&')
   }
 
   ngOnDestroy(): void {
