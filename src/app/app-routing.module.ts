@@ -4,12 +4,14 @@ import { PlannerComponent } from './planner/planner.component'
 import { WeaponComparisonComponent } from './weapon-comparison/weapon-comparison.component'
 import { ItemComparisonComponent } from './item-comparison/item-comparison.component'
 import { EquipmentComparisonComponent } from './equipment-comparison/equipment-comparison.component'
+import { AgeComponent } from './age/age.component'
 
 export enum Route {
   PLANNER = '',
   EQUIPMENT = 'equipment',
   WEAPON_COMPARISON = 'weapons',
   ITEM_COMPARISON = 'items',
+  AGE = 'age',
 }
 
 const routes: Routes = [
@@ -24,6 +26,10 @@ const routes: Routes = [
   {
     path: Route.WEAPON_COMPARISON,
     component: WeaponComparisonComponent,
+  },
+  {
+    path: Route.AGE,
+    component: AgeComponent,
   },
   {
     path: Route.EQUIPMENT,

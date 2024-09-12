@@ -18,10 +18,12 @@ import { DropdownModule } from 'primeng/dropdown'
 import { AppComponent } from './app.component'
 import { PlannerComponent } from './planner/planner.component'
 import { AppRoutingModule } from './app-routing.module'
+import { SelectButtonModule } from 'primeng/selectbutton'
 import { StatInputComponent } from './shared/components/stat-input/stat-input.component'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { RouterModule } from '@angular/router'
-import { DecimalPipe, TitleCasePipe } from '@angular/common'
+import { DatePipe, DecimalPipe, TitleCasePipe } from '@angular/common'
+import { CalendarModule } from 'primeng/calendar'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { LabelPipe } from './shared/pipes/label.pipe'
 import { LevelToPointsPipe } from './shared/pipes/level-to-points.pipe'
@@ -35,8 +37,9 @@ import { ToolbarComponent } from './shared/components/toolbar/toolbar.component'
 import { WeaponComparisonComponent } from './weapon-comparison/weapon-comparison.component'
 import { MultiSelectModule } from 'primeng/multiselect'
 import { BadgeModule } from 'primeng/badge'
-import { ItemComparisonComponent } from './item-comparison/item-comparison.component';
+import { ItemComparisonComponent } from './item-comparison/item-comparison.component'
 import { EquipmentComparisonComponent } from './equipment-comparison/equipment-comparison.component'
+import { AgeComponent } from './age/age.component'
 
 @NgModule({
   declarations: [
@@ -55,17 +58,20 @@ import { EquipmentComparisonComponent } from './equipment-comparison/equipment-c
     WeaponComparisonComponent,
     ItemComparisonComponent,
     EquipmentComparisonComponent,
+    AgeComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    SelectButtonModule,
     HttpClientModule,
     ToolbarModule,
     ProgressSpinnerModule,
     TableModule,
     DynamicDialogModule,
+    CalendarModule,
     FormsModule,
     DialogModule,
     ReactiveFormsModule,
@@ -81,7 +87,7 @@ import { EquipmentComparisonComponent } from './equipment-comparison/equipment-c
     MultiSelectModule,
     BadgeModule,
   ],
-  providers: [TitleCasePipe, DecimalPipe, LabelPipe, DialogService],
+  providers: [TitleCasePipe, DatePipe, DecimalPipe, LabelPipe, DialogService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

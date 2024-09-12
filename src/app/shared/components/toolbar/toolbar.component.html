@@ -43,6 +43,27 @@
       [routerLink]="'/' + Route.EQUIPMENT"
       [disabled]="url.startsWith(Route.EQUIPMENT)"
     ></button>
+
+    <!-- Age -->
+    <button
+      fxHide.lt-md
+      pButton
+      class="p-button-text p-button-secondary"
+      label="Age"
+      icon="pi pi-calendar"
+      [routerLink]="Route.AGE"
+      [disabled]="url === Route.AGE"
+    ></button>
+
+    <!-- Age (Icon Only) -->
+    <button
+      fxHide.gt-sm
+      pButton
+      class="p-button-text p-button-secondary"
+      icon="pi pi-calendar"
+      [routerLink]="Route.AGE"
+      [disabled]="url === Route.AGE"
+    ></button>
   </div>
   <div fxHide.lt-sm class="p-toolbar-group-end" fxLayout="row" fxLayoutGap="8px">
     <!-- Github Link -->

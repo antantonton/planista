@@ -1,0 +1,58 @@
+<!-- Toolbar -->
+<app-toolbar></app-toolbar>
+
+<!-- Content -->
+<div fxLayout="row" class="p-3 lg:p-5" fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="32px">
+  <div fxFlex fxLayout="column" fxLayoutGap="24px">
+    <app-divider-header [label]="'Created at'"></app-divider-header>
+    <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="24px" [formGroup]="dateForm">
+      <!-- Date Input -->
+      <p-calendar inputId="dateInput" dateFormat="d MM yy" [showIcon]="true" formControlName="date"></p-calendar>
+
+      <!-- Time Input -->
+      <p-selectButton
+        [options]="timeOptions"
+        formControlName="afterNoon"
+        optionLabel="label"
+        optionValue="value"
+      ></p-selectButton>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div fxFlex fxLayout="column" fxLayoutGap="24px">
+    <app-divider-header [label]="'Ages at'"></app-divider-header>
+
+    <div fxLayout="column">
+      <!-- Age Labels -->
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="12px" class="text-lg font-semibold">
+        <span fxFlex="75px">Race</span>
+        <div fxFlex fxLayout="row" fxLayoutAlign="end" fxLayoutGap="12px" class="text-right">
+          <span *ngFor="let age of ages" fxFlex>{{ age | label }}</span>
+        </div>
+      </div>
+
+      <!-- Race Row -->
+      <div
+        *ngFor="let raceResult of ageResult$ | async | keyvalue"
+        class="race-age-result-row"
+        fxLayout="row"
+        fxLayoutGap="12px"
+        fxLayoutAlign="start center"
+      >
+        <!-- Label -->
+        <span fxFlex="75px">{{ raceResult.key | label }}</span>
+
+        <div fxFlex fxLayout="row" fxLayoutAlign="end" fxLayoutGap="12px" class="text-right">
+          <div *ngFor="let ageResult of raceResult.value | keyvalue" fxFlex>
+            <span fxHide.lt-md>{{ ageResult.value | date : 'd MMMM' }}</span>
+            <span fxHide.gt-sm>{{ ageResult.value | date : 'd MMM' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px">
+      <span class="text-lg font-semibold">at {{ dateForm.controls.afterNoon.value ? '00:00' : '12:00' }}</span>
+    </div>
+  </div>
+</div>
