@@ -4,7 +4,7 @@
 <!-- Content -->
 <div fxLayout="row" class="p-3 lg:p-5" fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="32px">
   <div fxFlex fxLayout="column" fxLayoutGap="24px">
-    <app-divider-header [label]="'Created at'"></app-divider-header>
+    <app-divider-header [label]="'Created at'" [infoText]="createdAtTooltip"></app-divider-header>
     <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="24px" [formGroup]="dateForm">
       <!-- Date Input -->
       <p-calendar inputId="dateInput" dateFormat="d MM yy" [showIcon]="true" formControlName="date"></p-calendar>

@@ -19,6 +19,7 @@ type AgeResult = {
 export class AgeComponent {
   readonly races = Object.values(AgeRace)
   readonly ages = Object.values(Age)
+  readonly createdAtTooltip = 'When your character was created.'
   readonly agesAtTooltip = 'The age limits are not from the official Lanista API and may be incorrect or outdated.'
   readonly timeOptions = [
     { label: 'Before 12:00', value: false },
