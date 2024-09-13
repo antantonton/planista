@@ -16,7 +16,7 @@
       <!-- Stats Header -->
       <app-divider-header
         [label]="'Desired Stats'"
-        [infoText]="statsInfoText"
+        [infoText]="[statsInfoText]"
         [actionIcon]="'pi pi-undo'"
         [actionTooltip]="'Reset stats'"
         (actionClick)="onResetStatsClick()"
@@ -84,7 +84,7 @@
     <div *ngIf="config" fxFlex="0 0 50" fxLayout="column" fxLayoutGap="32px">
       <app-divider-header
         [label]="'Equipment'"
-        [infoText]="equipmentInfoText"
+        [infoText]="[equipmentInfoText]"
         [actionIcon]="'pi pi-undo'"
         [actionTooltip]="'Reset equipment'"
         (actionClick)="onResetEquipmentClick()"
@@ -95,7 +95,7 @@
 
   <!-- Results -->
   <div fxFlex fxLayout="column" fxLayoutGap="12px">
-    <app-divider-header [label]="'Results'" [infoText]="resultsInfoText"></app-divider-header>
+    <app-divider-header [label]="'Results'" [infoText]="[resultsInfoText]"></app-divider-header>
     <app-results [plannerForm]="plannerForm" [config]="config"></app-results>
   </div>
 </div>

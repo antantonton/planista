@@ -10,7 +10,7 @@ export class DividerHeaderComponent {
   private readonly _infoDialogService = inject(InfoDialogService)
 
   @Input() label = ''
-  @Input() infoText = ''
+  @Input() infoText: string[] = []
   @Input() actionIcon = ''
   @Input() actionTooltip = ''
   @Output() actionClick = new EventEmitter<void>()
@@ -20,6 +20,6 @@ export class DividerHeaderComponent {
   }
 
   onInfoClicked(): void {
-    this._infoDialogService.open(this.label, [this.infoText])
+    this._infoDialogService.open(this.label, this.infoText)
   }
 }
