@@ -44,9 +44,9 @@
         <span fxFlex="75px">{{ raceResult.key | label }}</span>
 
         <div fxFlex fxLayout="row" fxLayoutAlign="end" fxLayoutGap="12px" class="text-right">
-          <div *ngFor="let ageResult of raceResult.value | keyvalue" fxFlex>
-            <span fxHide.lt-md>{{ ageResult.value | date : 'd MMMM' }}</span>
-            <span fxHide.gt-sm>{{ ageResult.value | date : 'd MMM' }}</span>
+          <div *ngFor="let age of ages" fxFlex>
+            <span fxHide.lt-md>{{ raceResult.value[age] | date : 'd MMMM' }}</span>
+            <span fxHide.gt-sm>{{ raceResult.value[age] | date : 'd MMM' }}</span>
           </div>
         </div>
       </div>
