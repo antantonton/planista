@@ -50,7 +50,7 @@ export class AgeComponent {
           }
 
           if (afterNoon) {
-            const agingDate = addDays(date, limit + 1)
+            const agingDate = addDays(date, limit)
             agingDate.setHours(0, 0, 0, 0)
             return agingDate
           } else {
