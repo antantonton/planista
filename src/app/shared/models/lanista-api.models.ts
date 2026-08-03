@@ -19,6 +19,7 @@ export type Equipment = {
   is_weapon: boolean
   is_two_handed: boolean
   is_shield: boolean
+  is_trinket: boolean
   can_dual_wield: boolean
   is_ranged: boolean
   base_damage_min: number
@@ -42,6 +43,15 @@ export type ItemBonus = {
   type: string
   additive: number
   multiplier: number
+}
+
+/**
+ * Races look slightly different that the config API
+ */
+export type Races = {
+  weapon_skills: Omit<WeaponSkill, 'visible'>[]
+  stats: Omit<Stat, 'visible'>[]
+  races: (Omit<Race, 'type'> & { id: number })[]
 }
 
 export type Config = {
