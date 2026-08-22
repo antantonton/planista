@@ -18,7 +18,7 @@ export class LanistaApiService {
   constructor() {}
 
   async getConfig(): Promise<Config> {
-    const config = await fetch('https://beta.lanista.se/api/config')
+    const config = await fetch('https://lanista.se/api/config')
       .then((response) => response.json())
       .catch((error) => {
         console.error('Error fetching config from Lanista API, falling back to Races API:', error)
@@ -28,23 +28,23 @@ export class LanistaApiService {
   }
 
   async getRaceInfo(): Promise<unknown> {
-    return fetch(' https://beta.lanista.se/api/races').then((response) => response.json())
+    return fetch(' https://lanista.se/api/races').then((response) => response.json())
   }
 
   async getWeapons(): Promise<Equipment[]> {
-    return fetch('https://beta.lanista.se/api/external/items/weapons/all').then((response) => response.json())
+    return fetch('https://lanista.se/api/external/items/weapons/all').then((response) => response.json())
   }
 
   async getArmors(): Promise<Equipment[]> {
-    return fetch('https://beta.lanista.se/api/external/items/armors/all').then((response) => response.json())
+    return fetch('https://lanista.se/api/external/items/armors/all').then((response) => response.json())
   }
 
   async getConsumables(): Promise<Consumable[]> {
-    return fetch('https://beta.lanista.se/api/external/items/consumables/all').then((response) => response.json())
+    return fetch('https://lanista.se/api/external/items/consumables/all').then((response) => response.json())
   }
 
   async getEnchants(): Promise<Enchant[]> {
-    return fetch('https://beta.lanista.se/api/external/items/enchants/all').then((response) => response.json())
+    return fetch('https://lanista.se/api/external/items/enchants/all').then((response) => response.json())
   }
 
   /**
@@ -52,7 +52,7 @@ export class LanistaApiService {
    * With a compatibility layer in between to fill in missing fields
    */
   private async _getConfigFromRaces(): Promise<Config> {
-    const races: Races = await fetch('https://beta.lanista.se/api/external/races').then((response) => response.json())
+    const races: Races = await fetch('https://lanista.se/api/external/races').then((response) => response.json())
     const staminaAttributes = [0, 1, 3]
     const agilityAttributes = [4, 7]
     const trinketArmorTypes: ArmorTypes = {
